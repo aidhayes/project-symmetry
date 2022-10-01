@@ -5,7 +5,7 @@ Semantic comparison between entire Wikipedia articles in different languages so 
 ### Python
 Version 3.7.4
 ### NLTK
-In terminal:\n
+In terminal:  
 `pip3 install nltk`
 
 
