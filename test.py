@@ -25,5 +25,15 @@ REF: https://cloud.google.com/translate/automl/docs/evaluate
 
 # We split because sentence_bleu reads an array of strings (individual words)
 
+
+
+print("Test 2")
+# Sentence translated from another language (eg: A sentence translated from French to English)
+hypothesis = "I can't believe that people actually consider deep dish pizza real pizza, it's more of a casserole to me.".split()
+# Original translation (eg: A sentence in English)
+reference = "I can't believe people actually consider deep pizza to be real pizza, it's more of a pan.".split()
+
+
+score = sentence_bleu([reference], hypothesis)
 # Display result of comparison 
-print()
+print("BLEU Score:", score)
