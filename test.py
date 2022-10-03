@@ -22,8 +22,13 @@ REF: https://cloud.google.com/translate/automl/docs/evaluate
 > .6 - Quality often better than human
 '''
 # Comparison between sentences
+reference = "I like easting buffalo chicken wings on Sundays while I watch football."
+hypothesis = "I like to eat Bullalo Chicken Wings on Sundays while I watch football."
 
+
+score = sentence_bleu([reference], hypothesis)
 # We split because sentence_bleu reads an array of strings (individual words)
 
 # Display result of comparison 
-print()
+
+print(score)
