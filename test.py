@@ -7,9 +7,9 @@ from nltk.translate.bleu_score import corpus_bleu
 # REF: https://www.nltk.org/api/nltk.translate.bleu_score.html
 
 # Sentence translated from another language (eg: A sentence translated from French to English)
-reference = "I like easting buffalo chicken wings on Sundays while I watch football.".split()
-# Original translation (eg: A sentence in English)
 hypothesis = "I like to eat Bullalo Chicken Wings on Sundays while I watch football.".split()
+# Original translation (eg: A sentence in English)
+reference = "I like easting buffalo chicken wings on Sundays while I watch football.".split()
 # We split because sentence_bleu reads an array of strings (individual words)
 
 
