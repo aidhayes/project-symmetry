@@ -11,4 +11,6 @@ hypothesis = "".split()
 #Original translation (eg: A sentence in English)
 reference = "".split()
 
+#Comparison between sentences
+
 #We split because sentence_bleu reads an array of strings (individual words)
