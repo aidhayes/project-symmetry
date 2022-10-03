@@ -1,7 +1,7 @@
-#REF: README.md
-#For individual sentences
+# REF: README.md
+# For individual sentences
 from nltk.translate.bleu_score import sentence_bleu
-#For whole paragraphs/texts
+# For whole paragraphs/texts
 from nltk.translate.bleu_score import corpus_bleu
 
 #REF: https://www.nltk.org/api/nltk.translate.bleu_score.html
@@ -21,9 +21,9 @@ REF: https://cloud.google.com/translate/automl/docs/evaluate
 [.5 - .6] - Very high quality, adequate, and fluent translations
 > .6 - Quality often better than human
 '''
-#Comparison between sentences
+# Comparison between sentences
 
-#We split because sentence_bleu reads an array of strings (individual words)
+# We split because sentence_bleu reads an array of strings (individual words)
 
-#Display result of comparison 
+# Display result of comparison 
 print()
