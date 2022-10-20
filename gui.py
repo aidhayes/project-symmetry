@@ -2,6 +2,7 @@ import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from languages import lang_eng, text
 import comparison
 
+
 INPUT_BOX_SIZE = (50, 25)
 TITLE = 2
 SELECT_LANG = 0
@@ -55,9 +56,9 @@ while True:
     if event == "-COMPARE-":
         ref = values["-TEXT 1-"]
         hyp = values["-TEXT 2-"]
-        [pairs, no_pairs] = comparison.compare(ref, hyp)
-        window["-TEXT 1-"].update(pairs)
-        window["-TEXT 2-"].update(no_pairs)
+        [ref_, hyp_] = comparison.compare(ref, hyp)
+        window["-TEXT 1-"].update(ref_)
+        window["-TEXT 2-"].update(hyp_)
 
 
 window.close()
