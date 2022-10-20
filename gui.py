@@ -2,9 +2,9 @@ import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from languages import lang_eng
 
 INPUT_BOX_SIZE = (50, 25)
-
+lang = "English"
 lang_selection = [
-    [sg.Push(), sg.Text("Select a language:"), sg.Combo(lang_eng)]
+    [sg.Push(), sg.Text("Select a language:"), sg.Combo(lang_eng, key="-LANG-"), sg.Button("Select")]
 ]
 
 # Title of application
@@ -32,5 +32,10 @@ while True:
     # If user x's out of the window, then stop the application
     if event == sg.WIN_CLOSED:
         break
+    
+    if event == "Select":
+        lang = values["-LANG-"]
+
+    print(lang)
 
 window.close()
