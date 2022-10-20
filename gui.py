@@ -37,11 +37,14 @@ window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_
 
 # Event loop
 while True:
+    
     event, values = window.read()
+
     # If user x's out of the window, then stop the application
     if event == sg.WIN_CLOSED:
         break
     
+    # Update on screen text to the language the user selects
     if event == "-SELECT-":
         lang = values["-LANG-"]
         window["-SELECT LANG-"].update(text[lang][SELECT_LANG])
