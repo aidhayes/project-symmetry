@@ -1,3 +1,11 @@
+import csv
+
+text = dict()
+
+with open("display.csv") as file:
+    for line in csv.reader(file):
+        text[line[0]] = line[2:]
+        
 lang_eng = [ 
             "Arabic",
             "Bangla",
@@ -47,50 +55,3 @@ lang_eng = [
 
         ]
 
-text = {
-    "Arabic": ["أداة مقارنة مقالات ويكيبيديا"],
-    "Bangla": ["উইকিপিডিয়া নিবন্ধ তুলনা টুল"],
-    "Bulgarian": ["Инструмент за сравнение на статии в Уикипедия"],
-    "Bosnian": ["Wikipedijina alatka za poređenje članaka"],
-    "Catalan": ["Eina de comparació d'articles de la Viquipèdia"],
-    "Czech": ["Nástroj pro porovnávání článků na Wikipedii"],
-    "Danish": ["Wikipedia-artikelsammenligningsværktøj"],
-    "German": ["Vergleichstool für Wikipedia-Artikel"],
-    "Estonian": ["Wikipedia artiklite võrdlemise tööriist"] ,
-    "Greek": ["Εργαλείο σύγκρισης άρθρων της Wikipedia"] ,
-    "Spanish": ["Herramienta de comparación de artículos de Wikipedia"],
-    "Esperanto": ["Vikipedia Artikolo-Kompara Ilo"],
-    "Basque": ["Wikipedia artikuluak alderatzeko tresna"],
-    "Persian": ["ابزار مقایسه مقاله ویکی پدیا"] ,
-    "French": ["Outil de comparaison d'articles Wikipédia"],
-    "Galician": ["Ferramenta de comparación de artigos da Wikipedia"],
-    "Korean": ["Wikipedia 기사 비교 도구"],
-    "Croatian": ["Wikipedijin alat za usporedbu članaka"],
-    "Indonesian": ["Alat Perbandingan Artikel Wikipedia"],
-    "Italian": ["Strumento di confronto degli articoli di Wikipedia"],
-    "Hebrew": ["כלי השוואת מאמרים של ויקיפדיה"],
-    "Georgian": ["ვიკიპედიის სტატიების შედარების ინსტრუმენტი"],
-    "Latvian": ["Wikipedia rakstu salīdzināšanas rīks"],
-    "Lithuanian": ["Vikipedijos straipsnių palyginimo įrankis"],
-    "Hungarian": ["Wikipédia cikk-összehasonlító eszköz"],
-    "Macedonian": ["Алатка за споредба на статии на Википедија"],
-    "Malay": ["Alat Perbandingan Artikel Wikipedia"],
-    "Dutch": ["Artikelvergelijkingstool van Wikipedia"],
-    "Japanese": ["ウィキペディア記事比較ツール"],
-    "Norwegian": ["Wikipedia-artikkelsammenligningsverktøy"],
-    "Polish": ["Narzędzie do porównywania artykułów w Wikipedii"],
-    "Portugese": ["Ferramenta de comparação de artigos da Wikipedia"],
-    "Romanian": ["Instrumentul de comparare a articolelor Wikipedia"],
-    "Russian": ["Инструмент сравнения статей Википедии"],
-    "English": ["Wikipedia Article Comparison Tool"],
-    "Slovak": ["Nástroj na porovnávanie článkov na Wikipédii"],
-    "Slovenian": ["Orodje za primerjavo člankov Wikipedije"],
-    "Serbian": ["Алат за поређење чланака на Википедији"],
-    "Finnish": ["Wikipedia-artikkelien vertailutyökalu"],
-    "Swedish": ["Verktyg för jämförelse av Wikipedia-artiklar"],
-    "Thai": ["Wikipedia เครื่องมือเปรียบเทียบบทความ"],
-    "Turkish": ["Wikipedia Makale Karşılaştırma Aracı"],
-    "Ukranian": ["Інструмент порівняння статей Вікіпедії"],
-    "Vietnamese": ["Công cụ so sánh bài viết trên Wikipedia"],
-    "Chinese": ["维基百科文章比较工具"]
-}
