@@ -1,14 +1,23 @@
+from cProfile import label
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
-from languages import lang_eng
+from languages import lang_eng, text
 
 INPUT_BOX_SIZE = (50, 25)
+TITLE = 2
+SELECT_LANG = 0
+SELECT = 1
+COMPARE = 3
 lang = "English"
+display = "Wikipedia Article Comparison Tool"
+
+
+
 lang_selection = [
-    [sg.Push(), sg.Text("Select a language:"), sg.Combo(lang_eng, key="-LANG-"), sg.Button("Select")]
+    [sg.Push(), sg.Text("Select a language:", key="-SELECT LANG-"), sg.Combo(lang_eng, key="-LANG-"), sg.Button("Select", key = "-SELECT-")]
 ]
 
 # Title of application
-welcome = [sg.Text("Wikipedia Article Comparison Tool", justification="c")]
+welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
 
 # Text you want to compare
 text_entry = [
@@ -17,13 +26,13 @@ text_entry = [
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 2-")
     ],
     [ 
-        sg.Button("Compare")
+        sg.Button("Compare", key="-COMPARE-")
     ]
 ]
 
 # Setting the layout of the window
 layout = [lang_selection, welcome, text_entry]
-window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c")
+window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 
 
 # Event loop
@@ -33,9 +42,10 @@ while True:
     if event == sg.WIN_CLOSED:
         break
     
-    if event == "Select":
+    if event == "-SELECT-":
         lang = values["-LANG-"]
-
-    print(lang)
-
+        window["-SELECT LANG-"].update(text[lang][SELECT_LANG])
+        window["-SELECT-"].update(text[lang][SELECT])
+        window['-WELCOME-'].update(text[lang][TITLE])
+        window["-COMPARE-"].update(text[lang][COMPARE])
 window.close()
