@@ -1,6 +1,6 @@
-from cProfile import label
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from languages import lang_eng, text
+import comparison
 
 INPUT_BOX_SIZE = (50, 25)
 TITLE = 2
@@ -37,7 +37,7 @@ window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_
 
 # Event loop
 while True:
-    
+
     event, values = window.read()
 
     # If user x's out of the window, then stop the application
@@ -51,4 +51,13 @@ while True:
         window["-SELECT-"].update(text[lang][SELECT])
         window['-WELCOME-'].update(text[lang][TITLE])
         window["-COMPARE-"].update(text[lang][COMPARE])
+    
+    if event == "-COMPARE-":
+        ref = values["-TEXT 1-"]
+        hyp = values["-TEXT 2-"]
+        [pairs, no_pairs] = comparison.compare(ref, hyp)
+        window["-TEXT 1-"].update(pairs)
+        window["-TEXT 2-"].update(no_pairs)
+
+
 window.close()
