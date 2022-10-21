@@ -10,5 +10,5 @@ If needed, run either of the following in terminal:
 or  
 `python3 -m pip install nltk`  
 ### PySimpleGUI
-python3 -m pip install pysimplegui
+`python3 -m pip install pysimplegui`
 
