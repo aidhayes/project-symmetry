@@ -27,6 +27,22 @@ def compare(ref, hypothesis, similarity=0.1):
             if sentence_bleu([ref.split()], hyp.split(), smoothing_function=SmoothingFunction().method7) >= similarity:
                 # Check for duplicates
                 if ref not in ref_pair_dict:
+                    '''
+                    key = reference
+                    value = hypothesis
+                    eg:
+                        key = English sentence
+                        value = French sentence translated to English
+                    '''
                     ref_pair_dict[ref] = hyp
+                    
+                    '''
+                    key = hypothesis
+                    value = reference
+                    eg:
+                        key = French sentence translated to English
+                        value = English sentence
+                    '''
                     hyp_pair_dict[hyp] = ref
+                    
     return ref_pair_dict, hyp_pair_dict
