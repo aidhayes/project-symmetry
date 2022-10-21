@@ -15,9 +15,6 @@ def compare(ref, hypothesis, similarity=0.1):
     ref_list = sent_tokenize(ref)
     hyp_list = sent_tokenize(hypothesis)
 
-    no_pairs = []
-    pairs = []
-
     ref_pair_dict = dict()
     hyp_pair_dict = dict()
     # Itteration over both paragraphs
@@ -44,5 +41,5 @@ def compare(ref, hypothesis, similarity=0.1):
                         value = English sentence
                     '''
                     hyp_pair_dict[hyp] = ref
-                    
+
     return ref_pair_dict, hyp_pair_dict
