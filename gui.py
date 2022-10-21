@@ -1,7 +1,8 @@
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from languages import lang_eng, text
 import comparison
-
+from nltk.tokenize import sent_tokenize
+import random
 
 INPUT_BOX_SIZE = (50, 25)
 TITLE = 2
@@ -11,7 +12,16 @@ COMPARE = 3
 lang = "English"
 display = "Wikipedia Article Comparison Tool"
 
-
+def highlight_sim(element, text, colors, pairs):
+    window[element].update("")
+    i = 0
+    sentences = sent_tokenize(text)
+    for sentence in sentences:
+        if sentence in pairs:
+            window[element].update(sentence + " ", text_color_for_value="white", background_color_for_value = colors[i], append=True)
+            i = i + 1
+        else:
+            window[element].update(sentence + " ", text_color_for_value="black", append=True)
 
 lang_selection = [
     [sg.Push(), sg.Text("Select a language:", key="-SELECT LANG-"), sg.Combo(lang_eng, key="-LANG-"), sg.Button("Select", key = "-SELECT-")]
@@ -56,9 +66,17 @@ while True:
     if event == "-COMPARE-":
         ref = values["-TEXT 1-"]
         hyp = values["-TEXT 2-"]
-        [ref_, hyp_] = comparison.compare(ref, hyp)
-        window["-TEXT 1-"].update(ref_)
-        window["-TEXT 2-"].update(hyp_)
+        pairs_ref, pairs_hyp = comparison.compare(ref, hyp)
+        window["-TEXT 1-"].update("")
+        colors = []
+        for i in range(len (pairs_ref)):
+            # https://stackoverflow.com/questions/13998901/generating-a-random-hex-color-in-python
+            highlight = "%06x" % random.randint(0, 0xFFFFFF)
+            highlight = "#" + highlight
+            colors.append(highlight)
 
+        highlight_sim("-TEXT 1-", ref, colors, pairs_ref)
+        highlight_sim("-TEXT 2-", hyp, colors, pairs_hyp)
 
 window.close()
+
