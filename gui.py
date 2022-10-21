@@ -1,6 +1,6 @@
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from languages import lang_eng, text
-import comparison
+import bleu_score
 from nltk.tokenize import sent_tokenize
 import random
 
@@ -66,7 +66,7 @@ while True:
     if event == "-COMPARE-":
         ref = values["-TEXT 1-"]
         hyp = values["-TEXT 2-"]
-        pairs_ref, pairs_hyp = comparison.compare(ref, hyp)
+        pairs_ref, pairs_hyp = bleu_score.compare(ref, hyp)
         window["-TEXT 1-"].update("")
         colors = []
         for i in range(len (pairs_ref)):
