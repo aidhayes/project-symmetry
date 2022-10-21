@@ -23,19 +23,10 @@ def compare(ref, hypothesis, similarity=0.1):
     # Itteration over both paragraphs
     for ref in ref_list:
         for hyp in hyp_list:
-            #Determine if the current sentence has a match or not
+            # Determine if the current sentence has a match or not
             if sentence_bleu([ref.split()], hyp.split(), smoothing_function=SmoothingFunction().method7) >= similarity:
                 # Check for duplicates
                 if ref not in ref_pair_dict:
-                    pairs.append(ref)
                     ref_pair_dict[ref] = hyp
                     hyp_pair_dict[hyp] = ref
-                # Check to see if sentence was determined to have no pair in previous itteration
-                if ref in no_pairs:
-                    no_pairs.remove(ref)   
-            else:
-                # If the setence hasn't been added to either array yet
-                if ref not in no_pairs and ref not in pairs:
-                    no_pairs.append(ref)
-
     return ref_pair_dict, hyp_pair_dict
