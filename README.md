@@ -8,4 +8,5 @@ Version 3.7.4
 `python3 -m pip install nltk`  
 ### PySimpleGUI
 `python3 -m pip install pysimplegui`
-
+### Sentence Bert 
+`pip install -U sentence-transformers`
