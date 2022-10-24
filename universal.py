@@ -1,5 +1,6 @@
 import tensorflow as tf
 import tensorflow_hub as hub
+import tensorflow_text
 from sklearn.metrics.pairwise import cosine_similarity
 import nltk
 try:
@@ -11,24 +12,36 @@ model_url = "https://tfhub.dev/google/universal-sentence-encoder-multilingual-la
 model = hub.load(model_url)
 import numpy as np
 
+dict1 = dict()
+dict2 = dict()
 
 def similarity_array(paragraph1:list, paragraph2:list):
   return cosine_similarity(model(paragraph1),model(paragraph2))
 
-def dict_output(paragraph1: list, paragraph2: list, sim_array: np.ndarray, sim_r: float):
-  dict1 = dict.fromkeys(paragraph1)
-  dict2 = dict.fromkeys(paragraph2)
-  cur_num = 1
-  for i1, s1 in enumerate(dict1):
-    for i2, s2 in enumerate(dict2):
-      if sim_array[i1][i2] >= sim_r:
-        if dict1[s1] is None and dict2[s2] is None:
-          dict1[s1] = cur_num
-          dict2[s2] = cur_num
-          cur_num = cur_num + 1
-        elif dict1[s1] is None:
-          dict1[s1] = dict2[s2]
-        elif dict2[s2] is None:
-          dict2[s2] = dict1[s1]
-  return dict1, dict2
+def dict_output(paragraph1, paragraph2, sim_array, sim):
+  list1 = sent_tokenize(paragraph1)
+  list2 = sent_tokenize(paragraph2)
+  for i1, s1 in enumerate(list1):
+    for i2, s2 in enumerate(list2):
+      if sim_array[i1][i2] >= sim:
+        if list1 not in dict1:
+                    '''
+                    key = reference
+                    value = hypothesis
+                    eg:
+                        key = English sentence
+                        value = French sentence translated to English
+                    '''
+                    dict1[list1] = list2
+                    
+                    '''
+                    key = hypothesis
+                    value = reference
+                    eg:
+                        key = French sentence translated to English
+                        value = English sentence
+                    '''
+                    dict2[list2] = list1
+        
+    return dict1, dict2
 
