@@ -24,7 +24,7 @@ def highlight_sim(element, text, colors, pairs):
             window[element].update(sentence + " ", text_color_for_value="black", append=True)
 
 lang_selection = [
-    [sg.Push(), sg.Text("Select a language:", key="-SELECT LANG-"), sg.Combo(lang_eng, key="-LANG-"), sg.Button("Select", key = "-SELECT-")]
+    [sg.Push(), sg.Text("Select Language:", key="-SELECT LANG-"), sg.Combo(lang_eng, key="-LANG-", default_value="English"), sg.Button("Select", key = "-SELECT-")]
 ]
 
 # Title of application
