@@ -2,7 +2,7 @@ import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from languages import lang_eng, text
 import bleu_score
 from nltk.tokenize import sent_tokenize
-import bert
+from bert import bert
 
 INPUT_BOX_SIZE = (50, 25)
 TITLE = 2
