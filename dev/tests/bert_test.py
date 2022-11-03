@@ -2,7 +2,7 @@
 #To import use the command pip install -U sentence-transformers
 #Import the for the Bert model
 from sentence_transformers import SentenceTransformer, util
-import colors
+import ui.colors as colors
 from sentence_transformers import SentenceTransformer, util
 from nltk.tokenize import sent_tokenize
 

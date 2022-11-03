@@ -5,7 +5,7 @@ from nltk.translate.bleu_score import sentence_bleu
 from nltk.translate.bleu_score import corpus_bleu
 from nltk.tokenize import sent_tokenize
 from nltk.translate.bleu_score import SmoothingFunction
-import ui.colors as colors
+from ..ui.colors import gen_color
 
 
 '''
@@ -25,7 +25,7 @@ def compare(ref, hypothesis, similarity=0.1):
             if sentence_bleu([ref.split()], hyp.split(), smoothing_function=SmoothingFunction().method7) >= similarity:
                 # Check for duplicates
                 if ref not in ref_pair_dict and hyp not in hyp_pair_dict:
-                    highlight = colors.gen_color()
+                    highlight = gen_color()
                     '''
                     key = reference
                     value = hypothesis
