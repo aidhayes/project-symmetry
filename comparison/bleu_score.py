@@ -5,7 +5,7 @@ from nltk.translate.bleu_score import sentence_bleu
 from nltk.translate.bleu_score import corpus_bleu
 from nltk.tokenize import sent_tokenize
 from nltk.translate.bleu_score import SmoothingFunction
-import colors
+import ui.colors as colors
 
 
 '''

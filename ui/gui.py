@@ -1,8 +1,8 @@
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
-from languages import lang_eng, display_trans
-import bleu_score
+from ui.languages import lang_eng, display_trans
+import comparison.bleu_score as bleu_score
 from nltk.tokenize import sent_tokenize
-from bert import bert
+from comparison.bert import bert
 import numpy
 
 INPUT_BOX_SIZE = (50, 25)
