@@ -1,5 +1,5 @@
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
-from languages import lang_eng, text
+from languages import lang_eng, display_trans
 import bleu_score
 from nltk.tokenize import sent_tokenize
 from bert import bert
@@ -10,11 +10,14 @@ TITLE = 2
 SELECT_LANG = 0
 SELECT = 1
 COMPARE = 3
-lang = "English"
-display = "Wikipedia Article Comparison Tool"
-compare_type = "BLEU Score"
-sim_percent = .3
+SELECT_COMPARE = 4
+SELECT_SIM = 5
+lang = "English" # Default language 
+display = "Wikipedia Article Comparison Tool" # Default title
+compare_type = "BLEU Score" # Default comparison
+sim_percent = .3 # Default similarity score
 
+# Highlight the portions of text that are similar between the 2 articles
 def highlight_sim(element, text, pairs):
     window[element].update("")
     sentences = sent_tokenize(text)
@@ -24,6 +27,7 @@ def highlight_sim(element, text, pairs):
         else:
             window[element].update(sentence + " ", text_color_for_value="black", append=True)
 
+# Section to select which language a user wants the display in
 lang_selection = [
     [
         sg.Push(), 
@@ -71,23 +75,31 @@ while True:
     # Update on screen text to the language the user selects
     if event == "-SELECT-":
         lang = values["-LANG-"]
-        window["-SELECT LANG-"].update(text[lang][SELECT_LANG])
-        window["-SELECT-"].update(text[lang][SELECT])
-        window['-WELCOME-'].update(text[lang][TITLE])
-        window["-COMPARE-"].update(text[lang][COMPARE])
-
+        window["-SELECT LANG-"].update(display_trans[lang][SELECT_LANG])
+        window["-SELECT-"].update(display_trans[lang][SELECT])
+        window['-WELCOME-'].update(display_trans[lang][TITLE])
+        window["-COMPARE-"].update(display_trans[lang][COMPARE])
+        window["-SELECT COMPARE TEXT-"].update(display_trans[lang][SELECT_COMPARE])
+        window["-COMPARE VAL TEXT-"].update(display_trans[lang][SELECT_SIM])
+        window["-SELECT COMPARE VALS-"].update(display_trans[lang][SELECT])
+        
+    # Selecting comparison %
     if event == "-SELECT COMPARE VALS-":
         compare_type = values["-COMPARE SELECT-"]
+        # Divide by 100 because comparison tools returns a value in [0, 1]
         sim_percent = int(values["-COMPARE VAL-"]) / 100
 
-
+    # Comparing user inputted text
     if event == "-COMPARE-":
+        # Getting text from multilines
         ref = values["-TEXT 1-"]
         hyp = values["-TEXT 2-"]
+        # Determining which comparison type is being user
         if compare_type == "BLEU Score":
             pairs_ref, pairs_hyp = bleu_score.compare(ref, hyp, sim_percent)
         elif compare_type == "Sentence Bert":
             pairs_ref, pairs_hyp = bert(ref, hyp, sim_percent)
+        # Highlight text based on results of comparison
         highlight_sim("-TEXT 1-", ref, pairs_ref)
         highlight_sim("-TEXT 2-", hyp, pairs_hyp)
 
