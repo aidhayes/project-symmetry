@@ -16,5 +16,5 @@ cd project-symmetry
 # install required libraries
 python3 -m pip install -r requirements.txt
 # run program
-python3 <file>.py
+python3 main.py
 ```
