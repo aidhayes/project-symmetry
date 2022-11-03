@@ -1,6 +1,7 @@
 # project-symmetry
-## Introduction
-Semantic comparison between entire Wikipedia articles in different languages so that we can suggest edits.
+## About
+Software designed for comparing Wikipedia articles in different languages in order to determine what information is missing from one article, but present in another. The goal is for everyone to have the same access to information no matter what language they speak. This is just one small step in eliminating the digital divide.  
+For more information, visit: https://www.grey-box.ca
 ## Requirements
 Python 3+:  
 https://www.python.org/downloads/  
