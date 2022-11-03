@@ -20,3 +20,5 @@ python3 -m pip install -r requirements.txt
 # run program
 python3 main.py
 ```
+## Disclaimer
+This project utilizes several NLP libraries to compare text. It is important to note that the results may not always be accurate. Most of these libraries do not take into consideration sentence structure and grammar, so it is advised that the user double checks to make sure highlighted sections are *close enough* to each other. The best translations and comparisons will always be made by a real person, however having someone manually do this would be extremely time consuming, which is one of the problems this project aims to solve.
