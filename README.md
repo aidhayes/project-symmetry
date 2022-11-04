@@ -59,7 +59,8 @@ Finally, click "Compare", and the program should highlight sentences in both art
 
 Ex. English v. French Article on Barack Obama:  
 
-<img width="1257" alt="Screenshot 2022-11-04 at 3 19 34 PM" src="https://user-images.githubusercontent.com/57809744/200058031-802eab02-a2a1-4e1a-8cf8-be96ef5c0f06.png">
+<img width="1258" alt="Screenshot 2022-11-04 at 3 28 43 PM" src="https://user-images.githubusercontent.com/57809744/200059469-af3f18e1-c6af-4504-8e71-6b3d8b826a7c.png">
+
 
 Note: Some sections highlighted may not be very similar at all, please reference the disclaimer down below. We will try to get better results so less human review is needed.
 
