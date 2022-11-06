@@ -4,6 +4,9 @@ from .comparison.bleu_score import compare as bleu
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 import numpy
+import translation
+#import textblob
+
 
 INPUT_BOX_SIZE = (50, 25)
 TITLE = 2
@@ -14,6 +17,11 @@ SELECT_COMPARE = 4
 SELECT_SIM = 5
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
+
+#Clear Button
+def clear():
+    window["-TEXT 1-"].update()
+    window["-TEXT 2-"].update() 
 
 # Highlight the portions of text that are similar between the 2 articles
 def highlight_sim(element, text, pairs):
@@ -52,9 +60,12 @@ text_entry = [
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 2-")
     ],
     [ 
-        sg.Button("Compare", key="-COMPARE-")
+        sg.Button("Compare", key="-COMPARE-"),
+        sg.Button("Translate", key="-TRANSLATE"),
+        sg.Button("Clear", command = clear)
     ]
 ]
+
 
 # Setting the layout of the window
 layout = [lang_selection, welcome, text_entry]
@@ -103,6 +114,15 @@ def run():
             # Highlight text based on results of comparison
             highlight_sim("-TEXT 1-", ref, pairs_ref)
             highlight_sim("-TEXT 2-", hyp, pairs_hyp)
+
+        #Translate user inputted text
+        if event == "-TRANSLATE-":
+            text1 = values["-TEXT 1-"]
+            text2 = values["-TEXT 2-"]
+            text2 = translation.translate(text1, text2)
+        
+
+
 
     window.close()
 
