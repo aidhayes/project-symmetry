@@ -1,11 +1,10 @@
-from gettext import translation
+from .translation import translate
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 import numpy
-#rom .translation import translate 
 #import textblob
 
 
@@ -62,7 +61,7 @@ text_entry = [
     ],
     [ 
         sg.Button("Compare", key="-COMPARE-"),
-        sg.Button("Translate", key="-TRANSLATE"),
+        sg.Button("Translate", key="-TRANSLATE-"),
         sg.Button("Clear", key="-CLEAR-")
     ]
 ]
@@ -120,12 +119,16 @@ def run():
         if event == "-TRANSLATE-":
             text1 = values["-TEXT 1-"]
             text2 = values["-TEXT 2-"]
-            #text2 = translation.translate(text1, text2)
+            text2 = translate(text1, text2)
+            window["-TEXT 2-"].update("")
+            window["-TEXT 2-"].update(text2)
         
         #Clear Button
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
             window["-TEXT 2-"].update("")
+
+
         
 
 

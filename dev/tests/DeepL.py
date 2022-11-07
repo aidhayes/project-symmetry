@@ -13,7 +13,7 @@ user_language = input("Enter the target language you want.(BG CS DA DE FL EN ES 
     "LV NL PL PT RO RU SK SL SV TR UK ZH\n")
 
 
-result = translator.translate_text( text, target_lang= user_language )
+result = translator.translate_text(text, target_lang= user_language )
 #Prints the results 
 print(result.text)  
 
