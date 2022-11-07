@@ -1,10 +1,11 @@
+from gettext import translation
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 import numpy
-import translation
+#rom .translation import translate 
 #import textblob
 
 
@@ -20,8 +21,8 @@ display = "Wikipedia Article Comparison Tool" # Default title
 
 #Clear Button
 def clear():
-    window["-TEXT 1-"].update()
-    window["-TEXT 2-"].update() 
+    window["-TEXT 1-"].update("")
+    window["-TEXT 2-"].update("") 
 
 # Highlight the portions of text that are similar between the 2 articles
 def highlight_sim(element, text, pairs):
@@ -62,7 +63,7 @@ text_entry = [
     [ 
         sg.Button("Compare", key="-COMPARE-"),
         sg.Button("Translate", key="-TRANSLATE"),
-        sg.Button("Clear", command = clear)
+        sg.Button("Clear", key="-CLEAR-")
     ]
 ]
 
@@ -119,7 +120,12 @@ def run():
         if event == "-TRANSLATE-":
             text1 = values["-TEXT 1-"]
             text2 = values["-TEXT 2-"]
-            text2 = translation.translate(text1, text2)
+            #text2 = translation.translate(text1, text2)
+        
+        #Clear Button
+        if event == "-CLEAR-":
+            window["-TEXT 1-"].update("")
+            window["-TEXT 2-"].update("")
         
 
 
