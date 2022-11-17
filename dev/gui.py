@@ -5,6 +5,7 @@ from .comparison.bleu_score import compare as bleu
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 import numpy
+from .ui.colors import gen_colors
 #import textblob
 
 
@@ -17,7 +18,8 @@ SELECT_COMPARE = 4
 SELECT_SIM = 5
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
-
+colors = gen_colors()
+print(len(colors))
 #Clear Button
 def clear():
     window["-TEXT 1-"].update("")
@@ -108,9 +110,9 @@ def run():
             hyp = values["-TEXT 2-"]
             # Determining which comparison type is being user
             if compare_type == "BLEU Score":
-                pairs_ref, pairs_hyp = bleu(ref, hyp, sim_percent)
+                pairs_ref, pairs_hyp = bleu(ref, hyp, colors, sim_percent)
             elif compare_type == "Sentence Bert":
-                pairs_ref, pairs_hyp = bert(ref, hyp, sim_percent)
+                pairs_ref, pairs_hyp = bert(ref, hyp, colors, sim_percent)
             # Highlight text based on results of comparison
             highlight_sim("-TEXT 1-", ref, pairs_ref)
             highlight_sim("-TEXT 2-", hyp, pairs_hyp)
