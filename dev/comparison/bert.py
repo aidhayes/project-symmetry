@@ -2,7 +2,6 @@
 #To import use the command pip install -U sentence-transformers
 #Import the for the Bert model
 from sentence_transformers import SentenceTransformer, util
-from ..ui.colors import gen_color 
 from sentence_transformers import SentenceTransformer, util
 from nltk.tokenize import sent_tokenize
 
@@ -11,7 +10,7 @@ from nltk.tokenize import sent_tokenize
 #compare to the 'multi-qa-mpnet-base-dot-v1  which has a 66.76% is the second best one.'
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
-def compare(par1, par2, similarity=.5):
+def compare(par1, par2, colors, similarity=.5):
     list1 = sent_tokenize(par1)
     list2 = sent_tokenize(par2)
     dict1 = dict()
@@ -23,8 +22,7 @@ def compare(par1, par2, similarity=.5):
         for j in range(len(list2)):
             if cos_sim[i][j] >= similarity:
                 if list1[i] not in dict1 and list2[j] not in dict2:
-                    highlight = gen_color()
-                    dict1[list1[i]] = [list2[j], highlight]
-                    dict2[list2[j]] = [list1[i], highlight]
+                    dict1[list1[i]] = [list2[j], colors[i]]
+                    dict2[list2[j]] = [list1[i], colors[i]]
 
     return dict1, dict2
