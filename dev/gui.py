@@ -19,7 +19,7 @@ SELECT_SIM = 5
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
 colors = gen_colors()
-print(len(colors))
+# print(len(colors))
 #Clear Button
 def clear():
     window["-TEXT 1-"].update("")
