@@ -64,7 +64,31 @@ Ex. English v. French Article on Barack Obama:
 
 Note: Some sections highlighted may not be very similar at all, please reference the disclaimer down below. We will try to get better results so less human review is needed.
 
+## Testing
 
+Testing for comparison speed will be done as follows:
+- Clean up formatting of articles, if this step is not done the comparison will take much longer than needed (i.e. 1.5 minutes vs 10 minutes)
+  - Paste without formatting into word document
+  - Remove infobox
+    - It's likely these contain roughly the same information, and since text is unformatted, it will be hard to tell where this information is coming from
+    - Mostly done to cut down on comparison time
+  - Preferably remove image captions
+  - Remove references
+- Minimal apps open so more RAM is being allocated to comparison (i.e. Tests were run with only VSCode, the comparison app, and Excel open).
+- Number iterations based off # sentences in each article (O(m * n))
+  - NLTK splits articles into sentences using `sent_tokenizer`, simply got length by using `len()`
+- Estimates made based off previous results
+  - Comparison speed calculated using time library 
+  - Time per comparison = (total time) / (# iterations)
+  - Initial estimate of .0005 seconds per iteration
+- Articles of varying length used
+  - Barack Obama (random selection)
+  - Elvis Presley (One of the longest articles according to [this site](https://diff.wikimedia.org/2016/05/12/rock-n-scroll-english-wikipedias-longest-featured-articles/ "diff.wikimedia.org")
+  - Boris Johnson (One of largest articles according to Wikipedia)
+
+If you wish to not wait roughly 1-2 minute to compare entire articles, then it is recommended you only compare single sections at a time. Doing so will provide much faster results, though more testing will be needed if doing this section by section will save much time.
+
+ 
 ## Disclaimer
 
 This project utilizes several NLP libraries to compare text. It is important to note that the results may not always be accurate. Most of these libraries do not take into consideration sentence structure and grammar, so it is advised that the user double checks to make sure highlighted sections are *close enough* to each other. The best translations and comparisons will always be made by a real person, however having someone manually do this would be extremely time consuming, which is one of the problems this project aims to solve.
