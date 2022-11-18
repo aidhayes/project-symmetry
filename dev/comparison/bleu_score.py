@@ -47,7 +47,7 @@ def compare(ref, hypothesis, colors, similarity=0.1):
                     end_time = time.time()
         #print(hyp_pair_dict)
         #print(ref_pair_dict)
-                    print(f"Iteration Time:  {end_time - start_time}")
+                    # print(f"Iteration Time:  {end_time - start_time}")
     end_time_1 = time.time()
     print(f"Iteration Time:  {end_time_1 - start_time_1}")
     return ref_pair_dict, hyp_pair_dict
