@@ -9,7 +9,6 @@ The intended use of this software is for comparing Wikipedia articles, however i
 For more information, visit: https://www.grey-box.ca
 
 ## Requirements
-7
 Python 3+:  
 https://www.python.org/downloads/  
 Git:  
