@@ -20,20 +20,6 @@ lang = "English" # Default language
 display = "Wikipedia Article Comparison Tool" # Default title
 colors = gen_colors()
 # print(len(colors))
-#Clear Button
-def clear():
-    window["-TEXT 1-"].update("")
-    window["-TEXT 2-"].update("") 
-
-# Highlight the portions of text that are similar between the 2 articles
-def highlight_sim(element, text, pairs):
-    window[element].update("")
-    sentences = sent_tokenize(text)
-    for sentence in sentences:
-        if sentence in pairs:
-            window[element].update(sentence + " ", text_color_for_value="white", background_color_for_value = pairs[sentence][1], append=True)
-        else:
-            window[element].update(sentence + " ", text_color_for_value="black", append=True)
 
 # Section to select which language a user wants the display in
 lang_selection = [
@@ -73,6 +59,27 @@ text_entry = [
 layout = [lang_selection, welcome, text_entry]
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 
+#Clear Button
+def clear():
+    window["-TEXT 1-"].update("")
+    window["-TEXT 2-"].update("") 
+
+# Highlight the portions of text that are similar between the 2 articles
+def highlight_sim(element, text, pairs):
+    window[element].update("")
+    sentences = sent_tokenize(text)
+    for sentence in sentences:
+        if sentence in pairs:
+            window[element].update(sentence + " ", text_color_for_value="white", background_color_for_value = pairs[sentence][1], append=True)
+        else:
+            window[element].update(sentence + " ", text_color_for_value="black", append=True)
+
+# Highlight the portions of text that are different between the 2 articles
+def highlight_diff(element, text, pairs):
+    '''
+        (Code goes here)
+             ...
+    '''
 
 # Event loop
 def run():
