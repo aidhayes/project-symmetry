@@ -1,4 +1,5 @@
 from .translation import translate
+from .translate_back import translate_back
 import PySimpleGUI as sg # python3 -m pip install pysimplegui
 from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
@@ -7,7 +8,6 @@ from nltk.tokenize import sent_tokenize
 import numpy
 from .ui.colors import gen_colors
 #import textblob
-
 
 INPUT_BOX_SIZE = (50, 25)
 TITLE = 2
@@ -50,6 +50,7 @@ text_entry = [
     [ 
         sg.Button("Compare", key="-COMPARE-"),
         sg.Button("Translate", key="-TRANSLATE-"),
+        sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-")
     ]
 ]
@@ -57,11 +58,7 @@ text_entry = [
 
 # Setting the layout of the window
 layout = [lang_selection, welcome, text_entry]
-#window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
-
-#If buttons are showing up on gui uncomment the code below and comment out the code above  
-window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
-
+window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 
 # Clear Button
 def clear():
@@ -76,7 +73,7 @@ def highlight_sim(element, text, pairs):
         if sentence in pairs:
             window[element].update(sentence + " ", text_color_for_value="white", background_color_for_value = pairs[sentence][1], append=True)
         else:
-            window[element].update(sentence + " ", text_color_for_value="green",background_color_for_value="black",  append=True)
+            window[element].update(sentence + " ", text_color_for_value="black", append=True)
 
 # Highlight the portions of text that are different between the 2 articles
 def highlight_diff(element, text, pairs):
@@ -133,6 +130,13 @@ def run():
             text1 = values["-TEXT 1-"]
             text2 = values["-TEXT 2-"]
             text2 = translate(text1, text2)
+            window["-TEXT 2-"].update("")
+            window["-TEXT 2-"].update(text2)
+
+        #Translate back to the origanl langs you put in
+        if event == "-TRANSLATE BACK-":
+            text2 = values["-TEXT 2-"]
+            text2 = translate_back(text2, text2)
             window["-TEXT 2-"].update("")
             window["-TEXT 2-"].update(text2)
         
