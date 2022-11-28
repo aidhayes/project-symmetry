@@ -60,8 +60,8 @@ text_entry = [
 
 # Setting the layout of the window
 layout = [lang_selection, welcome, text_entry]
-window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 
+# Raj
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 #If buttons are showing up on gui uncomment the code below and comment out the code above  
 #window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
@@ -72,6 +72,7 @@ def clear():
     window["-TEXT 2-"].update("") 
 
 # Highlight the portions of text that are similar between the 2 articles
+# Raj & Aidan
 def highlight_sim(element, text, pairs):
     window[element].update("")
     sentences = sent_tokenize(text)
