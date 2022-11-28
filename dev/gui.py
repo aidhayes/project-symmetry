@@ -62,6 +62,10 @@ text_entry = [
 layout = [lang_selection, welcome, text_entry]
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 
+window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
+#If buttons are showing up on gui uncomment the code below and comment out the code above  
+#window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
+
 # Clear Button
 def clear():
     window["-TEXT 1-"].update("")
@@ -75,7 +79,7 @@ def highlight_sim(element, text, pairs):
         if sentence in pairs:
             window[element].update(sentence + " ", text_color_for_value="white", background_color_for_value = pairs[sentence][1], append=True)
         else:
-            window[element].update(sentence + " ", text_color_for_value="black", append=True)
+            window[element].update(sentence + " ", text_color_for_value="green",background_color_for_value="black",  append=True)
 
 # Highlight the portions of text that are different between the 2 articles
 def highlight_diff(element, text, pairs):
