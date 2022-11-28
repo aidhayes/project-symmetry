@@ -16,6 +16,8 @@ SELECT = 1
 COMPARE = 3
 SELECT_COMPARE = 4
 SELECT_SIM = 5
+CLEAR = 7
+TRANSLATE = 6
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
 colors = gen_colors()
@@ -104,7 +106,9 @@ def run():
             window["-SELECT COMPARE TEXT-"].update(display_trans[lang][SELECT_COMPARE])
             window["-COMPARE VAL TEXT-"].update(display_trans[lang][SELECT_SIM])
             window["-SELECT COMPARE VALS-"].update(display_trans[lang][SELECT])
-            
+            window["-CLEAR-"].update(display_trans[lang][CLEAR])
+            window["-TRANSLATE-"].update(display_trans[lang][TRANSLATE])
+
         # Selecting comparison %
         if event == "-SELECT COMPARE VALS-":
             compare_type = values["-COMPARE SELECT-"]
