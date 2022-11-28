@@ -59,7 +59,7 @@ text_entry = [
 layout = [lang_selection, welcome, text_entry]
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 
-#Clear Button
+# Clear Button
 def clear():
     window["-TEXT 1-"].update("")
     window["-TEXT 2-"].update("") 
