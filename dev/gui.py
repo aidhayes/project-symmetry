@@ -52,7 +52,7 @@ text_entry = [
     [ 
         sg.Button("Compare", key="-COMPARE-"),
         sg.Button("Translate", key="-TRANSLATE-"),
-        sg.Button("Translate Back", key="-TRANSLATE BACK-"),
+        # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-")
     ]
 ]
@@ -65,6 +65,12 @@ layout = [lang_selection, welcome, text_entry]
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 #If buttons are showing up on gui uncomment the code below and comment out the code above  
 #window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
+
+# Get word count of afrticle
+# Yulong
+def count_words(article):
+    count = len(article.split()) #split string and return the length of list
+    print(count)
 
 # Clear Button
 def clear():
@@ -125,6 +131,10 @@ def run():
             # Getting text from multilines
             ref = values["-TEXT 1-"]
             hyp = values["-TEXT 2-"]
+
+            count_words(ref)
+            count_words(hyp)
+
             # Determining which comparison type is being user
             if compare_type == "BLEU Score":
                 pairs_ref, pairs_hyp = bleu(ref, hyp, colors, sim_percent)
@@ -133,6 +143,7 @@ def run():
             # Highlight text based on results of comparison
             highlight_sim("-TEXT 1-", ref, pairs_ref)
             highlight_sim("-TEXT 2-", hyp, pairs_hyp)
+            
 
         #Translate user inputted text
         if event == "-TRANSLATE-":
