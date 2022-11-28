@@ -1,45 +1,45 @@
-Arabic,ar,اختار اللغة,يختار,أداة مقارنة مقال ويكيبيديا,قارن
-Bangla,bn,ভাষা নির্বাচন কর,নির্বাচন করুন,উইকিপিডিয়া নিবন্ধ তুলনা সরঞ্জাম,তুলনা করা
-Basque,eu,Aukeratu hizkuntza,Hautatu,Wikipedia artikuluaren konparazio tresna,Alderatu
-Bosnian,bs,Odaberite jezik,Odabrati,Alat za upoređivanje članaka Wikipedia,Uporediti
-Bulgarian,bg,Избери език,Изберете,Инструмент за сравнение на статии в Уикипедия,Сравнете
-Catalan,ca,Escolliu l'idioma,Seleccionar,Eina de comparació de l'article de Viquipèdia,Comparar
-Chinese,zh,选择语言,选择,Wikipedia文章比较工具,相比
-Croation,hr,Izaberi jezik,Odaberi,Wikipedia Alat za usporedbu članka,Usporediti
-Czech,cs,Zvolte jazyk,Vybrat,Nástroj pro srovnání článků Wikipedia,Porovnat
-Danish,da,Vælg sprog,Vælg,Wikipedia Artikel sammenligningsværktøj,Sammenligne
-Dutch,nl,Selecteer taal,Uitkiezen,Wikipedia artikelvergelijkingstool,Vergelijken
-English,en,Select Language,Select,Wikipedia Article Comparison Tool,Compare
-Esperanto,eo,Elektu Lingvon,Elektu,Vikipedio Artikola Kompara Ilo,Komparu
-Estonian,et,Vali keel,Valima,Vikipeedia artikli võrdlusvahend,Võrdlema
-Finnish,fi,Valitse kieli,Valita,Wikipedia -artikkelin vertailutyökalu,Vertailla
-French,fr,Choisir la langue,Sélectionner,Outil de comparaison de l'article Wikipedia,Comparer
-Galician,gl,Selecciona Idioma,Selecciona,Ferramenta de comparación de artigos de Wikipedia,Comparar
-Georgian,ka,Აირჩიეთ ენა,გადარჩევა,ვიკიპედიის სტატიის შედარების ინსტრუმენტი,შედარება
-German,de,Sprache auswählen,Auswählen,Wikipedia -Artikelvergleichsinstrument,Vergleichen
-Greek,el,Επιλέξτε γλώσσα,Επιλέγω,Εργαλείο σύγκρισης άρθρων Wikipedia,Συγκρίνω
-Hebrew,he,בחר שפה,בחר,כלי השוואת מאמרים בוויקיפדיה,לְהַשְׁווֹת
-Hungarian,hu,Válasszon nyelvet,Válasszon,Wikipedia cikk összehasonlító eszköz,Összehasonlít
-Indonesian,id,Pilih bahasa,Pilih,Alat Perbandingan Artikel Wikipedia,Membandingkan
-Italian,it,Seleziona la lingua,Selezionare,Strumento di confronto degli articoli di Wikipedia,Confrontare
-Japanese,ja,言語を選択する,選択する,ウィキペディアの記事比較ツール,比較
-Korean,ko,언어를 선택하십시오,고르다,Wikipedia 기사 비교 도구,비교하다
-Latvian,lv,Izvēlēties valodu,Atlasīt,Wikipedia rakstu salīdzināšanas rīks,Salīdzināt
-Lithuanian,lt,Pasirinkite kalbą,Pasirinkite,Vikipedijos straipsnių palyginimo įrankis,Palyginkite
-Macedonian,mk,Одбери јазик,Изберете,Алатка за споредување на статии на Википедија,Споредете
-Malay,ms,Pilih Bahasa,Pilih,Alat Perbandingan Artikel Wikipedia,Bandingkan
-Norwegian,no,Velg språk,Å velge,Wikipedia -artikkel Sammenligningsverktøy,Sammenligne
-Persian,fa,زبان را انتخاب کنید,انتخاب کنید,ابزار مقایسه مقاله ویکی پدیا,مقایسه کردن
-Polish,pl,Wybierz język,Wybierz,Narzędzie do porównywania artykułów w Wikipedii,Porównywać
-Portugese,pt,Selecione o idioma,Selecione,Ferramenta de comparação de artigos da Wikipedia,Comparar
-Romanian,ro,Selecteaza limba,Selectați,Instrument de comparare a articolului Wikipedia,Comparaţie
-Russian,ru,Выберите язык,Выбирать,Инструмент сравнения статей в Википедии,Сравнивать
-Serbian,sr,Изаберите језик,Одабрати,Алат за поређење чланака Википедије,Упоредити
-Slovak,sk,Zvoľ jazyk,Vybraný,Porovnanie článku Wikipedia,Porovnať
-Slovenian,sl,Izberi jezik,Izberite,Orodje za primerjavo članka Wikipedije,Primerjaj
-Spanish,es,Seleccione el idioma,Seleccione,Herramienta de comparación de artículos de Wikipedia,Comparar
-Swedish,sv,Välj språk,Välj,Wikipedia artikeljämförelseverktyg,Jämföra
-Thai,th,เลือกภาษา,เลือก,เครื่องมือเปรียบเทียบบทความ Wikipedia,เปรียบเทียบ
-Turkish,tr,Dil Seçin,Seçme,Wikipedia makale karşılaştırma aracı,Karşılaştırmak
-Ukranian,uk,Оберіть мову,Обраний,Інструмент порівняння статті Вікіпедії,Порівнювати
-Vietnamese,vi,Chọn ngôn ngữ,Lựa chọn,Công cụ so sánh bài viết Wikipedia,So sánh
+العربية',ar,اختار اللغة:,يختار,أداة مقارنة مقالة ويكيبيديا,قارن,حدد أداة المقارنة:,حدد النسبة المئوية للتشابه:,يترجم,صافي
+বাংলা,bn,ভাষা নির্বাচন কর:,নির্বাচন করুন,উইকিপিডিয়া নিবন্ধ তুলনা সরঞ্জাম,তুলনা করা,তুলনা সরঞ্জাম নির্বাচন করুন:,সাদৃশ্য শতাংশ নির্বাচন করুন:,অনুবাদ করা,স্পষ্ট
+Euskara,eu,Hautatu Hizkuntza:,Hautatu,Wikipedia artikuluaren konparazio tresna,Alderatu,Hautatu Konparaziorako tresna:,Aukeratu antzekotasun portzentajea:,Itzuli,Hustu
+Bosanski,bs,Odaberite Jezik:,Odabrati,Alat za upoređivanje članaka Wikipedia,Uporediti,Odaberite sredstvo za usporedbu:,Odaberite postotak sličnosti:,Prevesti,Jasan
+Български,bg,Избери език:,Изберете,Инструмент за сравнение на статии в Уикипедия,Сравнете,Изберете инструмент за сравнение:,Изберете Процент на сходство:,Превод,Ясно
+Català,ca,Escolliu l'idioma:,Seleccionar,Eina de comparació de l'article de Viquipèdia,Comparar,Seleccioneu l'eina de comparació:,Seleccioneu percentatge de similitud:,Traduir,Clar
+中文,zh,选择语言：,选择,Wikipedia文章比较工具,相比,选择比较工具：,选择相似性百分比：,翻译,清除
+Hrvatski,hr,Izaberi jezik:,Odaberi,Wikipedia Alat za usporedbu članka,Usporediti,Odaberite Alat za usporedbu:,Odaberite postotak sličnosti:,Prevedi,Čisto
+Čeština,cs,Zvolte jazyk:,Vybrat,Nástroj pro srovnání článků Wikipedia,Porovnat,Vyberte Porovnání nástroje:,Vyberte procento podobnosti:,přeložit,Průhledná
+Dansk,da,Vælg sprog:,Vælg,Wikipedia Artikel sammenligningsværktøj,Sammenligne,Vælg sammenligningsværktøj:,Vælg lighedsprocent:,Oversætte,Klar
+Nederlands,nl,Selecteer taal:,Uitkiezen,Wikipedia artikelvergelijkingstool,Vergelijken,Selecteer Vergelijkingstool:,Selecteer gelijkenispercentage:,Vertalen,Duidelijk
+English,en,Select Language:,Select,Wikipedia Article Comparison Tool,Compare,Select comparison tool:,Select similarity percentage:,Translate,Clear
+Esperanto,eo,Elektu Lingvon:,Elektu,Vikipedio Artikola Kompara Ilo,Komparu,Elektu Kompara Ilo:,Elektu Similecan Procenton:,Traduki,Klara
+Eesti,et,Vali keel:,Valima,Vikipeedia artikli võrdlusvahend,Võrdlema,Valige võrdlusriist:,Valige sarnasuse protsent:,Tõlkima,Selge
+Suomi,fi,Valitse kieli:,Valita,Wikipedia -artikkelin vertailutyökalu,Vertailla,Valitse vertailutyökalu:,Valitse samankaltaisuusprosentti:,Kääntää,Asia selvä
+Français,fr,Choisir la langue:,Sélectionner,Outil de comparaison de l'article Wikipedia,Comparer,Sélectionnez l'outil de comparaison:,Sélectionnez le pourcentage de similitude:,Traduire,Dégager
+Galego,gl,Selecciona Idioma:,Selecciona,Ferramenta de comparación de artigos de Wikipedia,Comparar,Seleccione Ferramenta de comparación:,Selecciona porcentaxe de semellanza:,Traducir,Claro
+ქართული,ka,Აირჩიეთ ენა:,გადარჩევა,ვიკიპედიის სტატიის შედარების ინსტრუმენტი,შედარება,აირჩიეთ შედარების ინსტრუმენტი:,აირჩიეთ მსგავსების პროცენტი:,თარგმნა,გასუფთავება
+Deutsch,de,Sprache auswählen:,Auswählen,Wikipedia -Artikelvergleichsinstrument,Vergleichen,Wählen Sie Vergleichswerkzeug:,Wählen Sie Ähnlichkeitsprozentsatz:,Übersetzen,Klar
+Ελληνικά,el,Επιλέξτε γλώσσα:,Επιλέγω,Εργαλείο σύγκρισης άρθρων Wikipedia,Συγκρίνω,Επιλέξτε εργαλείο σύγκρισης:,Επιλέξτε Ποσοστό ομοιότητας:,Μεταφράζω,Σαφή
+עברית,he,בחר שפה:,בחר,כלי השוואת מאמרים בוויקיפדיה,לְהַשְׁווֹת,בחר בכלי השוואה:,בחר אחוז דמיון:,תרגם,ברור
+Magyar,hu,Válasszon nyelvet:,Válasszon,Wikipedia cikk összehasonlító eszköz,Összehasonlít,Válassza ki az összehasonlító eszközt:,Válassza ki a hasonlósági százalékot:,fordít,Egyértelmű
+Bahasa Indonesia,id,Pilih bahasa:,Pilih,Alat Perbandingan Artikel Wikipedia,Membandingkan,Pilih Alat Perbandingan:,Pilih persentase kesamaan:,Menerjemahkan,Jernih
+Italiano,it,Seleziona la lingua:,Selezionare,Strumento di confronto degli articoli di Wikipedia,Confrontare,Seleziona lo strumento di confronto:,Seleziona percentuale di somiglianza:,Tradurre,Chiaro
+日本語,ja,言語を選択する：,選択する,ウィキペディアの記事比較ツール,比較,比較ツールを選択します：,類似性の割合を選択します：,翻訳,クリア
+한국어,ko,언어 선택 :,고르다,Wikipedia 기사 비교 도구,비교하다,비교 도구 선택 :,유사성 백분율 선택 :,번역하다,분명한
+Latviešu,lv,Izvēlēties valodu:,Atlasīt,Wikipedia rakstu salīdzināšanas rīks,Salīdzināt,Atlasīt salīdzināšanas rīku:,Izvēlieties līdzības procentuālo daudzumu:,Tulkot,Noskaidrot
+Lietuvių,lt,Pasirinkite kalbą:,Pasirinkite,Vikipedijos straipsnių palyginimo įrankis,Palyginkite,Pasirinkite palyginimo įrankį:,Pasirinkite panašumo procentą:,Išversti,Aišku
+Македонски,mk,Одбери јазик:,Изберете,Алатка за споредување на статии на Википедија,Споредете,Изберете алатка за споредување:,Изберете процент на сличност:,Преведете,Чиста
+Bahasa Melayu,ms,Pilih Bahasa:,Pilih,Alat Perbandingan Artikel Wikipedia,Bandingkan,Pilih Alat Perbandingan:,Pilih Peratusan Persamaan:,Terjemahkan,Jelas
+Norsk,no,Velg språk:,Å velge,Wikipedia -artikkel Sammenligningsverktøy,Sammenligne,Velg sammenligningsverktøy:,Velg likhetsprosent:,Oversette,Klar
+فارسی,fa,زبان را انتخاب کنید:,انتخاب کنید,ابزار مقایسه مقاله ویکی پدیا,مقایسه کردن,ابزار مقایسه را انتخاب کنید:,درصد شباهت را انتخاب کنید:,ترجمه کردن,پاک کردن
+Polski,pl,Wybierz język:,Wybierz,Narzędzie do porównywania artykułów w Wikipedii,Porównywać,Wybierz narzędzie porównawcze:,Wybierz Procent podobieństwa:,Tłumaczyć,Jasne
+Português,pt,Selecione o idioma:,Selecione,Ferramenta de comparação de artigos da Wikipedia,Comparar,Selecione Ferramenta de comparação:,Selecione porcentagem de similaridade:,Traduzir,Claro
+Română,ro,Selecteaza limba:,Selectați,Instrument de comparare a articolului Wikipedia,Comparaţie,Selectați instrument de comparație:,Selectați procentul de similaritate:,Traduceți,clar
+Русский,ru,Выберите язык:,Выбирать,Инструмент сравнения статей в Википедии,Сравнивать,Выберите инструмент сравнения:,Выберите процент сходства:,Перевести,чистый
+Српски,sr,Изаберите језик:,Одабрати,Алат за поређење чланака Википедије,Упоредити,Изаберите Алат за поређење:,Изаберите проценат сличности:,превести,Јасно
+Slovenčina,sk,Zvoľ jazyk:,Vybraný,Porovnanie článku Wikipedia,Porovnať,Vyberte porovnávací nástroj:,Vyberte percento podobnosti:,Preložiť,jasný
+Slovenščina,sl,Izberi jezik:,Izberite,Orodje za primerjavo članka Wikipedije,Primerjaj,Izberite Primerjalno orodje:,Izberite Odstotek podobnosti:,Prevesti,Jasno
+Español,es,Seleccione el idioma:,Seleccione,Herramienta de comparación de artículos de Wikipedia,Comparar,Seleccione la herramienta de comparación:,Seleccionar porcentaje de similitud:,Traducir,Claro
+Svenska,sv,Välj språk:,Välj,Wikipedia artikeljämförelseverktyg,Jämföra,Välj jämförelseverktyg:,Välj likhetsprocent:,Översätt,Klar
+ไทย,th,เลือกภาษา:,เลือก,เครื่องมือเปรียบเทียบบทความ Wikipedia,เปรียบเทียบ,เลือกเครื่องมือเปรียบเทียบ:,เลือกเปอร์เซ็นต์ความคล้ายคลึงกัน:,แปลภาษา,ชัดเจน
+Türkçe,tr,Dil Seçin:,Seçme,Wikipedia makale karşılaştırma aracı,Karşılaştırmak,Karşılaştırma aracını seçin:,Benzerlik yüzdesini seçin:,Çevirmek,Temizlemek
+Українська,uk,Оберіть мову:,Обраний,Інструмент порівняння статті Вікіпедії,Порівнювати,Виберіть інструмент порівняння:,Виберіть відсоток подібності:,Перекладати,Чіткий
+Tiếng Việt,vi,Chọn ngôn ngữ:,Lựa chọn,Công cụ so sánh bài viết Wikipedia,So sánh,Chọn Công cụ so sánh:,Chọn Tỷ lệ phần trăm tương tự:,Dịch,Xa lạ
