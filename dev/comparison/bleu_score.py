@@ -13,9 +13,9 @@ Compare 2 Wikipedia articles to find sentences present in one but not the other
 def compare(ref, hypothesis, colors, similarity=0.1):
     # Tokenize paragraphs so they can be traversed as an array
     ref_list = sent_tokenize(ref)
-    print("Ref length: ", len(ref_list))
+    # print("Ref length: ", len(ref_list))
     hyp_list = sent_tokenize(hypothesis)
-    print("Hyp length: ", len(hyp_list))
+    # print("Hyp length: ", len(hyp_list))
     i = 0
     ref_pair_dict = dict()
     hyp_pair_dict = dict()
