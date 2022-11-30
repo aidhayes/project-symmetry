@@ -7,7 +7,7 @@ from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 import numpy
 from .ui.colors import gen_colors
-#import textblob
+from nltk.tokenize import sent_tokenize
 
 INPUT_BOX_SIZE = (50, 25)
 TITLE = 2
@@ -49,11 +49,20 @@ text_entry = [
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 1-"),
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 2-")
     ],
+
+    [
+        sg.Text("Word Count: ", key="-TEXT 1 WORD COUNT-"),
+        sg.Text("Similarity Percentage: ", key="-TEXT 1 SIM PERCENT-"),
+        sg.Push(),
+        sg.Text("Word Count: ", key="-TEXT 2 WORD COUNT-"),
+        sg.Text("Similarity Percentage: ", key="-TEXT 2 SIM PERCENT-")
+    ],
+
     [ 
-        sg.Button("Compare", key="-COMPARE-"),
-        sg.Button("Translate", key="-TRANSLATE-"),
         # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
-        sg.Button("Clear", key="-CLEAR-")
+        sg.Button("Clear", key="-CLEAR-"),
+        sg.Button("Compare", key="-COMPARE-"),
+        sg.Button("Translate", key="-TRANSLATE-")
     ]
 ]
 
@@ -71,6 +80,17 @@ window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_
 def count_words(article):
     count = len(article.split()) #split string and return the length of list
     print(count)
+    return count
+
+# Similarity %
+def percent_similar(article, sim_dict):
+    sims_len = len(sim_dict)
+    article_list = sent_tokenize(article)
+    article_len = len(article_list)
+    sim = (sims_len / article_len) * 100
+    print(sim)
+    return round(sim, 2)
+
 
 # Clear Button
 def clear():
@@ -131,15 +151,21 @@ def run():
             # Getting text from multilines
             ref = values["-TEXT 1-"]
             hyp = values["-TEXT 2-"]
+            
 
-            count_words(ref)
-            count_words(hyp)
+            window["-TEXT 1 WORD COUNT-"].update("Word Count: " + str(count_words(ref)))
+            window["-TEXT 2 WORD COUNT-"].update("Word Count: " + str(count_words(hyp)))
+            
 
             # Determining which comparison type is being user
             if compare_type == "BLEU Score":
                 pairs_ref, pairs_hyp = bleu(ref, hyp, colors, sim_percent)
+                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(ref, pairs_ref)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(hyp, pairs_hyp)) + "%")
             elif compare_type == "Sentence Bert":
                 pairs_ref, pairs_hyp = bert(ref, hyp, colors, sim_percent)
+                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(ref, pairs_ref)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(hyp, pairs_hyp)) + "%")
             # Highlight text based on results of comparison
             highlight_sim("-TEXT 1-", ref, pairs_ref)
             highlight_sim("-TEXT 2-", hyp, pairs_hyp)
