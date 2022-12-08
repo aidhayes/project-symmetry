@@ -25,10 +25,12 @@ def compare(ref, hypothesis, colors, similarity=0.1):
         for hyp in hyp_list:
             # Determine if the current sentence has a match or not
             start_time = time.time()
-            if sentence_bleu([ref.split()], hyp.split(), smoothing_function=SmoothingFunction().method7) >= similarity:
+            bleu_score = sentence_bleu([ref.split()], hyp.split(), smoothing_function=SmoothingFunction().method7)
+            if bleu_score >= similarity:
                 # Check for duplicates
                 i += 1
-                if ref not in ref_pair_dict and hyp not in hyp_pair_dict:
+
+                if (ref not in ref_pair_dict and hyp not in hyp_pair_dict):
                     '''
                     key = reference
                     value = hypothesis
@@ -46,7 +48,14 @@ def compare(ref, hypothesis, colors, similarity=0.1):
                         value = English sentence
                     '''
                     hyp_pair_dict[hyp] = [ref, colors[i]]
-                    end_time = time.time()
+                '''
+                else:
+                    if ref in ref_pair_dict:
+                        if bleu_score > sentence_bleu([ref.split()], ref_pair_dict[ref][0].split(), smoothing_function=SmoothingFunction().method7):
+                            ref_pair_dict[ref] = [hyp, colors[i]]
+                            hyp_pair_dict[hyp] = [ref, colors[i]]
+                '''
+
         #print(hyp_pair_dict)
         #print(ref_pair_dict)
                     # print(f"Iteration Time:  {end_time - start_time}")

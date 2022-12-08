@@ -41,7 +41,7 @@ text_entry = [
         sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
         sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
         sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
-        sg.Combo(numpy.arange(0, 101, 5).tolist(), key="-COMPARE VAL-", default_value="30"),
+        sg.Slider(range=(1, 100), default_value=1, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"),
         sg.Button("Select", key="-SELECT COMPARE VALS-")
         ],
 
