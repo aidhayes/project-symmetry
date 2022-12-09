@@ -35,6 +35,8 @@ def compare(source, target, colors, similarity=0.1):
     source_list = sent_tokenize(source)
     target_list = sent_tokenize(target)
     i = 0 # Initialize count for color assignment
+    
+    # Intialize dictionaries
     source_pair_dict = dict()
     target_pair_dict = dict()
  
