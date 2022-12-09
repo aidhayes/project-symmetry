@@ -197,7 +197,7 @@ def run():
                 window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_source)) + "%")
                 window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_target)) + "%")
             elif compare_type == "Sentence Bert":
-                pairs_ref, pairs_hyp = bert(source, target, colors, sim_percent)
+                pairs_source, pairs_target = bert(source, target, colors, sim_percent)
                 # Display similarity % of articles
                 window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_source)) + "%")
                 window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_target)) + "%")
