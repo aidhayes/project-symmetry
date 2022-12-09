@@ -194,13 +194,13 @@ def run():
             if compare_type == "BLEU Score":
                 pairs_source, pairs_target = bleu(source, target, colors, sim_percent)
                 # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_ref)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_hyp)) + "%")
+                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_source)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_target)) + "%")
             elif compare_type == "Sentence Bert":
                 pairs_ref, pairs_hyp = bert(source, target, colors, sim_percent)
                 # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_ref)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_hyp)) + "%")
+                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_source)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_target)) + "%")
             # Highlight text based on results of comparison
             highlight_sim("-TEXT 1-", source, pairs_source)
             highlight_sim("-TEXT 2-", target, pairs_target)
