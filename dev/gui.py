@@ -54,21 +54,37 @@ text_entry = [
         sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
         sg.Slider(range=(1, 100), default_value=1, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"),
         sg.Button("Select", key="-SELECT COMPARE VALS-")
-        ],
+    ],
 
-    # Text you want to compare
     [
+        sg.Text("Source", key="-SOURCE-"),
+
+        # Centering of labels, perhaps there is a better way... seems to work for now
+        sg.Text("\t"),
+        sg.Text("\t"),
+        sg.Text("\t"),
+        sg.Text("\t"),
+        sg.Text("\t"),
+
+        sg.Text("Target", key="-TARGET-"),
+    ],
+    # Text you want to compare
+    [ 
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 1-"),
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 2-")
     ],
 
     # Statistics display
     [
-        sg.Text("Word Count: ", key="-TEXT 1 WORD COUNT-"),
-        sg.Text("Similarity Percentage: ", key="-TEXT 1 SIM PERCENT-"),
+        sg.Text("Word Count: ", key="-WORD COUNT 1-"),
+        sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
+        sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
+        sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
         sg.Push(),
-        sg.Text("Word Count: ", key="-TEXT 2 WORD COUNT-"),
-        sg.Text("Similarity Percentage: ", key="-TEXT 2 SIM PERCENT-")
+        sg.Text("Word Count: ", key="-WORD COUNT 2-"),
+        sg.Text(" ", key="-TEXT 2 WORD COUNT-"),
+        sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 2-"),
+        sg.Text(" ", key="-TEXT 2 SIM PERCENT-")
     ],
 
     # Buttons for clear, compare, and translate
@@ -84,7 +100,7 @@ text_entry = [
 # Setting the layout of the window
 layout = [lang_selection, welcome, text_entry]
 
-window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
+window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 18))
 
 # If buttons are showing up on gui uncomment the code below and comment out the code above  
 #window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
@@ -167,6 +183,12 @@ def run():
             window["-SELECT COMPARE VALS-"].update(display_trans[lang][1])
             window["-TRANSLATE-"].update(display_trans[lang][6])
             window["-CLEAR-"].update(display_trans[lang][7])
+            window["-WORD COUNT 1-"].update(display_trans[lang][8])
+            window["-WORD COUNT 2-"].update(display_trans[lang][8])
+            window["-TEXT SIM PERCENT 1-"].update(display_trans[lang][9])
+            window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
+            window["-SOURCE-"].update(display_trans[lang][14])
+            window["-TARGET-"].update(display_trans[lang][15])
 
         '''
         Selecting comparison %
@@ -186,36 +208,42 @@ def run():
 
 
             # Display word count for each article
-            window["-TEXT 1 WORD COUNT-"].update("Word Count: " + str(count_words(source)))
-            window["-TEXT 2 WORD COUNT-"].update("Word Count: " + str(count_words(target)))
+            window["-TEXT 1 WORD COUNT-"].update(str(count_words(source)))
+            window["-TEXT 2 WORD COUNT-"].update(str(count_words(target)))
             
 
             # Determining which comparison type is being used
             if compare_type == "BLEU Score":
                 pairs_source, pairs_target = bleu(source, target, colors, sim_percent)
                 # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_source)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_target)) + "%")
+                window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
             elif compare_type == "Sentence Bert":
                 pairs_source, pairs_target = bert(source, target, colors, sim_percent)
                 # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_source)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_target)) + "%")
+                window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
             # Highlight text based on results of comparison
             highlight_sim("-TEXT 1-", source, pairs_source)
             highlight_sim("-TEXT 2-", target, pairs_target)
             
 
-        # Translate user inputted text
+        # Translate user inputed text
         # Text from the "Target" box is translated to match the language in the "Source" box
         if event == "-TRANSLATE-":
-            text1 = values["-TEXT 1-"]
-            text2 = values["-TEXT 2-"]
-            text2 = translate(text1, text2)
-            window["-TEXT 2-"].update("")
-            window["-TEXT 2-"].update(text2)
+            source = values["-TEXT 1-"]
+            target = values["-TEXT 2-"]
+            if len(source) == 0:
+                sg.Popup(display_trans[lang][11], keep_on_top=True, title= display_trans[lang][10])
+            else:
+                if len(target) < 4500:
+                    target = translate(source, target)
+                    window["-TEXT 2-"].update("")
+                    window["-TEXT 2-"].update(target)
+                else:
+                    sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
 
-        #Translate back to the origanl langs you put in
+        # Translate back to the origanl language you put in
         # NOT IMPLEMENTED
         if event == "-TRANSLATE BACK-":
             text2 = values["-TEXT 2-"]

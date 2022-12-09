@@ -12,15 +12,16 @@ auth_key = "0ff6b0ef-fc20-631e-6feb-695b9d666743:fx"
 deepl_trans = deepl.Translator(auth_key)
 google_trans = Translator()
 
-#What is this doing right here is reading what language the source article
-#using google_trans.detect to figure out the language code which in term
-#allows deepl to translate the target article
+# What is this doing right here is reading what language the source article
+# using google_trans.detect to figure out the language code which in term
+# allows deepl to translate the target article
+# Contributor: Joe LaBianca
 def translate(text1, text2):
     text1_sent = sent_tokenize(text1)[0]
     goog = str(google_trans.detect(text1_sent).lang).upper()
-    if goog == 'EN': #here since some language have different versions like english and britch english we had to make sure that is always US english
+    if goog == 'EN': #here since some language have different versions like english and british english we had to make sure that is always US english
         goog = goog + '-US'
-    if goog == 'PT': #same goes for protuguese 
+    if goog == 'PT': #same goes for portuguese 
         goog = goog + '-BR'
 
     result = deepl_trans.translate_text(text2, target_lang = goog) 
