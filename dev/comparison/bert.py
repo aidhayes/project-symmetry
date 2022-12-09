@@ -23,6 +23,17 @@ param:
     colors: randomly generated list of colors for highlighting
     similarity: similarity score that will be used to determine matching sentences
 
+return:
+    dictionaries of the form:
+        {
+            "sentence": ["matching sentence", "highlight color"],
+            ...
+        }
+    source_pair_dict:   dictionary with sentences from source as key and value as a list containing matching sentences
+                        from target and color to be highlighted
+    target_pair_dict:   dictionary with sentences from target as key and value as a list containing matching sentences
+                        from source and color to be highlighted
+
 Contributors:
 Raj Jagroup, Yulong Chen
 '''
