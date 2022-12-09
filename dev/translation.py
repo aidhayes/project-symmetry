@@ -6,6 +6,7 @@ auth_key = "0ff6b0ef-fc20-631e-6feb-695b9d666743:fx"
 deepl_trans = deepl.Translator(auth_key)
 google_trans = Translator()
 
+
 def translate(text1, text2):
     text1_sent = sent_tokenize(text1)[0]
     goog = str(google_trans.detect(text1_sent).lang).upper()
@@ -17,19 +18,3 @@ def translate(text1, text2):
     return result
 
 
-
-
-
-'''
-if lang = eng
-    lang = lang + '-us'
-
-'''
-
-
-#make this into a mehtod
-#do a def method that takes text1 and text2 as parms
-#put everything into the method
-#get rid of the print methods and return result
-#set text in the gui in the translate method setting the text on the left side to whatever the txt is on the right side
-#if lang is english append '-US'

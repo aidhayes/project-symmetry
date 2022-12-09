@@ -10,19 +10,35 @@ from nltk.tokenize import sent_tokenize
 #compare to the 'multi-qa-mpnet-base-dot-v1  which has a 66.76% is the second best one.'
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
-def compare(par1, par2, colors, similarity=.5):
-    list1 = sent_tokenize(par1)
-    list2 = sent_tokenize(par2)
-    dict1 = dict()
-    dict2 = dict()
+'''
+Iterates over the source and the target articles sentence by sentence and 
+uses Sentence Bert to determine whether two sentences have a similarity score
+GREATER OR EQUAL to the chosen similarity score.
 
-    cos_sim = util.cos_sim(model.encode(list1), model.encode(list2))
+This method works functionally the same as bleu_score.compare
 
-    for i in range(len(list1)):
-        for j in range(len(list2)):
+param:
+    source: Article in a users native language
+    target: Same article as source but in another language
+    colors: randomly generated list of colors for highlighting
+    similarity: similarity score that will be used to determine matching sentences
+
+Contributors:
+Raj Jagroup
+'''
+def compare(source, target, colors, similarity=.5):
+    source_list = sent_tokenize(source)
+    target_list = sent_tokenize(target)
+    source_pairs = dict()
+    target_pairs = dict()
+
+    cos_sim = util.cos_sim(model.encode(source_list), model.encode(target_list))
+
+    for i in range(len(source_list)):
+        for j in range(len(target_list)):
             if cos_sim[i][j] >= similarity:
-                if list1[i] not in dict1 and list2[j] not in dict2:
-                    dict1[list1[i]] = [list2[j], colors[i]]
-                    dict2[list2[j]] = [list1[i], colors[i]]
+                if source_list[i] not in source_pairs and target_list[j] not in target_pairs:
+                    source_pairs[source_list[i]] = [target_list[j], colors[i]]
+                    target_pairs[target_list[j]] = [source_list[i], colors[i]]
 
-    return dict1, dict2
+    return source_pairs, target_pairs

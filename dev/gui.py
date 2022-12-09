@@ -9,19 +9,29 @@ import numpy
 from .ui.colors import gen_colors
 from nltk.tokenize import sent_tokenize
 
-INPUT_BOX_SIZE = (50, 25)
-TITLE = 2
-SELECT_LANG = 0
-SELECT = 1
-COMPARE = 3
-SELECT_COMPARE = 4
-SELECT_SIM = 5
-CLEAR = 7
-TRANSLATE = 6
+'''
+GUI file that designs the GUI of the application using PySimpleGUI
+
+For more information visit https://www.pysimplegui.org/en/latest/
+
+The GUI includes:
+    - On screen language selection
+    - Comparison tool selection
+    - Text boxes for the Source and Target articles to be copy/pasted into
+    - Button to clear both text boxes
+    - Button to compare the Source and Target articles
+    - Button to translate the Target to match the language of the Source
+More information on "Source" and "Target" can be found in bleu_score.py and bert.py
+
+Contributors:
+Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen
+'''
+
+INPUT_BOX_SIZE = (50, 25) # Size of text box
+
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
-colors = gen_colors()
-# print(len(colors))
+colors = gen_colors() # Generate random colors for highlighting
 
 # Section to select which language a user wants the display in
 lang_selection = [
@@ -72,11 +82,11 @@ layout = [lang_selection, welcome, text_entry]
 
 # Raj
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
-#If buttons are showing up on gui uncomment the code below and comment out the code above  
+
+# If buttons are showing up on gui uncomment the code below and comment out the code above  
 #window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
 
-# Get word count of afrticle
-# Yulong
+# Get word count of article
 def count_words(article):
     count = len(article.split()) #split string and return the length of list
     print(count)
@@ -98,7 +108,6 @@ def clear():
     window["-TEXT 2-"].update("") 
 
 # Highlight the portions of text that are similar between the 2 articles
-# Raj & Aidan
 def highlight_sim(element, text, pairs):
     window[element].update("")
     sentences = sent_tokenize(text)
@@ -117,7 +126,7 @@ def highlight_diff(element, text, pairs):
 
 # Event loop
 def run():
-    compare_type = "BLEU Score" # Default comparison
+    compare_type = "BLEU Score" # Default comparison type 
     sim_percent = .3 # Default similarity score
     while True:
 
@@ -127,18 +136,21 @@ def run():
         if event == sg.WIN_CLOSED:
             break
         
-        # Update on screen text to the language the user selects
+        '''
+        Update on screen display language to the selected language by a user
+        Language and matching translations are stored in a dictionary in languages.py
+        '''
         if event == "-SELECT-":
             lang = values["-LANG-"]
-            window["-SELECT LANG-"].update(display_trans[lang][SELECT_LANG])
-            window["-SELECT-"].update(display_trans[lang][SELECT])
-            window['-WELCOME-'].update(display_trans[lang][TITLE])
-            window["-COMPARE-"].update(display_trans[lang][COMPARE])
-            window["-SELECT COMPARE TEXT-"].update(display_trans[lang][SELECT_COMPARE])
-            window["-COMPARE VAL TEXT-"].update(display_trans[lang][SELECT_SIM])
-            window["-SELECT COMPARE VALS-"].update(display_trans[lang][SELECT])
-            window["-CLEAR-"].update(display_trans[lang][CLEAR])
-            window["-TRANSLATE-"].update(display_trans[lang][TRANSLATE])
+            window["-SELECT LANG-"].update(display_trans[lang][0])
+            window["-SELECT-"].update(display_trans[lang][1])
+            window['-WELCOME-'].update(display_trans[lang][2])
+            window["-COMPARE-"].update(display_trans[lang][3])
+            window["-SELECT COMPARE TEXT-"].update(display_trans[lang][4])
+            window["-COMPARE VAL TEXT-"].update(display_trans[lang][5])
+            window["-SELECT COMPARE VALS-"].update(display_trans[lang][1])
+            window["-TRANSLATE-"].update(display_trans[lang][6])
+            window["-CLEAR-"].update(display_trans[lang][7])
 
         # Selecting comparison %
         if event == "-SELECT COMPARE VALS-":
@@ -148,22 +160,26 @@ def run():
 
         # Comparing user inputted text
         if event == "-COMPARE-":
-            # Getting text from multilines
+            # Retrieve text from text boxes
             ref = values["-TEXT 1-"]
             hyp = values["-TEXT 2-"]
             
 
+
+            # Display word count for each article
             window["-TEXT 1 WORD COUNT-"].update("Word Count: " + str(count_words(ref)))
             window["-TEXT 2 WORD COUNT-"].update("Word Count: " + str(count_words(hyp)))
             
 
-            # Determining which comparison type is being user
+            # Determining which comparison type is being used
             if compare_type == "BLEU Score":
                 pairs_ref, pairs_hyp = bleu(ref, hyp, colors, sim_percent)
                 window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(ref, pairs_ref)) + "%")
                 window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(hyp, pairs_hyp)) + "%")
             elif compare_type == "Sentence Bert":
                 pairs_ref, pairs_hyp = bert(ref, hyp, colors, sim_percent)
+                # Display similarity % of articles
+                # Sim % = (# similar sentences) / (# total sentences)
                 window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(ref, pairs_ref)) + "%")
                 window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(hyp, pairs_hyp)) + "%")
             # Highlight text based on results of comparison
@@ -171,7 +187,8 @@ def run():
             highlight_sim("-TEXT 2-", hyp, pairs_hyp)
             
 
-        #Translate user inputted text
+        # Translate user inputted text
+        # Text from the "Target" box is translated to match the language in the "Source" box
         if event == "-TRANSLATE-":
             text1 = values["-TEXT 1-"]
             text2 = values["-TEXT 2-"]
@@ -180,13 +197,14 @@ def run():
             window["-TEXT 2-"].update(text2)
 
         #Translate back to the origanl langs you put in
+        # NOT IMPLEMENTED
         if event == "-TRANSLATE BACK-":
             text2 = values["-TEXT 2-"]
             text2 = translate_back(text2, text2)
             window["-TEXT 2-"].update("")
             window["-TEXT 2-"].update(text2)
         
-        #Clear Button
+        # Clear button
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
             window["-TEXT 2-"].update("")
