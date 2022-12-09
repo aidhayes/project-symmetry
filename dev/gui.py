@@ -5,7 +5,6 @@ from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
-import numpy
 from .ui.colors import gen_colors
 from nltk.tokenize import sent_tokenize
 
@@ -45,8 +44,10 @@ lang_selection = [
 # Title of application
 welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
 
-# Text you want to compare
+
 text_entry = [
+
+    # Comparison and similarity score selection 
     [
         sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
         sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
@@ -55,11 +56,13 @@ text_entry = [
         sg.Button("Select", key="-SELECT COMPARE VALS-")
         ],
 
+    # Text you want to compare
     [
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 1-"),
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 2-")
     ],
 
+    # Statistics display
     [
         sg.Text("Word Count: ", key="-TEXT 1 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT 1 SIM PERCENT-"),
@@ -68,6 +71,7 @@ text_entry = [
         sg.Text("Similarity Percentage: ", key="-TEXT 2 SIM PERCENT-")
     ],
 
+    # Buttons for clear, compare, and translate
     [ 
         # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-"),
@@ -80,7 +84,6 @@ text_entry = [
 # Setting the layout of the window
 layout = [lang_selection, welcome, text_entry]
 
-# Raj
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 20))
 
 # If buttons are showing up on gui uncomment the code below and comment out the code above  
@@ -92,7 +95,12 @@ def count_words(article):
     print(count)
     return count
 
-# Similarity %
+'''
+Calculate the similarity percentage of one article to the other
+Similarity percentage is calculated using:
+(# similar sentences) / (# total sentences) * 100
+Result is rounded to nearest hundreth
+'''
 def percent_similar(article, sim_dict):
     sims_len = len(sim_dict)
     article_list = sent_tokenize(article)
@@ -102,18 +110,22 @@ def percent_similar(article, sim_dict):
     return round(sim, 2)
 
 
-# Clear Button
+# Clear the text from both text boxes
 def clear():
     window["-TEXT 1-"].update("")
     window["-TEXT 2-"].update("") 
 
 # Highlight the portions of text that are similar between the 2 articles
+# Sentences that are similar will be highlighted with the same color
+# More information on how finding similarities can be found in bleu_score.py and bert.py
 def highlight_sim(element, text, pairs):
     window[element].update("")
     sentences = sent_tokenize(text)
     for sentence in sentences:
+        # Highlight similarities
         if sentence in pairs:
             window[element].update(sentence + " ", text_color_for_value="white", background_color_for_value = pairs[sentence][1], append=True)
+        # Highlight differences
         else:
             window[element].update(sentence + " ", text_color_for_value="green",background_color_for_value="black",  append=True)
 
@@ -124,12 +136,16 @@ def highlight_diff(element, text, pairs):
              ...
     '''
 
-# Event loop
+'''
+Event loop
+Reads for on screen events performed by the user
+'''
 def run():
     compare_type = "BLEU Score" # Default comparison type 
     sim_percent = .3 # Default similarity score
     while True:
 
+        # The event performed by the user and any value returned by performing that event
         event, values = window.read()
 
         # If user x's out of the window, then stop the application
@@ -152,7 +168,10 @@ def run():
             window["-TRANSLATE-"].update(display_trans[lang][6])
             window["-CLEAR-"].update(display_trans[lang][7])
 
-        # Selecting comparison %
+        '''
+        Selecting comparison %
+        The compare methods will search for sentences in Source and Target that have a similarity score GREATER THAN OR EQUAL TO this number
+        '''
         if event == "-SELECT COMPARE VALS-":
             compare_type = values["-COMPARE SELECT-"]
             # Divide by 100 because comparison tools returns a value in [0, 1]
@@ -161,30 +180,30 @@ def run():
         # Comparing user inputted text
         if event == "-COMPARE-":
             # Retrieve text from text boxes
-            ref = values["-TEXT 1-"]
-            hyp = values["-TEXT 2-"]
+            source = values["-TEXT 1-"]
+            target = values["-TEXT 2-"]
             
 
 
             # Display word count for each article
-            window["-TEXT 1 WORD COUNT-"].update("Word Count: " + str(count_words(ref)))
-            window["-TEXT 2 WORD COUNT-"].update("Word Count: " + str(count_words(hyp)))
+            window["-TEXT 1 WORD COUNT-"].update("Word Count: " + str(count_words(source)))
+            window["-TEXT 2 WORD COUNT-"].update("Word Count: " + str(count_words(target)))
             
 
             # Determining which comparison type is being used
             if compare_type == "BLEU Score":
-                pairs_ref, pairs_hyp = bleu(ref, hyp, colors, sim_percent)
-                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(ref, pairs_ref)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(hyp, pairs_hyp)) + "%")
-            elif compare_type == "Sentence Bert":
-                pairs_ref, pairs_hyp = bert(ref, hyp, colors, sim_percent)
+                pairs_source, pairs_target = bleu(source, target, colors, sim_percent)
                 # Display similarity % of articles
-                # Sim % = (# similar sentences) / (# total sentences)
-                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(ref, pairs_ref)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(hyp, pairs_hyp)) + "%")
+                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_ref)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_hyp)) + "%")
+            elif compare_type == "Sentence Bert":
+                pairs_ref, pairs_hyp = bert(source, target, colors, sim_percent)
+                # Display similarity % of articles
+                window["-TEXT 1 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(source, pairs_ref)) + "%")
+                window["-TEXT 2 SIM PERCENT-"].update("Similarity Percentage: " + str(percent_similar(target, pairs_hyp)) + "%")
             # Highlight text based on results of comparison
-            highlight_sim("-TEXT 1-", ref, pairs_ref)
-            highlight_sim("-TEXT 2-", hyp, pairs_hyp)
+            highlight_sim("-TEXT 1-", source, pairs_source)
+            highlight_sim("-TEXT 2-", target, pairs_target)
             
 
         # Translate user inputted text
@@ -208,11 +227,6 @@ def run():
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
             window["-TEXT 2-"].update("")
-
-
-        
-
-
 
     window.close()
 
