@@ -24,7 +24,7 @@ param:
     similarity: similarity score that will be used to determine matching sentences
 
 Contributors:
-Raj Jagroup
+Raj Jagroup, Yulong Chen
 '''
 def compare(source, target, colors, similarity=.5):
     source_list = sent_tokenize(source)

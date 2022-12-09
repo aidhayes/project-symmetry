@@ -18,7 +18,7 @@ param:
     similarity: similarity score that will be used to determine matching sentences
 
 Contributors:
-Aidan Hayes
+Aidan Hayes, Joseph LaBianca
 '''
 def compare(source, target, colors, similarity=0.1):
     # Tokenize paragraphs so they can be traversed as an array
