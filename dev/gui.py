@@ -231,17 +231,24 @@ def run():
         # Translate user inputed text
         # Text from the "Target" box is translated to match the language in the "Source" box
         if event == "-TRANSLATE-":
+
             source = values["-TEXT 1-"]
             target = values["-TEXT 2-"]
             if len(source) == 0:
-                sg.Popup(display_trans[lang][11], keep_on_top=True, title= display_trans[lang][10])
+                try:
+                    sg.Popup(display_trans[lang][11], keep_on_top=True, title= display_trans[lang][10])
+                except:
+                    sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
                 if len(target) < 4500:
                     target = translate(source, target)
                     window["-TEXT 2-"].update("")
                     window["-TEXT 2-"].update(target)
                 else:
-                    sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
+                    try:
+                        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
+                    except:
+                        sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
 
         # Translate back to the origanl language you put in
         # NOT IMPLEMENTED
