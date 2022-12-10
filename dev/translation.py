@@ -15,7 +15,7 @@ google_trans = Translator()
 # What is this doing right here is reading what language the source article
 # using google_trans.detect to figure out the language code which in term
 # allows deepl to translate the target article
-# Contributor: Joe LaBianca
+# Contributor: Joe LaBianca, Raj JaGroup
 def translate(text1, text2):
     text1_sent = sent_tokenize(text1)[0]
     goog = str(google_trans.detect(text1_sent).lang).upper()
