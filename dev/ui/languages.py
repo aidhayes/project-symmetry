@@ -43,7 +43,7 @@ lang_eng = [
     "Slovenščina",
     "Српски",
     "Suomi",
-    "Swedish",
+    "Svenska",
     "ไทย",
     "Türkçe",
     "Українська",
@@ -65,7 +65,7 @@ lang_eng = [
 
 # Dictionary of translations for application
 display_trans = {
-    "العربية'": [
+    "العربية": [
         "اختار اللغة:",
         "يختار",
         "أداة مقارنة مقالة ويكيبيديا",
