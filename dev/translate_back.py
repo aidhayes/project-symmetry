@@ -2,6 +2,7 @@ import deepl
 from googletrans import Translator
 from nltk.tokenize import sent_tokenize
 
+
 auth_key = "0ff6b0ef-fc20-631e-6feb-695b9d666743:fx" 
 deepl_trans = deepl.Translator(auth_key)
 google_trans = Translator()
