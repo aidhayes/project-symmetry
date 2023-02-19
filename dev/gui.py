@@ -7,6 +7,7 @@ from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 from .ui.colors import gen_colors
 from nltk.tokenize import sent_tokenize
+import nltk # Jin
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -25,6 +26,8 @@ More information on "Source" and "Target" can be found in bleu_score.py and bert
 Contributors:
 Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen
 '''
+
+nltk.download('punkt') # Jin
 
 INPUT_BOX_SIZE = (50, 25) # Size of text box
 
