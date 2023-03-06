@@ -9,6 +9,7 @@ from .ui.colors import gen_colors
 from nltk.tokenize import sent_tokenize
 import nltk # Jin
 import requests # Jin
+import dev.scraper as scraper # Jin
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -25,14 +26,10 @@ The GUI includes:
 More information on "Source" and "Target" can be found in bleu_score.py and bert.py
 
 Contributors:
-Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen
+Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi
 '''
 
 nltk.download('punkt') # Jin
-
-# Dictionary and list for second language for article link - Jin
-languageShort = {"Français": "fr", "Español": "es", "English": "en"}
-languagesSAC = ["English", "Español", "Français"]
 
 INPUT_BOX_SIZE = (50, 20) # Size of text box 25 -> 20 Jin
 
@@ -68,7 +65,7 @@ text_entry = [
     # Link input box - Jin
     [
         [sg.Text('Enter Article Link:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), sg.Push(),
-        sg.Text('Second Article Language:'), sg.Combo(languagesSAC, key = '-SAC CHOSEN-', default_value="English", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-")], #could change to key of languageShort
+        sg.Text('Second Article Language:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-")],
     ],
 
     [
@@ -287,6 +284,10 @@ def run():
         if event == 'Enter':
             link = (values['-LINK ENTERED-'])
             print('The link submitted is: ' + link)
+            languagesSACDict = scraper.languageGetter(link) # Dictionary for second language for article link (e.g.: [English - en,..中文 - zh]) - Jin
+            languagesSAC = list(languagesSACDict.keys())
+            print(languagesSAC) # Prints the available languages for checks and balances
+            window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
 
         if event == "-CONFIRM SAC-": 
             linkTwoFragment = (values['-SAC CHOSEN-'])
@@ -295,7 +296,8 @@ def run():
             try:
                 link = link.replace("https://", "")
                 linkList = link.split(".", 1)
-                linkTwo = "https://" + languageShort[linkTwoFragment] + "." + linkList[1]
+                linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
+                print(linkTwo)
                 #requests.py implementation for scraping here
                 response = requests.get(linkTwo)
                 if (response.status_code == 200):
@@ -305,7 +307,7 @@ def run():
                     print(f"Sorry, this article does not exist in {linkTwoFragment}\nThe response from the server is {response.status_code}, meaning the webpage does not exist!")
 
             except:
-                print("No link entered")
+                print("No link entered or no language chosen")
                 
     window.close()
 
