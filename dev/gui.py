@@ -1,6 +1,6 @@
 from .translation import translate
 from .translate_back import translate_back
-import PySimpleGUI as sg # python3 -m pip install pysimplegui
+import PySimpleGUI as sg
 from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
 from .comparison.bert import compare as bert
@@ -8,6 +8,8 @@ from nltk.tokenize import sent_tokenize
 from .ui.colors import gen_colors
 from nltk.tokenize import sent_tokenize
 import nltk # Jin
+import requests # Jin
+import dev.scraper as scraper # Jin
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -24,12 +26,12 @@ The GUI includes:
 More information on "Source" and "Target" can be found in bleu_score.py and bert.py
 
 Contributors:
-Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen
+Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi
 '''
 
 nltk.download('punkt') # Jin
 
-INPUT_BOX_SIZE = (50, 25) # Size of text box
+INPUT_BOX_SIZE = (50, 20) # Size of text box 25 -> 20 Jin
 
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
@@ -47,6 +49,7 @@ lang_selection = [
 # Title of application
 welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
 
+#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) - Jin
 
 text_entry = [
 
@@ -55,14 +58,21 @@ text_entry = [
         sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
         sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
         sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
-        sg.Slider(range=(1, 100), default_value=1, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"),
+        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 - Jin
         sg.Button("Select", key="-SELECT COMPARE VALS-")
+    ],
+
+    # Link input box - Jin
+    [
+        [sg.Text('Enter Article Link:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), sg.Push(),
+        sg.Text('Second Article Language:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-")],
     ],
 
     [
         sg.Text("Source", key="-SOURCE-"),
 
         # Centering of labels, perhaps there is a better way... seems to work for now
+        # CAN PERHAPS USE PUSH - Jin
         sg.Text("\t"),
         sg.Text("\t"),
         sg.Text("\t"),
@@ -99,11 +109,15 @@ text_entry = [
     ]
 ]
 
-
 # Setting the layout of the window
+# THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING - Jin
 layout = [lang_selection, welcome, text_entry]
 
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 18))
+
+# Initializing variables for the link entered and the desired translation language link - Jin
+link = ""
+linkTwoFragment = ""
 
 # If buttons are showing up on gui uncomment the code below and comment out the code above  
 #window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
@@ -161,7 +175,7 @@ Reads for on screen events performed by the user
 '''
 def run():
     compare_type = "BLEU Score" # Default comparison type 
-    sim_percent = .3 # Default similarity score
+    sim_percent = .1 # Default similarity score //Doesn't work - Jin
     while True:
 
         # The event performed by the user and any value returned by performing that event
@@ -266,5 +280,34 @@ def run():
             window["-TEXT 1-"].update("")
             window["-TEXT 2-"].update("")
 
+        # Searching link events - Jin
+        if event == 'Enter':
+            link = (values['-LINK ENTERED-'])
+            print('The link submitted is: ' + link)
+            languagesSACDict = scraper.languageGetter(link) # Dictionary for second language for article link (e.g.: [English - en,..中文 - zh]) - Jin
+            languagesSAC = list(languagesSACDict.keys())
+            print(languagesSAC) # Prints the available languages for checks and balances
+            window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
+
+        if event == "-CONFIRM SAC-": 
+            linkTwoFragment = (values['-SAC CHOSEN-'])
+            print("The secondary language chosen is: " + linkTwoFragment)
+            # Only if the link was entered will this work, exception handling a crash - Jin
+            try:
+                link = link.replace("https://", "")
+                linkList = link.split(".", 1)
+                linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
+                print(linkTwo)
+                #requests.py implementation for scraping here
+                response = requests.get(linkTwo)
+                if (response.status_code == 200):
+                    print(f"The article's secondary language link is {linkTwo}\nThe response from the server is: {response.status_code}, meaning the webpage exists!")
+
+                elif (response.status_code == 404): 
+                    print(f"Sorry, this article does not exist in {linkTwoFragment}\nThe response from the server is {response.status_code}, meaning the webpage does not exist!")
+
+            except:
+                print("No link entered or no language chosen")
+                
     window.close()
 
