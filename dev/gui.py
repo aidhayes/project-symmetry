@@ -1,15 +1,16 @@
 from .translation import translate
 from .translate_back import translate_back
 import PySimpleGUI as sg
-from .ui.languages import lang_eng, display_trans
+#from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 from .ui.colors import gen_colors
 from nltk.tokenize import sent_tokenize
-import nltk # Jin
-import requests # Jin
-import dev.scraper as scraper # Jin
+import nltk
+import requests
+import dev.scraper as scraper
+import csv
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -29,7 +30,14 @@ Contributors:
 Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi
 '''
 
-nltk.download('punkt') # Jin
+nltk.download('punkt')
+
+display_trans = {}
+lang_eng = []
+with open("supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
+    for line in csv.reader(file):
+        display_trans[line[0]] = line[2:]
+        lang_eng.append(line[0])
 
 INPUT_BOX_SIZE = (50, 20) # Size of text box 25 -> 20 Jin
 
