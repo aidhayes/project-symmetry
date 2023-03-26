@@ -61,7 +61,7 @@ lang_eng = [
          #text[line[0]] = line[2:]
 
 
-##xaprint(text)
+#print(text)
 
 # Dictionary of translations for application
 display_trans = {

@@ -38,3 +38,4 @@ googletrans==3.0.0 #jin
 deepl==1.13.0 #jin
 nltk==3.8.1 #jin
 sentence_transformers==2.2.2 #jin
+beautifulsoup4==4.8.1 #jin
