@@ -1,4 +1,6 @@
-Complete User Guide - Description of each element from Top Left to Right
+User Guide
+
+Description of each element from Top Left to Right
 
 Select Language: Shows a list of languages in their native name (ie Dutch 
 shown as Deutsch); will change language of all tool text to selected 

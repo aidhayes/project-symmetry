@@ -182,6 +182,7 @@ def run():
         '''
         if event == "-SELECT-":
             lang = values["-LANG-"]
+            print(lang)
             window["-SELECT LANG-"].update(display_trans[lang][0])
             window["-SELECT-"].update(display_trans[lang][1])
             window['-WELCOME-'].update(display_trans[lang][2])
@@ -197,6 +198,7 @@ def run():
             window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
             window["-SOURCE-"].update(display_trans[lang][14])
             window["-TARGET-"].update(display_trans[lang][15])
+            window["-USER GUIDE-"].update(display_trans[lang][16])
 
         '''
         Selecting comparison %
