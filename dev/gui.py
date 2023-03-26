@@ -114,6 +114,11 @@ text_entry = [
         sg.Button("Clear", key="-CLEAR-"),
         sg.Button("Compare", key="-COMPARE-"),
         sg.Button("Translate", key="-TRANSLATE-")
+    ],
+
+    [
+        sg.Push(),
+        sg.Button("User Guide", key="-USER GUIDE-")
     ]
 ]
 
@@ -200,6 +205,7 @@ def run():
         '''
         if event == "-SELECT-":
             lang = values["-LANG-"]
+            print(lang)
             window["-SELECT LANG-"].update(display_trans[lang][0])
             window["-SELECT-"].update(display_trans[lang][1])
             window['-WELCOME-'].update(display_trans[lang][2])
@@ -215,6 +221,7 @@ def run():
             window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
             window["-SOURCE-"].update(display_trans[lang][14])
             window["-TARGET-"].update(display_trans[lang][15])
+            window["-USER GUIDE-"].update(display_trans[lang][16])
 
         '''
         Selecting comparison %
@@ -293,6 +300,10 @@ def run():
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
 
+        if event == "-USER GUIDE-":
+            file = open("userguide.txt")
+            user_guide = file.read()
+            sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
 
         # Searching link events - Jin
         if event == 'Enter':
