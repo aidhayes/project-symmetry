@@ -96,6 +96,11 @@ text_entry = [
         sg.Button("Clear", key="-CLEAR-"),
         sg.Button("Compare", key="-COMPARE-"),
         sg.Button("Translate", key="-TRANSLATE-")
+    ],
+
+    [
+        sg.Push(),
+        sg.Button("User Guide", key="-USER GUIDE-")
     ]
 ]
 
@@ -265,6 +270,11 @@ def run():
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
             window["-TEXT 2-"].update("")
+
+        if event == "-USER GUIDE-":
+            file = open("userguide.txt")
+            user_guide = file.read()
+            sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
 
     window.close()
 
