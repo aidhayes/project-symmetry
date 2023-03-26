@@ -11,11 +11,11 @@ Select Similarity Percentage: Sets percentage needed for two sentences to
 be marked as similar. If using BLEU score, 10% is recommended; for 
 Sentence Bert, 30% is recommended.
 
-Import Wikipedia Article: Retrieves article specified by link and pastes
+Enter Article Link: Retrieves article specified by link and pastes
 inside source text box
 
-Select Second Language: Retrieves article specified by article link
-and second language selection, pastes inside target text box
+Second Article Language: Retrieves article specified by first article 
+link and second language selection, pastes inside target text box
 
 Text Boxes: Here you can enter the two texts to be compared: the source 
 (left side) and the target (right side)
