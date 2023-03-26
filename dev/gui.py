@@ -39,7 +39,7 @@ with open("supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file
         display_trans[line[0]] = line[2:]
         lang_eng.append(line[0])
 
-INPUT_BOX_SIZE = (50, 20) # Size of text box 25 -> 20 Jin
+INPUT_BOX_SIZE = (60, 30) # width, height
 
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
@@ -121,7 +121,8 @@ text_entry = [
 # THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING - Jin
 layout = [lang_selection, welcome, text_entry]
 
-window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", font=("Arial", 18))
+window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", resizable = True, font=("Arial", 18)).Finalize()
+window.Maximize()
 
 # Initializing variables for the link entered and the desired translation language link - Jin
 link = ""
@@ -152,9 +153,9 @@ def percent_similar(article, sim_dict):
 
 
 # Clear the text from both text boxes
-def clear():
-    window["-TEXT 1-"].update("")
-    window["-TEXT 2-"].update("") 
+#def clear():
+    #window["-TEXT 1-"].update("")
+    #window["-TEXT 2-"].update("") 
 
 # Highlight the portions of text that are similar between the 2 articles
 # Sentences that are similar will be highlighted with the same color
@@ -287,6 +288,11 @@ def run():
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
             window["-TEXT 2-"].update("")
+            window["-TEXT 1 WORD COUNT-"].update("")
+            window["-TEXT 1 SIM PERCENT-"].update("")
+            window["-TEXT 2 WORD COUNT-"].update("")
+            window["-TEXT 2 SIM PERCENT-"].update("")
+
 
         # Searching link events - Jin
         if event == 'Enter':
@@ -296,6 +302,7 @@ def run():
             languagesSAC = list(languagesSACDict.keys())
             print(languagesSAC) # Prints the available languages for checks and balances
             window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
+            window["-TEXT 1-"].update(scraper.textGetter(link))
 
         if event == "-CONFIRM SAC-": 
             linkTwoFragment = (values['-SAC CHOSEN-'])
@@ -313,6 +320,7 @@ def run():
 
                 elif (response.status_code == 404): 
                     print(f"Sorry, this article does not exist in {linkTwoFragment}\nThe response from the server is {response.status_code}, meaning the webpage does not exist!")
+                window["-TEXT 2-"].update(scraper.textGetter(linkTwo))
 
             except:
                 print("No link entered or no language chosen")
