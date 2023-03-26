@@ -30,3 +30,11 @@ def languageGetter (wikiLink):
         #print(link, end="\n"*2) # end always attaches the same thing to the ending of a print statement
     
     return languageDict
+
+def textGetter (wikiLink):
+    page = requests.get(wikiLink)
+    soup = BeautifulSoup(page.content, "html.parser") #lxml and html.parser are very similar, lxml just faster
+    text = ""
+    for paragraph in soup.find_all('p'):
+        text = text + paragraph.text
+    return text
