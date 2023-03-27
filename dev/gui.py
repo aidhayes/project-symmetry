@@ -39,7 +39,9 @@ with open("supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file
         display_trans[line[0]] = line[2:]
         lang_eng.append(line[0])
 
-INPUT_BOX_SIZE = (60, 30) # width, height
+w, h = sg.Window.get_screen_size()
+INPUT_BOX_SIZE = (round(0.0375 * w), round(0.0275 * h)) #round(0.6 * w), round(0.3 * h)) # width, height
+# 1 character = 10 pixels wide, 1 row = 20 pixels high
 
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
