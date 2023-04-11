@@ -5,3 +5,4 @@ gui.spec
 /virtualenv
 ~$Compare_Tests.xlsx
 tmp_env/
+query.py
