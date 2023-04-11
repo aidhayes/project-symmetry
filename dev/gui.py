@@ -11,6 +11,7 @@ import nltk
 import requests
 import dev.scraper as scraper
 import csv
+import math
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -40,8 +41,28 @@ with open("supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file
         lang_eng.append(line[0])
 
 w, h = sg.Window.get_screen_size()
-INPUT_BOX_SIZE = (round(0.0375 * w), round(0.0275 * h)) #round(0.6 * w), round(0.3 * h)) # width, height
+ratio = round(w/h, 2)
+widthMultiplier = .01
+heightMultiplier = .01
+if (0.00 < ratio < 1.59):
+    widthMultiplier = 0.038
+    heightMultiplier = 0.025
+
+elif (1.60 < ratio < 1.69):
+    widthMultiplier = 0.034
+    heightMultiplier = 0.021
+
+elif (1.7 < ratio < 1.79):
+    widthMultiplier = 0.03
+    heightMultiplier = 0.017
+
+else:
+    widthMultiplier = 0.025
+    heightMultiplier = 0.015          
+
+INPUT_BOX_SIZE = (round(widthMultiplier * w), round(heightMultiplier * h)) #round(0.6 * w), round(0.3 * h)) # width, height
 # 1 character = 10 pixels wide, 1 row = 20 pixels high
+# if ratio of length to width is c1 < x < c2, make input box size y * w z * h, etc.
 
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
@@ -268,11 +289,16 @@ def run():
                 except:
                     sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
-                if len(target) < 4500:
+                if len(target) < 4500: #can change this if to try and except to the popups below
                     target = translate(source, target)
                     window["-TEXT 2-"].update("")
                     window["-TEXT 2-"].update(target)
                 else:
+                    #iterations = math.ceil(len(target)/4500)
+                    #int i = 0
+                    #while i < iterations:
+                    #target = target + translate(source, target)
+                    #i += 1
                     try:
                         sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
                     except:
