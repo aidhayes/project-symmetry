@@ -102,7 +102,7 @@ text_entry = [
         sg.Button("Select", key="-SELECT COMPARE VALS-")
     ],
 
-    # Link input box - Jin
+    # Link input box
     [
         [sg.Text('Enter Article Link:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), sg.Push(),
         sg.Text('Second Article Language:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-")],
@@ -227,7 +227,7 @@ def run():
     
     folderChoice = ''
     compare_type = "BLEU Score" # Default comparison type 
-    sim_percent = .1 # Default similarity score //Doesn't work - Jin
+    sim_percent = .1 # Default similarity score //Doesn't work
     while True:
 
         # The event performed by the user and any value returned by performing that event
@@ -375,11 +375,12 @@ def run():
             user_guide = file.read()
             sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
 
-        # Searching link events - Jin
+        # Searching link events
         if event == 'Enter':
             link = (values['-LINK ENTERED-'])
             print('The link submitted is: ' + link)
-            languagesSACDict = scraper.languageGetter(link) # Dictionary for second language for article link (e.g.: [English - en,..中文 - zh]) - Jin
+            """
+            TRY BELOW - EDIT SCRAPER TO RETURN SOMETHING IF NO INTERNET, IF THAT'S RETURNED THEN ERROR MESSAGE HANDLER FOR NO INTERNET
             languagesSAC = list(languagesSACDict.keys())
             print(languagesSAC) # Prints the available languages for checks and balances
             window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
@@ -388,14 +389,16 @@ def run():
         if event == "-CONFIRM SAC-": 
             linkTwoFragment = (values['-SAC CHOSEN-'])
             print("The secondary language chosen is: " + linkTwoFragment)
-            # Only if the link was entered will this work, exception handling a crash - Jin
+            # Only if the link was entered will this work, exception handling a crash
             try:
                 link = link.replace("https://", "")
                 linkList = link.split(".", 1)
                 linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
                 print(linkTwo)
-                #requests.py implementation for scraping here
                 response = requests.get(linkTwo)
+                """
+                IMPLEMENT ERROR HANDLING FOR IF NO INTERNET
+                """
                 if (response.status_code == 200):
                     print(f"The article's secondary language link is {linkTwo}\nThe response from the server is: {response.status_code}, meaning the webpage exists!")
 
