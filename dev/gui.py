@@ -12,6 +12,8 @@ import requests
 import dev.scraper as scraper
 import csv
 import math
+import sys
+import os
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -28,14 +30,19 @@ The GUI includes:
 More information on "Source" and "Target" can be found in bleu_score.py and bert.py
 
 Contributors:
-Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi
+Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi, Alden Strafford, Henry Qiu, Yuhao Wang, Ambrose Ngayinoko
 '''
 
 nltk.download('punkt')
 
+#For exe- uncomment below line
+#bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+#For exe- replace line 45 (open moreLang csv) with below line and uncomment line 373 and comment out line 374 (userguide open)
+#with open(os.path.abspath(os.path.join(bundle_dir, "moreLanguagesFinal.csv")), 'r', encoding = "utf-8") as file:
+
 display_trans = {}
 lang_eng = []
-with open("supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
+with open("supplements\moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
     for line in csv.reader(file):
         display_trans[line[0]] = line[2:]
         lang_eng.append(line[0])
@@ -82,7 +89,7 @@ lang_selection = [
 # Title of application
 welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
 
-#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) - Jin
+#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor)
 
 text_entry = [
 
@@ -91,7 +98,7 @@ text_entry = [
         sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
         sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
         sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
-        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 - Jin
+        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10
         sg.Button("Select", key="-SELECT COMPARE VALS-")
     ],
 
@@ -105,7 +112,6 @@ text_entry = [
         sg.Text("Source", key="-SOURCE-"),
 
         # Centering of labels, perhaps there is a better way... seems to work for now
-        # CAN PERHAPS USE PUSH - Jin
         sg.Text("\t"),
         sg.Text("\t"),
         sg.Text("\t"),
@@ -153,13 +159,13 @@ text_entry = [
 ]
 
 # Setting the layout of the window
-# THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING - Jin
+# THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING
 layout = [lang_selection, welcome, text_entry]
 
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", resizable = True, font=("Arial", 18)).Finalize()
 window.Maximize()
 
-# Initializing variables for the link entered and the desired translation language link - Jin
+# Initializing variables for the link entered and the desired translation language link
 link = ""
 linkTwoFragment = ""
 
@@ -364,6 +370,7 @@ def run():
             window["-TEXT 2 SIM PERCENT-"].update("")
 
         if event == "-USER GUIDE-":
+            #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
             file = open("userguide.txt")
             user_guide = file.read()
             sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
