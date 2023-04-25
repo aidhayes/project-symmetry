@@ -11,7 +11,6 @@ import nltk
 import requests
 import dev.scraper as scraper
 import csv
-import math
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -31,7 +30,8 @@ Contributors:
 Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi
 '''
 
-nltk.download('punkt')
+if not nltk.data.find("tokenizers/punkt"):
+    nltk.download('punkt')
 
 display_trans = {}
 lang_eng = []
@@ -41,6 +41,8 @@ with open("supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file
         lang_eng.append(line[0])
 
 dlOptions = ['Source', 'Target']
+
+dlImg = b'iVBORw0KGgoAAAANSUhEUgAAADMAAAA7CAYAAADW8rJHAAAAAXNSR0IArs4c6QAAAoBJREFUaEPtmW3OwUAQx6dEKhLEyw1wBgfwwdsBnNEFvB3BFfQKmiARkbBPWk+l2LYzuzt4nqyvpjPz+8/s2A4HeD9C4t7hCsnmGACEEK8sjhOGZInL4jQJJKoIF5CFQfS8tMVsZRDK3UUi2FJMbWUoasls7QBAKGjbDCFSqoltM4SCts0QItk20xXJtpmugnaaIRS0bYYQyU4zXZFsm+kqaKcZQsE/02bxZVhSZXVgMP6lelLb7CHJlP2XKgzWvzYMZUOpAkPxrwVDTY7bng8mXB4/7pApMKm2Et+J8wd7ZjIDPgXFwlD9GrnOoILGgIK/AJIVvFUx1Sb+MHbRjq3Mb+zkBBG/PUomWJBQSGIEdIWIfqXm4/EYZrMZOke0YSzaW4CoICqViZhYgVRAdGDYztBoNIL5fK7SMQ9n5vl0YxwarRABRJprlPBLUoQpYgSIAvI89qNcA5jEZN4FNBwOYbFYaHVCkKvTarWE53nS0djpdMDzPEwQ5TNEAIF2uy02m438XhbAuK4rTqeT1KDRaIDv+1gYMhAFJHBer9fFdruV5losFsEpFArifD6bgkED9ft9WK1WFKFSYVzXZYHJBFIByaoMJ0wi0GAwgOVySapI1DZpbcYN8wJEmI7Stv80TAgUy0ypIt9SGROX57uPb6iMMSALE0lZrVZhv99r9bmxsgBApVIRu91O6jJzmuVyOSiVSpDP503mpOTrcrnA8XiE6/WqBqMU9UMPZVbmQ3kphf1/MLVaTfi+r6TGNz0U3PBTX86+KdmsXCaTyX0HYOTVNysg1/fdbhfW6/XvnvQWRTSbTTgcDtESnCu2Eb/BHqBcLkOv14PpdBr+Fv4A8cnJcCg/vWQAAAAOZVhJZk1NACoAAAAIAAAAAAAAANJTkwAAAABJRU5ErkJggg=='
 
 w, h = sg.Window.get_screen_size()
 ratio = round(w/h, 2)
@@ -71,18 +73,25 @@ display = "Wikipedia Article Comparison Tool" # Default title
 colors = gen_colors() # Generate random colors for highlighting
 
 # Section to select which language a user wants the display in
+
 lang_selection = [
     [
-        sg.Push(), 
-        sg.Text("Select Language:", key="-SELECT LANG-"), 
-        sg.Combo(lang_eng, key="-LANG-", default_value="English"), 
-        sg.Button("Select", key = "-SELECT-")]
+        sg.Text("")
+    ],
+
+    [
+        sg.Push(),
+        sg.Text("App Language:", key="-SELECT LANG-"), 
+        sg.Combo(lang_eng, key="-LANG-", default_value="English", size = (10, 1)), 
+        sg.Button("Select", key = "-SELECT-")
+    ]
+    
 ]
 
 # Title of application
-welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
+#welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
 
-#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) - Jin
+#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) 
 
 text_entry = [
 
@@ -91,33 +100,40 @@ text_entry = [
         sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
         sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
         sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
-        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 - Jin
+        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 
         sg.Button("Select", key="-SELECT COMPARE VALS-")
     ],
 
-    # Link input box - Jin
+    # Link input box 
     [
-        [sg.Text('Enter Article Link:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), sg.Push(),
-        sg.Text('Second Article Language:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-")],
+        sg.Push(),
+        sg.Text('Source Article:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        sg.Push(),
+        sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        sg.Push()
     ],
 
-    [
-        sg.Text("Source", key="-SOURCE-"),
+    #CAN PROBABLY REMOVE THESE LABELS 
+    #[
+    #sg.Text("Source", key="-SOURCE-"),
 
-        # Centering of labels, perhaps there is a better way... seems to work for now
-        # CAN PERHAPS USE PUSH - Jin
-        sg.Text("\t"),
-        sg.Text("\t"),
-        sg.Text("\t"),
-        sg.Text("\t"),
-        sg.Text("\t"),
+        #Centering of labels, perhaps there is a better way... seems to work for now
+        #sg.Text("\t"),
+        #sg.Text("\t"),
+        #sg.Text("\t"),
+        #sg.Text("\t"),
+        #sg.Text("\t"),
+        #sg.Text("Target", key="-TARGET-"),
+    #],
 
-        sg.Text("Target", key="-TARGET-"),
-    ],
     # Text you want to compare
     [ 
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 1-"),
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 2-")
+    ],
+    
+    [ 
+        sg.Text('')
     ],
 
     # Statistics display
@@ -126,12 +142,26 @@ text_entry = [
         sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
         sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
+        #sg.In(size=(round(widthMultiplier * w/3),1), enable_events=True, key = '-FOLDER CHOICE-'),
+        #sg.FolderBrowse(),
+        #sg.Combo(dlOptions, size = (round(widthMultiplier * w/6),1), key="-DOWNLOAD CHOICE-", default_value="Download Text"), 
+      
+        sg.Push(),        
+
+        sg.Button('', image_data=dlImg, border_width = 50,
+            button_color=(sg.theme_background_color(),sg.theme_background_color()),
+            key="-SELECT DOWNLOAD CHOICE-"),
         sg.Push(),
-        sg.In(size=(round(widthMultiplier * w/3),1), enable_events=True, key = '-FOLDER CHOICE-'),
-        sg.FolderBrowse(),
-        sg.Combo(dlOptions, size = (round(widthMultiplier * w/6),1), key="-DOWNLOAD CHOICE-", default_value="Download Text"), 
-        sg.Button("Select", key="-SELECT DOWNLOAD CHOICE-"),
         sg.Push(),
+        sg.Push(),
+        sg.Push(),
+        sg.Push(),
+        sg.Button('', image_data=dlImg, 
+            button_color=(sg.theme_background_color(),sg.theme_background_color()),
+            key="-SELECT DOWNLOAD CHOICE 2-"),
+            
+        sg.Push(),
+
         sg.Text("Word Count: ", key="-WORD COUNT 2-"),
         sg.Text(" ", key="-TEXT 2 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 2-"),
@@ -148,13 +178,13 @@ text_entry = [
 ]
 
 # Setting the layout of the window
-# THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING - Jin
-layout = [lang_selection, welcome, text_entry]
+# THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING 
+layout = [lang_selection, text_entry] #welcome, text_entry]
 
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", resizable = True, font=("Arial", 18)).Finalize()
 window.Maximize()
 
-# Initializing variables for the link entered and the desired translation language link - Jin
+# Initializing variables for the link entered and the desired translation language link 
 link = ""
 linkTwoFragment = ""
 
@@ -216,7 +246,7 @@ def run():
     
     folderChoice = ''
     compare_type = "BLEU Score" # Default comparison type 
-    sim_percent = .1 # Default similarity score //Doesn't work - Jin
+    sim_percent = .1 # Default similarity score //Doesn't work 
     while True:
 
         # The event performed by the user and any value returned by performing that event
@@ -234,7 +264,7 @@ def run():
             lang = values["-LANG-"]
             window["-SELECT LANG-"].update(display_trans[lang][0])
             window["-SELECT-"].update(display_trans[lang][1])
-            window['-WELCOME-'].update(display_trans[lang][2])
+            #window['-WELCOME-'].update(display_trans[lang][2])
             window["-COMPARE-"].update(display_trans[lang][3])
             window["-SELECT COMPARE TEXT-"].update(display_trans[lang][4])
             window["-COMPARE VAL TEXT-"].update(display_trans[lang][5])
@@ -245,8 +275,8 @@ def run():
             window["-WORD COUNT 2-"].update(display_trans[lang][8])
             window["-TEXT SIM PERCENT 1-"].update(display_trans[lang][9])
             window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
-            window["-SOURCE-"].update(display_trans[lang][14])
-            window["-TARGET-"].update(display_trans[lang][15])
+            #window["-SOURCE-"].update(display_trans[lang][14])
+            #window["-TARGET-"].update(display_trans[lang][15])
 
         '''
         Selecting comparison %
@@ -324,22 +354,20 @@ def run():
                 except:
                     sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
-                if len(target) < 4500: #can change this if to try and except to the popups below
-                    target = translate(source, target)
+                #if len(target) < 4500: can change this if to try and except to the popups below
+                try:
+                    code = link.replace("https://", "")
+                    code = code.split('.')
+                    code = code[0]
+                    target = translate(code, target)
                     window["-TEXT 2-"].update("")
                     window["-TEXT 2-"].update(target)
-                else:
-                    #iterations = math.ceil(len(target)/4500)
-                    #int i = 0
-                    #while i < iterations:
-                    #target = target + translate(source, target)
-                    #i += 1
+                except:
                     try:
                         sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
                     except:
                         sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
 
-        # Translate back to the origanl language you put in
         # NOT IMPLEMENTED
         if event == "-TRANSLATE BACK-":
             text2 = values["-TEXT 2-"]
@@ -357,20 +385,20 @@ def run():
             window["-TEXT 2 SIM PERCENT-"].update("")
 
 
-        # Searching link events - Jin
+        # Searching link events 
         if event == 'Enter':
             link = (values['-LINK ENTERED-'])
             print('The link submitted is: ' + link)
-            languagesSACDict = scraper.languageGetter(link) # Dictionary for second language for article link (e.g.: [English - en,..中文 - zh]) - Jin
+            languagesSACDict = scraper.languageGetter(link) # Dictionary for second language for article link (e.g.: [English - en,..中文 - zh]) 
             languagesSAC = list(languagesSACDict.keys())
-            print(languagesSAC) # Prints the available languages for checks and balances
+            #print(languagesSAC) # Prints the available languages for checks and balances
             window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
             window["-TEXT 1-"].update(scraper.textGetter(link))
 
         if event == "-CONFIRM SAC-": 
             linkTwoFragment = (values['-SAC CHOSEN-'])
             print("The secondary language chosen is: " + linkTwoFragment)
-            # Only if the link was entered will this work, exception handling a crash - Jin
+            # Only if the link was entered will this work, exception handling a crash 
             try:
                 link = link.replace("https://", "")
                 linkList = link.split(".", 1)
