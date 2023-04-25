@@ -11,6 +11,8 @@ import nltk
 import requests
 import dev.scraper as scraper
 import csv
+import sys
+import os
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -27,15 +29,20 @@ The GUI includes:
 More information on "Source" and "Target" can be found in bleu_score.py and bert.py
 
 Contributors:
-Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi
+Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi, Alden Strafford, Henry Qiu, Yuhao Wang, Ambrose Ngayinoko
 '''
 
 if not nltk.data.find("tokenizers/punkt"):
     nltk.download('punkt')
 
+#For exe- uncomment below line
+#bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+#For exe- replace line 45 (open moreLang csv) with below line and uncomment line 373 and comment out line 374 (userguide open)
+#with open(os.path.abspath(os.path.join(bundle_dir, "moreLanguagesFinal.csv")), 'r', encoding = "utf-8") as file:
+
 display_trans = {}
 lang_eng = []
-with open("supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
+with open("supplements\moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
     for line in csv.reader(file):
         display_trans[line[0]] = line[2:]
         lang_eng.append(line[0])
@@ -174,6 +181,11 @@ text_entry = [
         sg.Button("Clear", key="-CLEAR-"),
         sg.Button("Compare", key="-COMPARE-"),
         sg.Button("Translate", key="-TRANSLATE-")
+    ],
+
+    [
+        sg.Push(),
+        sg.Button("User Guide", key="-USER GUIDE-")
     ]
 ]
 
@@ -262,6 +274,7 @@ def run():
         '''
         if event == "-SELECT-":
             lang = values["-LANG-"]
+            print(lang)
             window["-SELECT LANG-"].update(display_trans[lang][0])
             window["-SELECT-"].update(display_trans[lang][1])
             #window['-WELCOME-'].update(display_trans[lang][2])
@@ -277,6 +290,7 @@ def run():
             window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
             #window["-SOURCE-"].update(display_trans[lang][14])
             #window["-TARGET-"].update(display_trans[lang][15])
+            window["-USER GUIDE-"].update(display_trans[lang][16])
 
         '''
         Selecting comparison %
@@ -384,6 +398,11 @@ def run():
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
 
+        if event == "-USER GUIDE-":
+            #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
+            file = open("userguide.txt")
+            user_guide = file.read()
+            sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
 
         # Searching link events 
         if event == 'Enter':
@@ -399,13 +418,16 @@ def run():
             linkTwoFragment = (values['-SAC CHOSEN-'])
             print("The secondary language chosen is: " + linkTwoFragment)
             # Only if the link was entered will this work, exception handling a crash 
+
             try:
                 link = link.replace("https://", "")
                 linkList = link.split(".", 1)
                 linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
                 print(linkTwo)
-                #requests.py implementation for scraping here
                 response = requests.get(linkTwo)
+                """
+                IMPLEMENT ERROR HANDLING FOR IF NO INTERNET
+                """
                 if (response.status_code == 200):
                     print(f"The article's secondary language link is {linkTwo}\nThe response from the server is: {response.status_code}, meaning the webpage exists!")
 
