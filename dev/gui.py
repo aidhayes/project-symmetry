@@ -78,6 +78,8 @@ INPUT_BOX_SIZE = (round(widthMultiplier * w), round(heightMultiplier * h)) #roun
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
 colors = gen_colors() # Generate random colors for highlighting
+pairs_source = {}
+pairs_target = {}
 
 # Section to select which language a user wants the display in
 
@@ -120,19 +122,6 @@ text_entry = [
         sg.Push()
     ],
 
-    #CAN PROBABLY REMOVE THESE LABELS 
-    #[
-    #sg.Text("Source", key="-SOURCE-"),
-
-        #Centering of labels, perhaps there is a better way... seems to work for now
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("Target", key="-TARGET-"),
-    #],
-
     # Text you want to compare
     [ 
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 1-"),
@@ -143,19 +132,21 @@ text_entry = [
         sg.Text('')
     ],
 
+    [
+        sg.Push(),
+        sg.Button("Expanded View", key="-EXPAND SIM-", visible=False)
+    ],
+
     # Statistics display
     [
         sg.Text("Word Count: ", key="-WORD COUNT 1-"),
         sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
         sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
-        #sg.In(size=(round(widthMultiplier * w/3),1), enable_events=True, key = '-FOLDER CHOICE-'),
-        #sg.FolderBrowse(),
-        #sg.Combo(dlOptions, size = (round(widthMultiplier * w/6),1), key="-DOWNLOAD CHOICE-", default_value="Download Text"), 
       
         sg.Push(),        
 
-        sg.Button('', image_data=dlImg, border_width = 50,
+        sg.Button('', image_data=dlImg, border_width = 25,
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
             key="-SELECT DOWNLOAD CHOICE-"),
         sg.Push(),
@@ -163,7 +154,7 @@ text_entry = [
         sg.Push(),
         sg.Push(),
         sg.Push(),
-        sg.Button('', image_data=dlImg, 
+        sg.Button('', image_data=dlImg, border_width=25, 
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
             key="-SELECT DOWNLOAD CHOICE 2-"),
             
@@ -305,26 +296,15 @@ def run():
             folderChoice = values["-FOLDER CHOICE-"]
         
         if event == "-SELECT DOWNLOAD CHOICE-":
-            choice = values["-DOWNLOAD CHOICE-"]
-
-            if folderChoice:
-                f = open(f"{folderChoice}/myfile.txt", "w")
-                if choice == dlOptions[0]:
-                    print(f"Downloading {dlOptions[0].lower()} text to {folderChoice}")
-                    f.write(values["-TEXT 1-"])
-                elif choice == dlOptions[1]:
-                    print(f"Downloading {dlOptions[1].lower()} text to {folderChoice}")
-                    f.write(values["-TEXT 2-"])
+                f = open("myfile.txt", "w")
+                print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
+                f.write(values["-TEXT 1-"])
                 f.close()
 
-            else:
+        if event == "-SELECT DOWNLOAD CHOICE 2-":
                 f = open("myfile.txt", "w")
-                if choice == dlOptions[0]:
-                    print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
-                    f.write(values["-TEXT 1-"])
-                elif choice == dlOptions[1]:
-                    print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
-                    f.write(values["-TEXT 2-"])
+                print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
+                f.write(values["-TEXT 2-"])
                 f.close()
 
         # Comparing user inputted text
@@ -341,19 +321,23 @@ def run():
             
 
             # Determining which comparison type is being used
-            if compare_type == "BLEU Score":
-                pairs_source, pairs_target = bleu(source, target, colors, sim_percent)
-                # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
-            elif compare_type == "Sentence Bert":
-                pairs_source, pairs_target = bert(source, target, colors, sim_percent)
-                # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
-            # Highlight text based on results of comparison
-            highlight_sim("-TEXT 1-", source, pairs_source)
-            highlight_sim("-TEXT 2-", target, pairs_target)
+            try:
+                if compare_type == "BLEU Score":
+                    pairs_source, pairs_target = bleu(source, target, colors, sim_percent)
+                    # Display similarity % of articles
+                    window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
+                    window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
+                elif compare_type == "Sentence Bert":
+                    pairs_source, pairs_target = bert(source, target, colors, sim_percent)
+                    # Display similarity % of articles
+                    window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
+                    window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
+                window["-EXPAND SIM-"].update(visible=True)
+                # Highlight text based on results of comparison
+                highlight_sim("-TEXT 1-", source, pairs_source)
+                highlight_sim("-TEXT 2-", target, pairs_target)
+            except ZeroDivisionError:
+                sg.popup_ok("Must have text in both source and target to perform compare operation.", title="ERROR: MISSING TEXT!")
             
 
         # Translate user inputed text
@@ -369,18 +353,20 @@ def run():
                     sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
                 #if len(target) < 4500: can change this if to try and except to the popups below
-                try:
-                    code = link.replace("https://", "")
-                    code = code.split('.')
-                    code = code[0]
-                    target = translate(code, target)
-                    window["-TEXT 2-"].update("")
-                    window["-TEXT 2-"].update(target)
-                except:
-                    try:
-                        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
-                    except:
-                        sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
+                if(len(target) > 4500):
+                    sg.popup_ok("Translation of article over 4500 words may take long to translate- please wait.", title="Warning: Long Translate Request")
+                #try:
+                code = link.replace("https://", "")
+                code = code.split('.')
+                code = code[0]
+                target = translate(code, target)
+                window["-TEXT 2-"].update("")
+                window["-TEXT 2-"].update(target)
+                #except:
+                #    try:
+                #        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
+                #    except:
+                #       sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
 
         # NOT IMPLEMENTED
         if event == "-TRANSLATE BACK-":
@@ -397,12 +383,23 @@ def run():
             window["-TEXT 1 SIM PERCENT-"].update("")
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
+            window["-EXPAND SIM-"].update(visible=False)
 
         if event == "-USER GUIDE-":
             #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
             file = open("userguide.txt")
             user_guide = file.read()
             sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
+
+        if event == "-EXPAND SIM-":
+            expand_list = []
+            source_vals = list(pairs_source.values())
+            target_vals = list(pairs_target.values())
+            for i in range(0, len(source_vals)):
+                expand_list.append(str(i+1) + ": SOURCE TEXT- " + target_vals[i][0] + "\nTARGET TEXT- " + source_vals[i][0] + "\n\n") #\n creates space for each line after, unsure how to fix, since cant use sep arg
+            sg.popup_scrolled(' '.join(expand_list), title="Expanded View", font=("Arial", 18), size=(63, 18))
+            #for i in range(0, len(source_vals)):
+            #, text_color_for_value="white", background_color_for_value=source_vals[i][1], append=True        	
 
         # Searching link events 
         if event == 'Enter':

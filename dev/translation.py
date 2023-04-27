@@ -3,7 +3,7 @@
 #source article (left) is in
 import math
 import deepl
-from googletrans import Translator
+#from googletrans import Translator
 from nltk.tokenize import sent_tokenize
 from textwrap import wrap
 
@@ -11,7 +11,7 @@ from textwrap import wrap
 #google_trans helps with the language codes
 auth_key = "a00fba37-dc41-db89-61f3-f739098b1700:fx" #"0ff6b0ef-fc20-631e-6feb-695b9d666743:fx" 
 deepl_trans = deepl.Translator(auth_key)
-google_trans = Translator()
+#google_trans = Translator()
 
 # allows deepl to translate the target article
 # Contributor: Joe LaBianca, Raj JaGroup
