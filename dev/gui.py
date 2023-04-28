@@ -1,5 +1,4 @@
 from .translation import translate
-from .translate_back import translate_back
 import PySimpleGUI as sg
 #from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
@@ -42,7 +41,7 @@ if not nltk.data.find("tokenizers/punkt"):
 
 display_trans = {}
 lang_eng = []
-with open("supplements\moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
+with open("./supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
     for line in csv.reader(file):
         display_trans[line[0]] = line[2:]
         lang_eng.append(line[0])
@@ -382,12 +381,13 @@ def run():
                     except:
                         sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
 
+
         # NOT IMPLEMENTED
-        if event == "-TRANSLATE BACK-":
-            text2 = values["-TEXT 2-"]
-            text2 = translate_back(text2, text2)
-            window["-TEXT 2-"].update("")
-            window["-TEXT 2-"].update(text2)
+        #if event == "-TRANSLATE BACK-":
+         #   text2 = values["-TEXT 2-"]
+          #  text2 = translate_back(text2, text2)
+           # window["-TEXT 2-"].update("")
+            #window["-TEXT 2-"].update(text2)
         
         # Clear button
         if event == "-CLEAR-":
@@ -420,9 +420,10 @@ def run():
             # Only if the link was entered will this work, exception handling a crash 
 
             try:
-                link = link.replace("https://", "")
-                linkList = link.split(".", 1)
-                linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
+                #link = link.replace("https://", "")
+                #linkList = link.split(".", 1)
+                #linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
+                linkTwo = languagesSACDict[linkTwoFragment]
                 print(linkTwo)
                 response = requests.get(linkTwo)
                 """
