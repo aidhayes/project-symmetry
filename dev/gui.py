@@ -29,7 +29,8 @@ The GUI includes:
 More information on "Source" and "Target" can be found in bleu_score.py and bert.py
 
 Contributors:
-Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi, Alden Strafford, Henry Qiu, Yuhao Wang, Ambrose Ngayinoko
+Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen - Fall 2022
+Jin Long Shi, Alden Strafford, Henry Qiu, Yuhao Wang, Ambrose Ngayinoko - Spring 2023
 '''
 
 if not nltk.data.find("tokenizers/punkt"):
@@ -37,7 +38,7 @@ if not nltk.data.find("tokenizers/punkt"):
 
 #For exe- uncomment below line
 #bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
-#For exe- replace line 45 (open moreLang csv) with below line and uncomment line 373 and comment out line 374 (userguide open)
+#For exe- replace line 46 (open moreLang csv) with below line and uncomment line 390 and comment out line 391 (userguide open)
 #with open(os.path.abspath(os.path.join(bundle_dir, "moreLanguagesFinal.csv")), 'r', encoding = "utf-8") as file:
 
 display_trans = {}
@@ -51,6 +52,7 @@ dlOptions = ['Source', 'Target']
 
 dlImg = b'iVBORw0KGgoAAAANSUhEUgAAADMAAAA7CAYAAADW8rJHAAAAAXNSR0IArs4c6QAAAoBJREFUaEPtmW3OwUAQx6dEKhLEyw1wBgfwwdsBnNEFvB3BFfQKmiARkbBPWk+l2LYzuzt4nqyvpjPz+8/s2A4HeD9C4t7hCsnmGACEEK8sjhOGZInL4jQJJKoIF5CFQfS8tMVsZRDK3UUi2FJMbWUoasls7QBAKGjbDCFSqoltM4SCts0QItk20xXJtpmugnaaIRS0bYYQyU4zXZFsm+kqaKcZQsE/02bxZVhSZXVgMP6lelLb7CHJlP2XKgzWvzYMZUOpAkPxrwVDTY7bng8mXB4/7pApMKm2Et+J8wd7ZjIDPgXFwlD9GrnOoILGgIK/AJIVvFUx1Sb+MHbRjq3Mb+zkBBG/PUomWJBQSGIEdIWIfqXm4/EYZrMZOke0YSzaW4CoICqViZhYgVRAdGDYztBoNIL5fK7SMQ9n5vl0YxwarRABRJprlPBLUoQpYgSIAvI89qNcA5jEZN4FNBwOYbFYaHVCkKvTarWE53nS0djpdMDzPEwQ5TNEAIF2uy02m438XhbAuK4rTqeT1KDRaIDv+1gYMhAFJHBer9fFdruV5losFsEpFArifD6bgkED9ft9WK1WFKFSYVzXZYHJBFIByaoMJ0wi0GAwgOVySapI1DZpbcYN8wJEmI7Stv80TAgUy0ypIt9SGROX57uPb6iMMSALE0lZrVZhv99r9bmxsgBApVIRu91O6jJzmuVyOSiVSpDP503mpOTrcrnA8XiE6/WqBqMU9UMPZVbmQ3kphf1/MLVaTfi+r6TGNz0U3PBTX86+KdmsXCaTyX0HYOTVNysg1/fdbhfW6/XvnvQWRTSbTTgcDtESnCu2Eb/BHqBcLkOv14PpdBr+Fv4A8cnJcCg/vWQAAAAOZVhJZk1NACoAAAAIAAAAAAAAANJTkwAAAABJRU5ErkJggg=='
 
+#resizing window functionality- should work, not tested very heavily though
 w, h = sg.Window.get_screen_size()
 ratio = round(w/h, 2)
 widthMultiplier = .01
@@ -391,6 +393,7 @@ def run():
             user_guide = file.read()
             sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
 
+        #expand view- shows matching sentences in popup- renaming it was discussed, so dont hesitate to change the name to something you think is more fitting
         if event == "-EXPAND SIM-":
             expand_list = []
             source_vals = list(pairs_source.values())
