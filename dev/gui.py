@@ -28,7 +28,8 @@ The GUI includes:
 More information on "Source" and "Target" can be found in bleu_score.py and bert.py
 
 Contributors:
-Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen, Jin Long Shi, Alden Strafford, Henry Qiu, Yuhao Wang, Ambrose Ngayinoko
+Aidan Hayes, Raj Jagroup, Joseph LaBianca, Yulong Chen - Fall 2022
+Jin Long Shi, Alden Strafford, Henry Qiu, Yuhao Wang, Ambrose Ngayinoko - Spring 2023
 '''
 
 if not nltk.data.find("tokenizers/punkt"):
@@ -36,7 +37,7 @@ if not nltk.data.find("tokenizers/punkt"):
 
 #For exe- uncomment below line
 #bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
-#For exe- replace line 45 (open moreLang csv) with below line and uncomment line 373 and comment out line 374 (userguide open)
+#For exe- replace line 46 (open moreLang csv) with below line and uncomment line 390 and comment out line 391 (userguide open)
 #with open(os.path.abspath(os.path.join(bundle_dir, "moreLanguagesFinal.csv")), 'r', encoding = "utf-8") as file:
 
 display_trans = {}
@@ -50,6 +51,7 @@ dlOptions = ['Source', 'Target']
 
 dlImg = b'iVBORw0KGgoAAAANSUhEUgAAADMAAAA7CAYAAADW8rJHAAAAAXNSR0IArs4c6QAAAoBJREFUaEPtmW3OwUAQx6dEKhLEyw1wBgfwwdsBnNEFvB3BFfQKmiARkbBPWk+l2LYzuzt4nqyvpjPz+8/s2A4HeD9C4t7hCsnmGACEEK8sjhOGZInL4jQJJKoIF5CFQfS8tMVsZRDK3UUi2FJMbWUoasls7QBAKGjbDCFSqoltM4SCts0QItk20xXJtpmugnaaIRS0bYYQyU4zXZFsm+kqaKcZQsE/02bxZVhSZXVgMP6lelLb7CHJlP2XKgzWvzYMZUOpAkPxrwVDTY7bng8mXB4/7pApMKm2Et+J8wd7ZjIDPgXFwlD9GrnOoILGgIK/AJIVvFUx1Sb+MHbRjq3Mb+zkBBG/PUomWJBQSGIEdIWIfqXm4/EYZrMZOke0YSzaW4CoICqViZhYgVRAdGDYztBoNIL5fK7SMQ9n5vl0YxwarRABRJprlPBLUoQpYgSIAvI89qNcA5jEZN4FNBwOYbFYaHVCkKvTarWE53nS0djpdMDzPEwQ5TNEAIF2uy02m438XhbAuK4rTqeT1KDRaIDv+1gYMhAFJHBer9fFdruV5losFsEpFArifD6bgkED9ft9WK1WFKFSYVzXZYHJBFIByaoMJ0wi0GAwgOVySapI1DZpbcYN8wJEmI7Stv80TAgUy0ypIt9SGROX57uPb6iMMSALE0lZrVZhv99r9bmxsgBApVIRu91O6jJzmuVyOSiVSpDP503mpOTrcrnA8XiE6/WqBqMU9UMPZVbmQ3kphf1/MLVaTfi+r6TGNz0U3PBTX86+KdmsXCaTyX0HYOTVNysg1/fdbhfW6/XvnvQWRTSbTTgcDtESnCu2Eb/BHqBcLkOv14PpdBr+Fv4A8cnJcCg/vWQAAAAOZVhJZk1NACoAAAAIAAAAAAAAANJTkwAAAABJRU5ErkJggg=='
 
+#resizing window functionality- should work, not tested very heavily though
 w, h = sg.Window.get_screen_size()
 ratio = round(w/h, 2)
 widthMultiplier = .01
@@ -77,6 +79,8 @@ INPUT_BOX_SIZE = (round(widthMultiplier * w), round(heightMultiplier * h)) #roun
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
 colors = gen_colors() # Generate random colors for highlighting
+pairs_source = {}
+pairs_target = {}
 
 # Section to select which language a user wants the display in
 
@@ -118,19 +122,6 @@ text_entry = [
         sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
-
-    #CAN PROBABLY REMOVE THESE LABELS 
-    #[
-    #sg.Text("Source", key="-SOURCE-"),
-
-        #Centering of labels, perhaps there is a better way... seems to work for now
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("\t"),
-        #sg.Text("Target", key="-TARGET-"),
-    #],
 
     # Text you want to compare
     [ 
@@ -323,19 +314,23 @@ def run():
             
 
             # Determining which comparison type is being used
-            if compare_type == "BLEU Score":
-                pairs_source, pairs_target = bleu(source, target, colors, sim_percent)
-                # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
-            elif compare_type == "Sentence Bert":
-                pairs_source, pairs_target = bert(source, target, colors, sim_percent)
-                # Display similarity % of articles
-                window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
-                window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
-            # Highlight text based on results of comparison
-            highlight_sim("-TEXT 1-", source, pairs_source)
-            highlight_sim("-TEXT 2-", target, pairs_target)
+            try:
+                if compare_type == "BLEU Score":
+                    pairs_source, pairs_target = bleu(source, target, colors, sim_percent)
+                    # Display similarity % of articles
+                    window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
+                    window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
+                elif compare_type == "Sentence Bert":
+                    pairs_source, pairs_target = bert(source, target, colors, sim_percent)
+                    # Display similarity % of articles
+                    window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
+                    window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
+                window["-EXPAND SIM-"].update(visible=True)
+                # Highlight text based on results of comparison
+                highlight_sim("-TEXT 1-", source, pairs_source)
+                highlight_sim("-TEXT 2-", target, pairs_target)
+            except ZeroDivisionError:
+                sg.popup_ok("Must have text in both source and target to perform compare operation.", title="ERROR: MISSING TEXT!")
             
 
         # Translate user inputed text
@@ -351,18 +346,20 @@ def run():
                     sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
                 #if len(target) < 4500: can change this if to try and except to the popups below
-                try:
-                    code = link.replace("https://", "")
-                    code = code.split('.')
-                    code = code[0]
-                    target = translate(code, target)
-                    window["-TEXT 2-"].update("")
-                    window["-TEXT 2-"].update(target)
-                except:
-                    try:
-                        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
-                    except:
-                        sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
+                if(len(target) > 4500):
+                    sg.popup_ok("Translation of article over 4500 words may take long to translate- please wait.", title="Warning: Long Translate Request")
+                #try:
+                code = link.replace("https://", "")
+                code = code.split('.')
+                code = code[0]
+                target = translate(code, target)
+                window["-TEXT 2-"].update("")
+                window["-TEXT 2-"].update(target)
+                #except:
+                #    try:
+                #        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
+                #    except:
+                #       sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
 
 
         # NOT IMPLEMENTED
@@ -380,12 +377,24 @@ def run():
             window["-TEXT 1 SIM PERCENT-"].update("")
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
+            window["-EXPAND SIM-"].update(visible=False)
 
         if event == "-USER GUIDE-":
             #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
             file = open("userguide.txt")
             user_guide = file.read()
             sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
+
+        #expand view- shows matching sentences in popup- renaming it was discussed, so dont hesitate to change the name to something you think is more fitting
+        if event == "-EXPAND SIM-":
+            expand_list = []
+            source_vals = list(pairs_source.values())
+            target_vals = list(pairs_target.values())
+            for i in range(0, len(source_vals)):
+                expand_list.append(str(i+1) + ": SOURCE TEXT- " + target_vals[i][0] + "\nTARGET TEXT- " + source_vals[i][0] + "\n\n") #\n creates space for each line after, unsure how to fix, since cant use sep arg
+            sg.popup_scrolled(' '.join(expand_list), title="Expanded View", font=("Arial", 18), size=(63, 18))
+            #for i in range(0, len(source_vals)):
+            #, text_color_for_value="white", background_color_for_value=source_vals[i][1], append=True        	
 
         # Searching link events 
         if event == 'Enter':
