@@ -142,7 +142,7 @@ text_entry = [
         sg.Text('')
     ],
 
-    # Statistics display
+# Statistics display
     [
         sg.Text("Word Count: ", key="-WORD COUNT 1-"),
         sg.Text(" ", key="-TEXT 1 WORD COUNT-"),

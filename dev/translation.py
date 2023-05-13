@@ -91,5 +91,4 @@ def translate(code, target):
                     result = result + str(resultFragment)
                     i += 1
         return result
-    
-    #if this line is hit, return the popup that we will have to auto translate
+    #if this line is hit, return the popup that user will have to manually translate
