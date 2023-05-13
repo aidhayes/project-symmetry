@@ -1,5 +1,4 @@
 from .translation import translate
-from .translate_back import translate_back
 import PySimpleGUI as sg
 #from .ui.languages import lang_eng, display_trans
 from .comparison.bleu_score import compare as bleu
@@ -43,7 +42,7 @@ if not nltk.data.find("tokenizers/punkt"):
 
 display_trans = {}
 lang_eng = []
-with open("supplements\moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
+with open("./supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
     for line in csv.reader(file):
         display_trans[line[0]] = line[2:]
         lang_eng.append(line[0])
@@ -134,19 +133,14 @@ text_entry = [
         sg.Text('')
     ],
 
-    [
-        sg.Push(),
-        sg.Button("Expanded View", key="-EXPAND SIM-", visible=False)
-    ],
-
-    # Statistics display
+# Statistics display
     [
         sg.Text("Word Count: ", key="-WORD COUNT 1-"),
         sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
         sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
-      
-        sg.Push(),        
+
+        sg.Push(),
 
         sg.Button('', image_data=dlImg, border_width = 25,
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
@@ -159,7 +153,7 @@ text_entry = [
         sg.Button('', image_data=dlImg, border_width=25, 
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
             key="-SELECT DOWNLOAD CHOICE 2-"),
-            
+
         sg.Push(),
 
         sg.Text("Word Count: ", key="-WORD COUNT 2-"),
@@ -294,20 +288,17 @@ def run():
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
         
-        if event == "-FOLDER CHOICE-":
-            folderChoice = values["-FOLDER CHOICE-"]
-        
         if event == "-SELECT DOWNLOAD CHOICE-":
-                f = open("myfile.txt", "w")
-                print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
-                f.write(values["-TEXT 1-"])
-                f.close()
+            f = open("myfile.txt", "w")
+            print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
+            f.write(values["-TEXT 1-"])
+            f.close()
 
         if event == "-SELECT DOWNLOAD CHOICE 2-":
-                f = open("myfile.txt", "w")
-                print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
-                f.write(values["-TEXT 2-"])
-                f.close()
+            f = open("myfile.txt", "w")
+            print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
+            f.write(values["-TEXT 2-"])
+            f.close()
 
         # Comparing user inputted text
         if event == "-COMPARE-":
@@ -370,12 +361,13 @@ def run():
                 #    except:
                 #       sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
 
+
         # NOT IMPLEMENTED
-        if event == "-TRANSLATE BACK-":
-            text2 = values["-TEXT 2-"]
-            text2 = translate_back(text2, text2)
-            window["-TEXT 2-"].update("")
-            window["-TEXT 2-"].update(text2)
+        #if event == "-TRANSLATE BACK-":
+         #   text2 = values["-TEXT 2-"]
+          #  text2 = translate_back(text2, text2)
+           # window["-TEXT 2-"].update("")
+            #window["-TEXT 2-"].update(text2)
         
         # Clear button
         if event == "-CLEAR-":
@@ -420,9 +412,10 @@ def run():
             # Only if the link was entered will this work, exception handling a crash 
 
             try:
-                link = link.replace("https://", "")
-                linkList = link.split(".", 1)
-                linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
+                #link = link.replace("https://", "")
+                #linkList = link.split(".", 1)
+                #linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
+                linkTwo = languagesSACDict[linkTwoFragment]
                 print(linkTwo)
                 response = requests.get(linkTwo)
                 """
