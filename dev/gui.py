@@ -148,13 +148,10 @@ text_entry = [
         sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
         sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
-        #sg.In(size=(round(widthMultiplier * w/3),1), enable_events=True, key = '-FOLDER CHOICE-'),
-        #sg.FolderBrowse(),
-        #sg.Combo(dlOptions, size = (round(widthMultiplier * w/6),1), key="-DOWNLOAD CHOICE-", default_value="Download Text"), 
-      
-        sg.Push(),        
 
-        sg.Button('', image_data=dlImg, border_width = 50,
+        sg.Push(),
+
+        sg.Button('', image_data=dlImg, border_width = 25,
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
             key="-SELECT DOWNLOAD CHOICE-"),
         sg.Push(),
@@ -162,10 +159,10 @@ text_entry = [
         sg.Push(),
         sg.Push(),
         sg.Push(),
-        sg.Button('', image_data=dlImg, 
+        sg.Button('', image_data=dlImg, border_width=25, 
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
             key="-SELECT DOWNLOAD CHOICE 2-"),
-            
+
         sg.Push(),
 
         sg.Text("Word Count: ", key="-WORD COUNT 2-"),
@@ -300,31 +297,17 @@ def run():
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
         
-        if event == "-FOLDER CHOICE-":
-            folderChoice = values["-FOLDER CHOICE-"]
-        
         if event == "-SELECT DOWNLOAD CHOICE-":
-            choice = values["-DOWNLOAD CHOICE-"]
+            f = open("myfile.txt", "w")
+            print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
+            f.write(values["-TEXT 1-"])
+            f.close()
 
-            if folderChoice:
-                f = open(f"{folderChoice}/myfile.txt", "w")
-                if choice == dlOptions[0]:
-                    print(f"Downloading {dlOptions[0].lower()} text to {folderChoice}")
-                    f.write(values["-TEXT 1-"])
-                elif choice == dlOptions[1]:
-                    print(f"Downloading {dlOptions[1].lower()} text to {folderChoice}")
-                    f.write(values["-TEXT 2-"])
-                f.close()
-
-            else:
-                f = open("myfile.txt", "w")
-                if choice == dlOptions[0]:
-                    print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
-                    f.write(values["-TEXT 1-"])
-                elif choice == dlOptions[1]:
-                    print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
-                    f.write(values["-TEXT 2-"])
-                f.close()
+        if event == "-SELECT DOWNLOAD CHOICE 2-":
+            f = open("myfile.txt", "w")
+            print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
+            f.write(values["-TEXT 2-"])
+            f.close()
 
         # Comparing user inputted text
         if event == "-COMPARE-":

@@ -33,7 +33,6 @@ typing-extensions==4.4.0
 urllib3==1.26.12
 zipp==3.10.0
 textblob==0.17.1
-#httpx==0.23.3
 googletrans==3.0.0
 deepl==1.13.0
 nltk==3.8.1
