@@ -53,18 +53,18 @@ dlImg = b'iVBORw0KGgoAAAANSUhEUgAAADMAAAA7CAYAAADW8rJHAAAAAXNSR0IArs4c6QAAAoBJRE
 w, h = sg.Window.get_screen_size()
 ratio = round(w/h, 2)
 widthMultiplier = .01
-heightMultiplier = .01
+heightMultiplier = .01 
 if (0.00 < ratio < 1.59):
-    widthMultiplier = 0.038
-    heightMultiplier = 0.025
+    widthMultiplier = 0.028 #0.038
+    heightMultiplier = 0.015 #0.025
 
 elif (1.60 < ratio < 1.69):
-    widthMultiplier = 0.034
-    heightMultiplier = 0.021
+    widthMultiplier = 0.024 #0.034
+    heightMultiplier = 0.011 #0.021
 
 elif (1.7 < ratio < 1.79):
-    widthMultiplier = 0.03
-    heightMultiplier = 0.017
+    widthMultiplier = 0.01 #0.03
+    heightMultiplier = 0.07 #0.017
 
 else:
     widthMultiplier = 0.025

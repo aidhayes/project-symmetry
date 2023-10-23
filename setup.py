@@ -1,5 +1,6 @@
 from setuptools import setup
 
+
 APP=['main.py']
 
 OPTIONS={
