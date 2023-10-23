@@ -8,7 +8,7 @@ from textwrap import wrap
 
 #here is the auth_key which connects to deepl allowing us to be able to translate
 #google_trans helps with the language codes
-auth_key = "1b432087-4d5a-93bb-cc4c-3ad8617d9e35:fx" #"0ff6b0ef-fc20-631e-6feb-695b9d666743:fx" 
+auth_key = "9f340417-7f80-e70f-8193-d1c8a5f97866:fx" #"0ff6b0ef-fc20-631e-6feb-695b9d666743:fx" 
 deepl_trans = deepl.Translator(auth_key)
 
 # allows deepl to translate the target article
@@ -91,5 +91,4 @@ def translate(code, target):
                     result = result + str(resultFragment)
                     i += 1
         return result
-    
-    #if this line is hit, return the popup that we will have to auto translate
+    #if this line is hit, return the popup that user will have to manually translate
