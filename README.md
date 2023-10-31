@@ -9,7 +9,7 @@ The intended use of this software is for comparing Wikipedia articles, however i
 For more information, visit: https://www.grey-box.ca
 
 ## Requirements
-Python version >=3.7 < 3.11
+Python version >=3.7 < 3.11  
 https://www.python.org/downloads/  
 Git:  
 https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
@@ -24,7 +24,7 @@ git clone https://github.com/aidhayes/project-symmetry
 cd project-symmetry
 # install required libraries
 python -m pip install -r requirements.txt
-# installl Punkt
+# install Punkt
 python import nltk
 nltk.download('punkt')
 # run program
