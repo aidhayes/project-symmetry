@@ -289,13 +289,13 @@ def run():
             sim_percent = int(values["-COMPARE VAL-"]) / 100
         
         if event == "-SELECT DOWNLOAD CHOICE-":
-            f = open("myfile.txt", "w")
+            f = open("myfile.txt", "w", encoding="utf-8")
             print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
             f.write(values["-TEXT 1-"])
             f.close()
 
         if event == "-SELECT DOWNLOAD CHOICE 2-":
-            f = open("myfile.txt", "w")
+            f = open("myfile.txt", "w", encoding = "utf-8")
             print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
             f.write(values["-TEXT 2-"])
             f.close()

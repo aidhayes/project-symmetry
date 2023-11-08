@@ -1,0 +1,13 @@
+
+This is an example page for use in tutorials, help pages, or any other place where it would be inconvenient to link to another Wikipedia page.
+Example text
+Example bold text
+Example italic text
+Example bold and italic text
+Example underlined text
+Example block quote textExample blue link
+Example red link
+.mw-parser-output .fakelinks{cursor:pointer;color:#0645ad}.mw-parser-output .fakelinks:hover,.mw-parser-output .fakelinks:focus{text-decoration:underline}.mw-parser-output .fakelinks:visited{color:#0b0080}.mw-parser-output .fakelinks:active{color:#faa700}Example fake link
+.mw-parser-output .fakeredlinks{cursor:pointer;color:#ba0000}.mw-parser-output .fakeredlinks:hover,.mw-parser-output .fakeredlinks:focus{text-decoration:underline}.mw-parser-output .fakeredlinks:visited{color:#ba0000}.mw-parser-output .fakeredlinks:active{color:#ba0000}Example fake redlink
+Example cited text[1] with web reference
+Example cited text[2] without web reference
