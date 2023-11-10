@@ -325,7 +325,7 @@ def run():
                     # Display similarity % of articles
                     window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
                     window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
-                window["-EXPAND SIM-"].update(visible=True)
+
                 # Highlight text based on results of comparison
                 highlight_sim("-TEXT 1-", source, pairs_source)
                 highlight_sim("-TEXT 2-", target, pairs_target)
@@ -345,9 +345,6 @@ def run():
                 except:
                     sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
-                #if len(target) < 4500: can change this if to try and except to the popups below
-                if(len(target) > 4500):
-                    sg.popup_ok("Translation of article over 4500 words may take long to translate- please wait.", title="Warning: Long Translate Request")
                 #try:
                 code = link.replace("https://", "")
                 code = code.split('.')
@@ -377,7 +374,6 @@ def run():
             window["-TEXT 1 SIM PERCENT-"].update("")
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
-            window["-EXPAND SIM-"].update(visible=False)
 
         if event == "-USER GUIDE-":
             #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
@@ -385,6 +381,7 @@ def run():
             user_guide = file.read()
             sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
 
+        #Not currently implemented
         #expand view- shows matching sentences in popup- renaming it was discussed, so dont hesitate to change the name to something you think is more fitting
         if event == "-EXPAND SIM-":
             expand_list = []
