@@ -7,3 +7,4 @@ gui.spec
 tmp_env/
 query.py
 .idea/
+symmetry_env/
