@@ -82,8 +82,7 @@ colors = gen_colors() # Generate random colors for highlighting
 pairs_source = {}
 pairs_target = {}
 
-# Section to select which language a user wants the display in
-
+# Section to select which language a user wants the display in the app screen
 lang_selection = [
     [
         sg.Text("")
@@ -104,6 +103,14 @@ lang_selection = [
 #sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) 
 
 text_entry = [
+     [
+       # sg.Push(),
+       # sg.Push(),
+        sg.Button("User Guide", key="-USER GUIDE-"),
+        sg.Push(),
+        sg.Push(),
+    ],
+    #sg.Push(),
 
     # Comparison and similarity score selection 
     [
@@ -117,9 +124,12 @@ text_entry = [
     # Link input box 
     [
         sg.Push(),
-        sg.Text('Source Article:'), sg.InputText('Please enter you copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        #sg.Text('Source Article:'), sg.InputText('Paste your copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        sg.Button("Source Article:", key="-SOURCE ARTICLE LANG-"), sg.InputText('Paste your copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        #sg.Button("Source Article:", key="-USER GUIDE-"),
         sg.Push(),
-        sg.Text('Target Article:'), sg.Combo('Please enter you copied link here, and click Select', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        #sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your copied link, and click Select!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        sg.Button("Target Article:", key="-TARGET ARTICLE LANG-"), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your copied link, and click Select!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
 
@@ -170,10 +180,11 @@ text_entry = [
         sg.Button("Translate", key="-TRANSLATE-")
     ],
 
-    [
-        sg.Push(),
-        sg.Button("User Guide", key="-USER GUIDE-")
-    ]
+      # Moved to up to the font od the screen for a better visibility
+    # [
+    #     sg.Push(),
+    #     sg.Button("User Guide", key="-USER GUIDE-")
+    # ]
 ]
 
 # Setting the layout of the window
@@ -264,7 +275,9 @@ def run():
             print(lang)
             window["-SELECT LANG-"].update(display_trans[lang][0])
             window["-SELECT-"].update(display_trans[lang][1])
-            #window['-WELCOME-'].update(display_trans[lang][2])
+            window["-SOURCE ARTICLE LANG-"].update(display_trans[lang][14]) #[2]
+            window['-TARGET ARTICLE LANG-'].update(display_trans[lang][15]) #[2]
+            #window['-LANG-'].update(display_trans[lang][2])
             window["-COMPARE-"].update(display_trans[lang][3])
             window["-SELECT COMPARE TEXT-"].update(display_trans[lang][4])
             window["-COMPARE VAL TEXT-"].update(display_trans[lang][5])
@@ -275,8 +288,8 @@ def run():
             window["-WORD COUNT 2-"].update(display_trans[lang][8])
             window["-TEXT SIM PERCENT 1-"].update(display_trans[lang][9])
             window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
-            #window["-SOURCE-"].update(display_trans[lang][14])
-            #window["-TARGET-"].update(display_trans[lang][15])
+           # window["-SOURCE-"].update(display_trans[lang][14])  
+           # window["-TARGET-"].update(display_trans[lang][15])  
             window["-USER GUIDE-"].update(display_trans[lang][16])
 
         '''
@@ -404,7 +417,7 @@ def run():
             languagesSACDict = scraper.languageGetter(link) # Dictionary for second language for article link (e.g.: [English - en,..中文 - zh]) 
             languagesSAC = list(languagesSACDict.keys())
             #print(languagesSAC) # Prints the available languages for checks and balances
-            window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
+            window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Paste your copied link here, and Click Select') #'Click here!'
             window["-TEXT 1-"].update(scraper.textGetter(link))
 
         if event == "-CONFIRM SAC-": 
