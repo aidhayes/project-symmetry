@@ -12,7 +12,7 @@ def translator(shortLanguage):
     translators = ['Select%20Language%3A','Select','Wikipedia%20Article%20Comparison%20Tool','Compare','Select%20comparison%20tool%3A',
     'Select%20similarity%20percentage%3A','Translate','Clear','Word%20Count%3A','Similarity%20Percentage%3A','ERROR%3A%20NO%20TEXT%20IN%20SOURCE%20BOX!',
     'In%20order%20to%20translate%2C%20text%20is%20needed%20in%20the%20Source%20box%20so%20that%20the%20text%20in%20the%20Target%20box%20can%20be%20translated%20to%20match.',
-    'ERROR%3A%20Too%20many%20characters','The%20length%20of%20text%20you%20are%20trying%20to%20translate%20exceeds%20the%20character%20limit%20of%204500.','Source','Target']
+    'ERROR%3A%20Too%20many%20characters','The%20length%20of%20text%20you%20are%20trying%20to%20translate%20exceeds%20the%20character%20limit%20of%204500.','Source','Target']#working on SA TA no change...
 
     # start by defining the options 
     options = webdriver.ChromeOptions() 

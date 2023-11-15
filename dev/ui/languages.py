@@ -63,7 +63,7 @@ lang_eng = [
 
 #print(text)
 
-# Dictionary of translations for application
+# UPDATE COMMENT: Dictionary of translations for application "of the screen"
 display_trans = {
     "العربية": [
         "اختار اللغة:",
@@ -353,21 +353,22 @@ display_trans = {
     "Français": [
         "Choisir la langue:",
         "Sélectionner",
-        "Outil de comparaison de l'article Wikipedia",
+        "Outil de comparaison de l'article de Wikipedia",
         "Comparer",
         "Sélectionnez l'outil de comparaison:",
         "Sélectionnez le pourcentage de similitude:",
         "Traduire",
-        "Dégager",
+        "Effacer",
         "Nombre de mots:",
         "Pourcentage de similitude:",
         "Erreur: pas de texte dans la boîte source!",
         "Pour traduire, le texte est nécessaire dans la zone source afin que le texte de la zone cible puisse être traduit pour correspondre.",
         '"Erreur: trop de caractères"',
-        "La longueur du texte que vous essayez de traduire dépasse la limite de caractères de 4500.",
+        "La longueur du texte que vous essayez de traduire dépasse la limite de 4500 caractères.",
         "La source",
         "Cible",
-        "Mode d'emploi"
+        "Mode d'Emploi"
+        "Article de Source"
     ],
     "Galego": [
         "Selecciona Idioma:",

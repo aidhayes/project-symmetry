@@ -82,8 +82,7 @@ colors = gen_colors() # Generate random colors for highlighting
 pairs_source = {}
 pairs_target = {}
 
-# Section to select which language a user wants the display in
-
+# Section to select which language a user wants the display in the screen
 lang_selection = [
     [
         sg.Text("")
@@ -91,12 +90,12 @@ lang_selection = [
 
     [
         sg.Push(),
-        sg.Text("App Language:", key="-SELECT LANG-"), 
-        sg.Combo(lang_eng, key="-LANG-", default_value="English", size = (10, 1)), 
+        sg.Text("App Language:", key="-SELECT LANG-"),                            #WORKING on this...
+        sg.Combo(lang_eng, key="-LANG-", default_value="English", size = (10, 1)), #WORKING on this...
         sg.Button("Select", key = "-SELECT-")
     ]
     
-]
+]#end of lang_selection
 
 # Title of application
 #welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
@@ -117,9 +116,10 @@ text_entry = [
     # Link input box 
     [
         sg.Push(),
-        sg.Text('Source Article:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+      #  sg.Text('Source Article:'), sg.InputText('Please enter your copied link here and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        sg.Button('Source Article:'), sg.InputText('Please enter your copied link here and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
         sg.Push(),
-        sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Please enter your copied link here and click Select", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
 
@@ -144,7 +144,7 @@ text_entry = [
 
         sg.Button('', image_data=dlImg, border_width = 25,
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE-"),
+            key="-SELECT DOWNLOAD CHOICE-"),       #Button to Download..
         sg.Push(),
         sg.Push(),
         sg.Push(),
@@ -167,14 +167,15 @@ text_entry = [
         # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-"),
         sg.Button("Compare", key="-COMPARE-"),
-        sg.Button("Translate", key="-TRANSLATE-")
+        sg.Button("Translate", key="-TRANSLATE-")  #NEED TO Fix this... 
     ],
 
+        # Buttons for User Guide
     [
         sg.Push(),
         sg.Button("User Guide", key="-USER GUIDE-")
     ]
-]
+]#end of text_entry
 
 # Setting the layout of the window
 # THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING 
@@ -262,7 +263,7 @@ def run():
         if event == "-SELECT-":
             lang = values["-LANG-"]
             print(lang)
-            window["-SELECT LANG-"].update(display_trans[lang][0])
+            window["-SELECT LANG-"].update(display_trans[lang][0])   #Select lang no translation on Sorce Art ans Targ Art 
             window["-SELECT-"].update(display_trans[lang][1])
             #window['-WELCOME-'].update(display_trans[lang][2])
             window["-COMPARE-"].update(display_trans[lang][3])
