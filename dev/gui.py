@@ -117,9 +117,9 @@ text_entry = [
     # Link input box 
     [
         sg.Push(),
-        sg.Text('Source Article:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        sg.Text('Source Article:'), sg.InputText('Please enter you copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
         sg.Push(),
-        sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        sg.Text('Target Article:'), sg.Combo('Please enter you copied link here, and click Select', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
 
