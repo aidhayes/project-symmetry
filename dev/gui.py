@@ -275,7 +275,7 @@ def run():
             print(lang)
             window["-SELECT LANG-"].update(display_trans[lang][0])
             window["-SELECT-"].update(display_trans[lang][1])
-            window["-SOURCE ARTICLE LANG-"].update(display_trans[lang][14]) #[2]
+            window["-SOURCE ARTICLE LANG-"].update(display_trans[lang][14]) #[2] Ud
             window['-TARGET ARTICLE LANG-'].update(display_trans[lang][15]) #[2]
             #window['-LANG-'].update(display_trans[lang][2])
             window["-COMPARE-"].update(display_trans[lang][3])
@@ -287,9 +287,7 @@ def run():
             window["-WORD COUNT 1-"].update(display_trans[lang][8])
             window["-WORD COUNT 2-"].update(display_trans[lang][8])
             window["-TEXT SIM PERCENT 1-"].update(display_trans[lang][9])
-            window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
-           # window["-SOURCE-"].update(display_trans[lang][14])  
-           # window["-TARGET-"].update(display_trans[lang][15])  
+            window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9]) 
             window["-USER GUIDE-"].update(display_trans[lang][16])
 
         '''
