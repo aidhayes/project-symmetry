@@ -13,6 +13,10 @@ import csv
 import sys
 import os
 
+#Check if the current working directory is writable and accessible. 
+# You can print the current working directory using os.getcwd().
+print("Current Working Directory:", os.getcwd())
+
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
 
@@ -117,7 +121,7 @@ text_entry = [
         sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
         sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
         sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
-        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 
+        sg.Slider(range=(1, 100), default_value=10, resolution=.01, orientation="h", key="-COMPARE VAL-"), # Default 1 -> 10 . I assigned resolution to .01
         sg.Button("Select", key="-SELECT COMPARE VALS-")
     ],
 
@@ -125,11 +129,11 @@ text_entry = [
     [
         sg.Push(),
         #sg.Text('Source Article:'), sg.InputText('Paste your copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
-        sg.Button("Source Article:", key="-SOURCE ARTICLE LANG-"), sg.InputText('Paste your copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        sg.Button("Source Article:", key="-SOURCE ARTICLE LANG-"), sg.InputText('Paste your link, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
         #sg.Button("Source Article:", key="-USER GUIDE-"),
         sg.Push(),
         #sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your copied link, and click Select!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
-        sg.Button("Target Article:", key="-TARGET ARTICLE LANG-"), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your copied link, and click Select!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        sg.Button("Target Article:", key="-TARGET ARTICLE LANG-"), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your link, Select language, and click Select", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
 
@@ -152,6 +156,7 @@ text_entry = [
 
         sg.Push(),
 
+       # Buttons to downloads
         sg.Button('', image_data=dlImg, border_width = 25,
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
             key="-SELECT DOWNLOAD CHOICE-"),
@@ -172,12 +177,20 @@ text_entry = [
         sg.Text(" ", key="-TEXT 2 SIM PERCENT-")
     ],
 
+    #Button for message after clicking downlo
+    [
+       # [sg.Button('Download Wikipedia Page')]
+    ],
+
+
+
     # Buttons for clear, compare, and translate
     [ 
         # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-"),
+        sg.Push(),
         sg.Button("Compare", key="-COMPARE-"),
-        sg.Button("Translate", key="-TRANSLATE-")
+      #  sg.Button("Translate", key="-TRANSLATE-")
     ],
 
       # Moved to up to the font od the screen for a better visibility
@@ -248,6 +261,13 @@ def highlight_diff(element, text, pairs):
              ...
     '''
 
+
+''''''
+#def download_msg(message):
+#    sg.Popup(message) 
+#download_msg("Download Completed!") 
+    
+
 '''
 Event loop
 Reads for on screen events performed by the user
@@ -267,7 +287,7 @@ def run():
             break
         
         '''
-        Update on screen display language to the selected language by a user
+        Update on screen display language to the selected language by a user.
         Language and matching translations are stored in a dictionary in languages.py
         '''
         if event == "-SELECT-":
@@ -282,7 +302,7 @@ def run():
             window["-SELECT COMPARE TEXT-"].update(display_trans[lang][4])
             window["-COMPARE VAL TEXT-"].update(display_trans[lang][5])
             window["-SELECT COMPARE VALS-"].update(display_trans[lang][1])
-            window["-TRANSLATE-"].update(display_trans[lang][6])
+         #   window["-TRANSLATE-"].update(display_trans[lang][6])
             window["-CLEAR-"].update(display_trans[lang][7])
             window["-WORD COUNT 1-"].update(display_trans[lang][8])
             window["-WORD COUNT 2-"].update(display_trans[lang][8])
@@ -299,17 +319,38 @@ def run():
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
         
+        #========================
+
+        #Specify an absolute path for the file to ensure that it is saved in a 
+        # location where the program has write permissions. Make sure to 
+        # replace "/path/to/your/directory/" with the actual path where you want to save the file.
+        file_path_text_1 = r"C:\Users\xiggy\OneDrive\Desktop\project-symmetry\project-symmetry\text1_download.txt"
+
         if event == "-SELECT DOWNLOAD CHOICE-":
-            f = open("myfile.txt", "w")
-            print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
-            f.write(values["-TEXT 1-"])
-            f.close()
+            try:
+                with open(file_path_text_1, "w", encoding="utf-8") as file:
+                    file.write(values["-TEXT 1-"])
+                print(f"Downloaded {dlOptions[0].lower()} text to: {file_path_text_1}")
+                sg.popup('Download complete!')
+            except Exception as e:
+                print(f"Error during download: {e}")
+
+        
+        #Specify an absolute path for the file to ensure that it is saved in a 
+        # location where the program has write permissions. Make sure to 
+        # replace "/path/to/your/directory/" with the actual path where you want to save the file.         
+        file_path_text_2 = r"C:\Users\xiggy\OneDrive\Desktop\project-symmetry\project-symmetry\text2_download.txt"
 
         if event == "-SELECT DOWNLOAD CHOICE 2-":
-            f = open("myfile.txt", "w")
-            print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
-            f.write(values["-TEXT 2-"])
-            f.close()
+            try:
+                with open(file_path_text_2, "w", encoding="utf-8") as file:
+                    file.write(values["-TEXT 2-"])
+                print(f"Downloaded {dlOptions[1].lower()} text to: {file_path_text_2}")
+                sg.popup('Download complete!')
+            except Exception as e:
+                print(f"Error during download: {e}")
+        
+        #========================    
 
         # Comparing user inputted text
         if event == "-COMPARE-":
@@ -336,7 +377,7 @@ def run():
                     # Display similarity % of articles
                     window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
                     window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
-                window["-EXPAND SIM-"].update(visible=True)
+             #   window["-EXPAND SIM-"].update(visible=True)
                 # Highlight text based on results of comparison
                 highlight_sim("-TEXT 1-", source, pairs_source)
                 highlight_sim("-TEXT 2-", target, pairs_target)
@@ -358,7 +399,7 @@ def run():
             else:
                 #if len(target) < 4500: can change this if to try and except to the popups below
                 #if(len(target) > 4500):
-                if len(target) > 4500 or len(target) == 4500:  # Change this condition
+                if len(target) > 4500 or len(target) == 4500:  # Change this condition to extend the capacity
                     sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- please wait.", title="Warning: Long Translate Request")
                 #try:
                 code = link.replace("https://", "")
@@ -390,7 +431,7 @@ def run():
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
             window["-EXPAND SIM-"].update(visible=False)
-
+        #User Guide button
         if event == "-USER GUIDE-":
             #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
             file = open("userguide.txt")
