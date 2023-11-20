@@ -160,9 +160,9 @@ text_entry = [
         sg.Button('', image_data=dlImg, border_width = 25,
             button_color=(sg.theme_background_color(),sg.theme_background_color()),
             key="-SELECT DOWNLOAD CHOICE-"),
-        sg.Push(),
-        sg.Push(),
-        sg.Push(),
+    #    sg.Push(),
+     #   sg.Push(),
+      #  sg.Push(),
         sg.Push(),
         sg.Push(),
         sg.Button('', image_data=dlImg, border_width=25, 
@@ -261,11 +261,6 @@ def highlight_diff(element, text, pairs):
              ...
     '''
 
-
-''''''
-#def download_msg(message):
-#    sg.Popup(message) 
-#download_msg("Download Completed!") 
     
 
 '''
@@ -314,11 +309,13 @@ def run():
         Selecting comparison %
         The compare methods will search for sentences in Source and Target that have a similarity score GREATER THAN OR EQUAL TO this number
         '''
+        sg.Push(),
+        #sg.Text(""),
         if event == "-SELECT COMPARE VALS-":
             compare_type = values["-COMPARE SELECT-"]
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
-        
+
         #========================
 
         #Specify an absolute path for the file to ensure that it is saved in a 
@@ -335,7 +332,9 @@ def run():
             except Exception as e:
                 print(f"Error during download: {e}")
 
-        
+        #sg.Push(),
+        #sg.Text(""),
+
         #Specify an absolute path for the file to ensure that it is saved in a 
         # location where the program has write permissions. Make sure to 
         # replace "/path/to/your/directory/" with the actual path where you want to save the file.         
@@ -346,6 +345,9 @@ def run():
                 with open(file_path_text_2, "w", encoding="utf-8") as file:
                     file.write(values["-TEXT 2-"])
                 print(f"Downloaded {dlOptions[1].lower()} text to: {file_path_text_2}")
+             #   try:
+               #     if()
+              #      else
                 sg.popup('Download complete!')
             except Exception as e:
                 print(f"Error during download: {e}")
@@ -378,6 +380,7 @@ def run():
                     window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
                     window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
              #   window["-EXPAND SIM-"].update(visible=True)
+                
                 # Highlight text based on results of comparison
                 highlight_sim("-TEXT 1-", source, pairs_source)
                 highlight_sim("-TEXT 2-", target, pairs_target)
