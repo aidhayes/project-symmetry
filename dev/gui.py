@@ -189,8 +189,11 @@ text_entry = [
         # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-"),
         sg.Push(),
+        #sg.Button("Compare", key="-COMPARE-"), 
+        sg.Button("Translate", key="-TRANSLATE-"),
+        sg.Push(),
+        #sg.Button("Translate", key="-TRANSLATE-"),
         sg.Button("Compare", key="-COMPARE-"),
-      #  sg.Button("Translate", key="-TRANSLATE-")
     ],
 
       # Moved to up to the font od the screen for a better visibility
@@ -489,3 +492,4 @@ def run():
                 
     window.close()
 
+#end run
