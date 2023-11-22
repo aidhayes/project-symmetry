@@ -5,11 +5,11 @@ import math
 import deepl
 from nltk.tokenize import sent_tokenize
 from textwrap import wrap
+from .deeplconfig import deepl_api_key
 
 #here is the auth_key which connects to deepl allowing us to be able to translate
 #google_trans helps with the language codes
-auth_key = "0ff6b0ef-fc20-631e-6feb-695b9d666743:fx" #this is specifically valentin/grey-box api key- it is a free key that allows 500k chars translated a month
-#whoever takes over- discuss with valentin best option- either paid version of deepl, or another translation api
+auth_key = deepl_api_key 
 deepl_trans = deepl.Translator(auth_key)
 
 # allows deepl to translate the target article
