@@ -408,7 +408,7 @@ def run():
                 #if len(target) < 4500: can change this if to try and except to the popups below
                 #if(len(target) > 4500):
                 if len(target) > 4500 or len(target) == 4500:  # Change this condition to extend the capacity of the article
-                    sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- please wait.", title="Warning: Long Translate Request")
+                    sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- Please click OK to continue.", title="Warning: Long Translation Request")
                 #try:
                 code = link.replace("https://", "")
                 code = code.split('.')
