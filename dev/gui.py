@@ -129,11 +129,13 @@ text_entry = [
     [
         sg.Push(),
         #sg.Text('Source Article:'), sg.InputText('Paste your copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
-        sg.Button("Source Article:", key="-SOURCE ARTICLE LANG-"), sg.InputText('Paste your link, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        sg.Button("Source Article:", key="-SOURCE ARTICLE LANG-"), sg.InputText('Paste your link, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), 
+        sg.Button('Enter'), 
         #sg.Button("Source Article:", key="-USER GUIDE-"),
         sg.Push(),
         #sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your copied link, and click Select!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
-        sg.Button("Target Article:", key="-TARGET ARTICLE LANG-"), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your link, Select language, and click Select", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        sg.Button("Target Article:", key="-TARGET ARTICLE LANG-"), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your link, Select language, and click Select", size = (22, 1)), 
+        sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
 
@@ -190,7 +192,7 @@ text_entry = [
         sg.Button("Clear", key="-CLEAR-"),
         sg.Push(),
         #sg.Button("Compare", key="-COMPARE-"), 
-        sg.Button("Translate", key="-TRANSLATE-"),
+        sg.Button("Translate", key="-TRANSLATE-"),      #sg.Button("User Guide", key="-USER GUIDE-"),
         sg.Push(),
         #sg.Button("Translate", key="-TRANSLATE-"),
         sg.Button("Compare", key="-COMPARE-"),
@@ -300,7 +302,7 @@ def run():
             window["-SELECT COMPARE TEXT-"].update(display_trans[lang][4])
             window["-COMPARE VAL TEXT-"].update(display_trans[lang][5])
             window["-SELECT COMPARE VALS-"].update(display_trans[lang][1])
-         #   window["-TRANSLATE-"].update(display_trans[lang][6])
+            window["-TRANSLATE-"].update(display_trans[lang][6])            #if window["-TRANSLATE-"].update(display_trans[lang][6])  
             window["-CLEAR-"].update(display_trans[lang][7])
             window["-WORD COUNT 1-"].update(display_trans[lang][8])
             window["-WORD COUNT 2-"].update(display_trans[lang][8])
@@ -331,7 +333,7 @@ def run():
                 with open(file_path_text_1, "w", encoding="utf-8") as file:
                     file.write(values["-TEXT 1-"])
                 print(f"Downloaded {dlOptions[0].lower()} text to: {file_path_text_1}")
-                sg.popup('Download complete!')
+                sg.popup('You downloaded your Source Article: Download complete!')
             except Exception as e:
                 print(f"Error during download: {e}")
 
@@ -351,7 +353,7 @@ def run():
              #   try:
                #     if()
               #      else
-                sg.popup('Download complete!')
+                sg.popup('You downloaded your Target Article: Download complete!')
             except Exception as e:
                 print(f"Error during download: {e}")
         
@@ -405,7 +407,7 @@ def run():
             else:
                 #if len(target) < 4500: can change this if to try and except to the popups below
                 #if(len(target) > 4500):
-                if len(target) > 4500 or len(target) == 4500:  # Change this condition to extend the capacity
+                if len(target) > 4500 or len(target) == 4500:  # Change this condition to extend the capacity of the article
                     sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- please wait.", title="Warning: Long Translate Request")
                 #try:
                 code = link.replace("https://", "")
