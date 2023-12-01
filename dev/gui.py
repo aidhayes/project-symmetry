@@ -65,8 +65,8 @@ elif (1.60 < ratio < 1.69):
     heightMultiplier = 0.011 #0.021
 
 elif (1.7 < ratio < 1.79):
-    widthMultiplier = 0.01 #0.03
-    heightMultiplier = 0.07 #0.017
+    widthMultiplier = 0.02 #0.03
+    heightMultiplier = 0.007 #0.017
 
 else:
     widthMultiplier = 0.025
