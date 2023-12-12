@@ -6,6 +6,7 @@ import deepl
 from nltk.tokenize import sent_tokenize
 from textwrap import wrap
 from .deeplconfig import deepl_api_key
+from deep_translator import GoogleTranslator
 
 #here is the auth_key which connects to deepl allowing us to be able to translate
 #google_trans helps with the language codes
@@ -17,6 +18,10 @@ deepl_trans = deepl.Translator(auth_key)
 
 deeplLangs = [
     "BG", "CS", "DA", "DE", "EL", "EN", "EN-GB", "EN-US", "ES", "ET", "FI", "FR", "HU", "ID", "IT", "JA", "KO", "LT", "LV", "NB", "NL", "PL", "PT", "PT-BR", "PT-PT", "RO", "RU", "SK", "SL", "SV", "TR", "UK", "ZH"
+]
+
+googleLangs = [
+    "af", "sq", "am", "ar", "hy", "az", "eu", "be", "bn", "bs", "bg", "ca", "ceb", "ny", "zh-cn", "zh-tw", "co", "hr", "cs", "da", "nl", "en", "eo", "et", "tl", "fi", "fr", "fy", "gl", "ka", "de", "el", "gu", "ht", "ha", "haw", "iw", "hi", "hmn", "hu", "is", "ig", "id", "ga", "it", "ja", "jw", "kn", "kk", "km", "ko", "ku", "ky", "lo", "la", "lv", "lt", "lb", "mk", "mg", "ms", "ml", "mt", "mi", "mr", "mn", "my", "ne", "no", "ps", "fa", "pl", "pt", "pa", "ro", "ru", "sm", "gd", "sr", "st", "sn", "sd", "si", "sk", "sl", "so", "es", "su", "sw", "sv", "tg", "ta", "te", "th", "tr", "uk", "ur", "uz", "vi", "cy", "xh", "yi", "yo", "zu"
 ]
 """
 "BG" : 'bg',
@@ -66,17 +71,20 @@ def translate(code, target):
         goog = goog + '-BR'
     # goog is the name of the language that we are changing right box into
     goog = 'EN-US'
-    """   
+    """
     if (code == "en"):
         code = "en-us"
     if (code == "pt"):
         code = "pt-br" 
     code = code.upper()
-
+    
     if len(target) < 4500:
         for language in deeplLangs:
+        #for language in googleLangs:
             if code == language:
+                #result = GoogleTranslator(source='auto', target=language).translate(target)
                 result = deepl_trans.translate_text(target, target_lang = language) #turns target into the translated language we want
+
                 return result
 
     else:
@@ -88,7 +96,9 @@ def translate(code, target):
                 textFragments = wrap(target, 4450, break_long_words=False) #first 4450 to translate without breaking words
                 while i < iterations:
                     resultFragment = ""
+                   # resultFragment = GoogleTranslator(source='auto', target='de').translate(textFragments[i])
                     resultFragment = deepl_trans.translate_text(textFragments[i], target_lang = language) 
+
                     result = result + str(resultFragment)
                     i += 1
         return result
