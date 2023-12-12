@@ -12,6 +12,7 @@ import dev.scraper as scraper
 import csv
 import sys
 import os
+from deepl.exceptions import QuotaExceededException
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -353,7 +354,10 @@ def run():
                 code = link.replace("https://", "")
                 code = code.split('.')
                 code = code[0]
-                target = translate(code, target)
+                try:
+                    target = translate(code, target)
+                except QuotaExceededException:
+                    sg.popup_ok("Your DeepL quota for this billing period has been exceeded.", title="Quota Exceeded")
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(target)
                 #except:
