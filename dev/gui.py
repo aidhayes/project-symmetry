@@ -158,18 +158,16 @@ text_entry = [
 
         sg.Push(),
 
-       # Buttons to downloads
-        sg.Button('', image_data=dlImg, border_width = 25,
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE-"),
+       # Buttons to downloads: Choice-1 
+ #       sg.Button('', image_data=dlImg, border_width = 25,button_color=(sg.theme_background_color(),sg.theme_background_color()), key="-SELECT DOWNLOAD CHOICE-"),
+    
     #    sg.Push(),
      #   sg.Push(),
       #  sg.Push(),
         sg.Push(),
         sg.Push(),
-        sg.Button('', image_data=dlImg, border_width=25, 
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE 2-"),
+        # Buttons to downloads: Choice-2
+ #       sg.Button('', image_data=dlImg, border_width=25,button_color=(sg.theme_background_color(),sg.theme_background_color()),key="-SELECT DOWNLOAD CHOICE 2-"),
 
         sg.Push(),
 
