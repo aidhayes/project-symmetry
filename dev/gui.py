@@ -14,6 +14,10 @@ import sys
 import os
 from deepl.exceptions import QuotaExceededException
 
+#Check if the current working directory is writable and accessible. 
+# You can print the current working directory using os.getcwd().
+print("Current Working Directory:", os.getcwd())
+
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
 
@@ -83,8 +87,7 @@ colors = gen_colors() # Generate random colors for highlighting
 pairs_source = {}
 pairs_target = {}
 
-# Section to select which language a user wants the display in
-
+# Section to select which language a user wants the display in the app screen
 lang_selection = [
     [
         sg.Text("")
@@ -105,22 +108,35 @@ lang_selection = [
 #sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) 
 
 text_entry = [
+     [
+       # sg.Push(),
+       # sg.Push(),
+        sg.Button("User Guide", key="-USER GUIDE-"),
+        sg.Push(),
+        sg.Push(),
+    ],
+    #sg.Push(),
 
     # Comparison and similarity score selection 
     [
         sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
         sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
         sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
-        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 
+        sg.Slider(range=(1, 100), default_value=10, resolution=.01, orientation="h", key="-COMPARE VAL-"), # Default 1 -> 10 . I assigned resolution to .01
         sg.Button("Select", key="-SELECT COMPARE VALS-")
     ],
 
     # Link input box 
     [
         sg.Push(),
-        sg.Text('Source Article:'), sg.InputText('https://en.wikipedia.org/wiki/Wikipedia:Example', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        #sg.Text('Source Article:'), sg.InputText('Paste your copied link here, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), sg.Button('Enter'), 
+        sg.Button("Source Article:", key="-SOURCE ARTICLE LANG-"), sg.InputText('Paste your link, and click Enter', key = '-LINK ENTERED-', size = (25, 1)), 
+        sg.Button('Enter'), 
+        #sg.Button("Source Article:", key="-USER GUIDE-"),
         sg.Push(),
-        sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        #sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your copied link, and click Select!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
+        sg.Button("Target Article:", key="-TARGET ARTICLE LANG-"), sg.Combo('', key = '-SAC CHOSEN-', default_value="Paste your link, Select language, and click Select", size = (22, 1)), 
+        sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
 
@@ -143,17 +159,16 @@ text_entry = [
 
         sg.Push(),
 
-        sg.Button('', image_data=dlImg, border_width = 25,
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE-"),
+       # Buttons to downloads: Choice-1 
+ #       sg.Button('', image_data=dlImg, border_width = 25,button_color=(sg.theme_background_color(),sg.theme_background_color()), key="-SELECT DOWNLOAD CHOICE-"),
+    
+    #    sg.Push(),
+     #   sg.Push(),
+      #  sg.Push(),
         sg.Push(),
         sg.Push(),
-        sg.Push(),
-        sg.Push(),
-        sg.Push(),
-        sg.Button('', image_data=dlImg, border_width=25, 
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE 2-"),
+        # Buttons to downloads: Choice-2
+ #       sg.Button('', image_data=dlImg, border_width=25,button_color=(sg.theme_background_color(),sg.theme_background_color()),key="-SELECT DOWNLOAD CHOICE 2-"),
 
         sg.Push(),
 
@@ -163,18 +178,30 @@ text_entry = [
         sg.Text(" ", key="-TEXT 2 SIM PERCENT-")
     ],
 
+    #Button for message after clicking downlo
+    [
+       # [sg.Button('Download Wikipedia Page')]
+    ],
+
+
+
     # Buttons for clear, compare, and translate
     [ 
         # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-"),
+        sg.Push(),
+        #sg.Button("Compare", key="-COMPARE-"), 
+        sg.Button("Translate", key="-TRANSLATE-"),      #sg.Button("User Guide", key="-USER GUIDE-"),
+        sg.Push(),
+        #sg.Button("Translate", key="-TRANSLATE-"),
         sg.Button("Compare", key="-COMPARE-"),
-        sg.Button("Translate", key="-TRANSLATE-")
     ],
 
-    [
-        sg.Push(),
-        sg.Button("User Guide", key="-USER GUIDE-")
-    ]
+      # Moved to up to the font od the screen for a better visibility
+    # [
+    #     sg.Push(),
+    #     sg.Button("User Guide", key="-USER GUIDE-")
+    # ]
 ]
 
 # Setting the layout of the window
@@ -238,6 +265,8 @@ def highlight_diff(element, text, pairs):
              ...
     '''
 
+    
+
 '''
 Event loop
 Reads for on screen events performed by the user
@@ -257,7 +286,7 @@ def run():
             break
         
         '''
-        Update on screen display language to the selected language by a user
+        Update on screen display language to the selected language by a user.
         Language and matching translations are stored in a dictionary in languages.py
         '''
         if event == "-SELECT-":
@@ -265,38 +294,47 @@ def run():
             print(lang)
             window["-SELECT LANG-"].update(display_trans[lang][0])
             window["-SELECT-"].update(display_trans[lang][1])
-            #window['-WELCOME-'].update(display_trans[lang][2])
+            window["-SOURCE ARTICLE LANG-"].update(display_trans[lang][14]) #[2] Ud
+            window['-TARGET ARTICLE LANG-'].update(display_trans[lang][15]) #[2]
+            #window['-LANG-'].update(display_trans[lang][2])
             window["-COMPARE-"].update(display_trans[lang][3])
             window["-SELECT COMPARE TEXT-"].update(display_trans[lang][4])
             window["-COMPARE VAL TEXT-"].update(display_trans[lang][5])
             window["-SELECT COMPARE VALS-"].update(display_trans[lang][1])
-            window["-TRANSLATE-"].update(display_trans[lang][6])
+            window["-TRANSLATE-"].update(display_trans[lang][6])            #if window["-TRANSLATE-"].update(display_trans[lang][6])  
             window["-CLEAR-"].update(display_trans[lang][7])
             window["-WORD COUNT 1-"].update(display_trans[lang][8])
             window["-WORD COUNT 2-"].update(display_trans[lang][8])
             window["-TEXT SIM PERCENT 1-"].update(display_trans[lang][9])
-            window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9])
-            #window["-SOURCE-"].update(display_trans[lang][14])
-            #window["-TARGET-"].update(display_trans[lang][15])
+            window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9]) 
             window["-USER GUIDE-"].update(display_trans[lang][16])
 
         '''
         Selecting comparison %
         The compare methods will search for sentences in Source and Target that have a similarity score GREATER THAN OR EQUAL TO this number
         '''
+        sg.Push(),
+        #sg.Text(""),
         if event == "-SELECT COMPARE VALS-":
             compare_type = values["-COMPARE SELECT-"]
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
-        
+
+        #========================
+
+        #Specify an absolute path for the file to ensure that it is saved in a 
+        # location where the program has write permissions. Make sure to 
+        # replace "/path/to/your/directory/" with the actual path where you want to save the file.
+        file_path_text_1 = r"C:\Users\xiggy\OneDrive\Desktop\project-symmetry\project-symmetry\text1_download.txt"
+
         if event == "-SELECT DOWNLOAD CHOICE-":
-            f = open("myfile.txt", "w", encoding="utf-8")
+            f = open("myfile.txt", "w")
             print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
             f.write(values["-TEXT 1-"])
             f.close()
 
         if event == "-SELECT DOWNLOAD CHOICE 2-":
-            f = open("myfile.txt", "w", encoding = "utf-8")
+            f = open("myfile.txt", "w")
             print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
             f.write(values["-TEXT 2-"])
             f.close()
@@ -326,7 +364,7 @@ def run():
                     # Display similarity % of articles
                     window["-TEXT 1 SIM PERCENT-"].update(str(percent_similar(source, pairs_source)) + "%")
                     window["-TEXT 2 SIM PERCENT-"].update(str(percent_similar(target, pairs_target)) + "%")
-
+                window["-EXPAND SIM-"].update(visible=True)
                 # Highlight text based on results of comparison
                 highlight_sim("-TEXT 1-", source, pairs_source)
                 highlight_sim("-TEXT 2-", target, pairs_target)
@@ -348,8 +386,8 @@ def run():
             else:
                 #if len(target) < 4500: can change this if to try and except to the popups below
                 #if(len(target) > 4500):
-                if len(target) > 4500 or len(target) == 4500:  # Change this condition
-                    sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- please wait.", title="Warning: Long Translate Request")
+                if len(target) > 4500 or len(target) == 4500:  # Change this condition to extend the capacity of the article
+                    sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- Please click OK to continue.", title="Warning: Long Translation Request")
                 #try:
                 code = link.replace("https://", "")
                 code = code.split('.')
@@ -382,6 +420,7 @@ def run():
             window["-TEXT 1 SIM PERCENT-"].update("")
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
+            window["-EXPAND SIM-"].update(visible=False)
 
         if event == "-USER GUIDE-":
             #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
@@ -408,7 +447,7 @@ def run():
             languagesSACDict = scraper.languageGetter(link) # Dictionary for second language for article link (e.g.: [English - en,..中文 - zh]) 
             languagesSAC = list(languagesSACDict.keys())
             #print(languagesSAC) # Prints the available languages for checks and balances
-            window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
+            window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Paste your copied link here, and Click Select') #'Click here!'
             window["-TEXT 1-"].update(scraper.textGetter(link))
 
         if event == "-CONFIRM SAC-": 
@@ -438,3 +477,4 @@ def run():
                 
     window.close()
 
+#end run
