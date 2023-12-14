@@ -82,6 +82,22 @@ colors = gen_colors() # Generate random colors for highlighting
 pairs_source = {}
 pairs_target = {}
 
+# Section to choose the translation tool
+translation_tool_selection = [
+
+    [
+        sg.Push(),
+        sg.Text("Translation tool:", key="-SELECT TOOL-"), 
+        sg.Combo(["Google translate", "DeepL"], key="-TRANSLATION SELECT-", default_value="Google translate"), 
+        sg.Button("Select", key = "-SELECT TRANSLATION TOOL-"),
+    ],
+    [
+        sg.Push(),
+        sg.InputText("DeepL API key", key="-DEEPL API KEY-"),
+        sg.Button("Enter", key = "-ENTER DEEPL KEY-")
+    ]
+    
+]
 # Section to select which language a user wants the display in
 
 lang_selection = [
@@ -178,7 +194,7 @@ text_entry = [
 
 # Setting the layout of the window
 # THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING 
-layout = [lang_selection, text_entry] #welcome, text_entry]
+layout = [translation_tool_selection, lang_selection, text_entry] #welcome, text_entry]
 
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", resizable = True, font=("Arial", 18)).Finalize()
 window.Maximize()
@@ -244,8 +260,12 @@ Reads for on screen events performed by the user
 def run():
     
     folderChoice = ''
+    translate_tool = "Google translate" # Default translation tool
     compare_type = "BLEU Score" # Default comparison type 
+    deepl_api_key = "" 
     sim_percent = .1 # Default similarity score //Doesn't work 
+    window["-DEEPL API KEY-"].update(visible=False)
+    window["-ENTER DEEPL KEY-"].update(visible=False)
     while True:
 
         # The event performed by the user and any value returned by performing that event
@@ -283,6 +303,13 @@ def run():
         Selecting comparison %
         The compare methods will search for sentences in Source and Target that have a similarity score GREATER THAN OR EQUAL TO this number
         '''
+        if event == "-SELECT TRANSLATION TOOL-":
+            if(values["-TRANSLATION SELECT-"] == "DeepL"):
+                window["-DEEPL API KEY-"].update(visible=True)
+            else:
+                window["-DEEPL API KEY-"].update(visible=False)  
+            translate_tool = values["-TRANSLATION SELECT-"]
+            
         if event == "-SELECT COMPARE VALS-":
             compare_type = values["-COMPARE SELECT-"]
             # Divide by 100 because comparison tools returns a value in [0, 1]
@@ -339,6 +366,7 @@ def run():
 
             source = values["-TEXT 1-"]
             target = values["-TEXT 2-"]
+
             if len(source) == 0:
                 try:
                     sg.Popup(display_trans[lang][11], keep_on_top=True, title= display_trans[lang][10])
@@ -353,7 +381,7 @@ def run():
                 code = link.replace("https://", "")
                 code = code.split('.')
                 code = code[0]
-                target = translate(code, target)
+                target = translate(code, target, translate_tool, deepl_api_key)
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(target)
                 #except:
