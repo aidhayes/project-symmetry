@@ -268,6 +268,8 @@ def run():
     sim_percent = .1 # Default similarity score //Doesn't work 
     window["-DEEPL API KEY-"].update(visible=False)
     window["-ENTER DEEPL KEY-"].update(visible=False)
+    window["-COMPARE-"].update(disabled=True)
+    window["-TRANSLATE-"].update(disabled=True)
     while True:
 
         # The event performed by the user and any value returned by performing that event
@@ -310,8 +312,10 @@ def run():
                 window["-DEEPL API KEY-"].update(visible=True)
                 window["-ENTER DEEPL KEY-"].update(visible=True)
             else:
-                window["-DEEPL API KEY-"].update(visible=False)  
+                window["-DEEPL API KEY-"].update(visible=False)
+                window["-ENTER DEEPL KEY-"].update(visible=False) 
             translate_tool = values["-TRANSLATION SELECT-"]
+
 
         if event == "-ENTER DEEPL KEY-":
             deepl_api_key = values["-DEEPL API KEY-"]
@@ -398,6 +402,7 @@ def run():
                     sg.popup_ok("Please ensure a valid DeepL API key is entered", title="Invalid API Key")
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(target)
+                window["-COMPARE-"].update(disabled=False)
                 #except:
                 #    try:
                 #        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
@@ -420,6 +425,8 @@ def run():
             window["-TEXT 1 SIM PERCENT-"].update("")
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
+            window["-COMPARE-"].update(disabled=True)
+            window["-TRANSLATE-"].update(disabled=True)
 
         if event == "-USER GUIDE-":
             #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
@@ -470,6 +477,8 @@ def run():
                 elif (response.status_code == 404): 
                     print(f"Sorry, this article does not exist in {linkTwoFragment}\nThe response from the server is {response.status_code}, meaning the webpage does not exist!")
                 window["-TEXT 2-"].update(scraper.textGetter(linkTwo))
+                window["-TRANSLATE-"].update(disabled=False) # Enable translate button
+                window["-COMPARE-"].update(disabled=True) # Enable compare button
 
             except:
                 print("No link entered or no language chosen")
