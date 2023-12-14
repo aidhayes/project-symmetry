@@ -13,6 +13,7 @@ import csv
 import sys
 import os
 from deepl.exceptions import QuotaExceededException
+from deepl.exceptions import AuthorizationException
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -307,10 +308,14 @@ def run():
         if event == "-SELECT TRANSLATION TOOL-":
             if(values["-TRANSLATION SELECT-"] == "DeepL"):
                 window["-DEEPL API KEY-"].update(visible=True)
+                window["-ENTER DEEPL KEY-"].update(visible=True)
             else:
                 window["-DEEPL API KEY-"].update(visible=False)  
             translate_tool = values["-TRANSLATION SELECT-"]
-            
+
+        if event == "-ENTER DEEPL KEY-":
+            deepl_api_key = values["-DEEPL API KEY-"]
+
         if event == "-SELECT COMPARE VALS-":
             compare_type = values["-COMPARE SELECT-"]
             # Divide by 100 because comparison tools returns a value in [0, 1]
@@ -382,11 +387,15 @@ def run():
                 code = link.replace("https://", "")
                 code = code.split('.')
                 code = code[0]
-                target = translate(code, target, translate_tool, deepl_api_key)
+
                 try:
-                    target = translate(code, target)
+                    target = translate(code, target, translate_tool, deepl_api_key)
                 except QuotaExceededException:
                     sg.popup_ok("Your DeepL quota for this billing period has been exceeded.", title="Quota Exceeded")
+                except AuthorizationException:
+                    sg.popup_ok("The provided key has an authorization issue.", title="Invalid API Key")
+                except ValueError:
+                    sg.popup_ok("Please ensure a valid DeepL API key is entered", title="Invalid API Key")
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(target)
                 #except:
