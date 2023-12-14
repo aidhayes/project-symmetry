@@ -12,6 +12,7 @@ import dev.scraper as scraper
 import csv
 import sys
 import os
+from deepl.exceptions import QuotaExceededException
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -65,8 +66,8 @@ elif (1.60 < ratio < 1.69):
     heightMultiplier = 0.011 #0.021
 
 elif (1.7 < ratio < 1.79):
-    widthMultiplier = 0.01 #0.03
-    heightMultiplier = 0.07 #0.017
+    widthMultiplier = 0.02 #0.03
+    heightMultiplier = 0.007 #0.017
 
 else:
     widthMultiplier = 0.025
@@ -382,6 +383,10 @@ def run():
                 code = code.split('.')
                 code = code[0]
                 target = translate(code, target, translate_tool, deepl_api_key)
+                try:
+                    target = translate(code, target)
+                except QuotaExceededException:
+                    sg.popup_ok("Your DeepL quota for this billing period has been exceeded.", title="Quota Exceeded")
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(target)
                 #except:
