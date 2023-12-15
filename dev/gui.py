@@ -455,6 +455,8 @@ def run():
             #print(languagesSAC) # Prints the available languages for checks and balances
             window['-SAC CHOSEN-'].update(values = languagesSAC, value = 'Click here!')
             window["-TEXT 1-"].update(scraper.textGetter(link))
+            window["-COMPARE-"].update(disabled=True) # Disable compare button
+            window["-TRANSLATE-"].update(disabled=True) # Disable translate button
 
         if event == "-CONFIRM SAC-": 
             linkTwoFragment = (values['-SAC CHOSEN-'])
@@ -478,7 +480,7 @@ def run():
                     print(f"Sorry, this article does not exist in {linkTwoFragment}\nThe response from the server is {response.status_code}, meaning the webpage does not exist!")
                 window["-TEXT 2-"].update(scraper.textGetter(linkTwo))
                 window["-TRANSLATE-"].update(disabled=False) # Enable translate button
-                window["-COMPARE-"].update(disabled=True) # Enable compare button
+                window["-COMPARE-"].update(disabled=True) # Disable compare button
 
             except:
                 print("No link entered or no language chosen")

@@ -17,9 +17,7 @@ deeplLangs = [
     "BG", "CS", "DA", "DE", "EL", "EN", "EN-GB", "EN-US", "ES", "ET", "FI", "FR", "HU", "ID", "IT", "JA", "KO", "LT", "LV", "NB", "NL", "PL", "PT", "PT-BR", "PT-PT", "RO", "RU", "SK", "SL", "SV", "TR", "UK", "ZH"
 ]
 
-googleLangs = [
-    "af", "sq", "am", "ar", "hy", "az", "eu", "be", "bn", "bs", "bg", "ca", "ceb", "ny", "zh-cn", "zh-tw", "co", "hr", "cs", "da", "nl", "en", "eo", "et", "tl", "fi", "fr", "fy", "gl", "ka", "de", "el", "gu", "ht", "ha", "haw", "iw", "hi", "hmn", "hu", "is", "ig", "id", "ga", "it", "ja", "jw", "kn", "kk", "km", "ko", "ku", "ky", "lo", "la", "lv", "lt", "lb", "mk", "mg", "ms", "ml", "mt", "mi", "mr", "mn", "my", "ne", "no", "ps", "fa", "pl", "pt", "pa", "ro", "ru", "sm", "gd", "sr", "st", "sn", "sd", "si", "sk", "sl", "so", "es", "su", "sw", "sv", "tg", "ta", "te", "th", "tr", "uk", "ur", "uz", "vi", "cy", "xh", "yi", "yo", "zu"
-]
+
 """
 "BG" : 'bg',
 "CS" : 'cs',
@@ -69,9 +67,11 @@ def translate(code, target, translate_tool, deepl_api_key):
     # goog is the name of the language that we are changing right box into
     goog = 'EN-US'
     """
-    
-    
+
     result = ""
+    
+    
+
     if len(target) < 4500:
         if translate_tool == "DeepL":
             #here is the auth_key which connects to deepl allowing us to be able to translate
@@ -84,19 +84,22 @@ def translate(code, target, translate_tool, deepl_api_key):
             if (code == "pt"):
                 code = "pt-br" 
             code = code.upper()
+
             for language in deeplLangs:
                 if code == language:
                     result = deepl_trans.translate_text(target, target_lang = language) #turns target into the translated language we want
                     
         elif translate_tool == "Google translate":
-            for language in googleLangs:        
-                if code == language:
-                    result = GoogleTranslator(source='auto', target=language).translate(target)
-                    
+            result = GoogleTranslator(source='auto', target=code).translate(target)
         
         return result            
 
     else:
+        if (code == "en"):
+                code = "en-us"
+        if (code == "pt"):
+                code = "pt-br" 
+        code = code.upper()
         
         iterations = math.ceil(len(target)/4450)
         i = 0
@@ -105,7 +108,7 @@ def translate(code, target, translate_tool, deepl_api_key):
                 textFragments = wrap(target, 4450, break_long_words=False) #first 4450 to translate without breaking words
                 while i < iterations:
                     resultFragment = ""
-                   # resultFragment = GoogleTranslator(source='auto', target='de').translate(textFragments[i])
+                    #resultFragment = GoogleTranslator(source='auto', target="en").translate(textFragments[i])
                     resultFragment = deepl_trans.translate_text(textFragments[i], target_lang = language) 
 
                     result = result + str(resultFragment)
