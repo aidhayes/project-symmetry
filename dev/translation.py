@@ -99,14 +99,14 @@ def translate(code, target, translate_tool, deepl_api_key):
                     while i < iterations:
                         resultFragment = ""
                         resultFragment = deepl_trans.translate_text(textFragments[i], target_lang = language) 
-                        result = result + str(resultFragment)
+                        result += str(resultFragment)
                         i += 1
 
         elif translate_tool == "Google translate":            
             while i < iterations:
                 resultFragment = ""
                 resultFragment = GoogleTranslator(source='auto', target=code).translate(textFragments[i])
-                result = result + str(resultFragment)
+                result += str(resultFragment)
                 i += 1
         
         return result

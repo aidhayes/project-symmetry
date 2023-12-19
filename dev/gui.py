@@ -14,6 +14,7 @@ import sys
 import os
 from deepl.exceptions import QuotaExceededException
 from deepl.exceptions import AuthorizationException
+import textwrap
 
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
@@ -394,6 +395,7 @@ def run():
 
                 try:
                     target = translate(code, target, translate_tool, deepl_api_key)
+                    wrapped_text = textwrap.fill(target, INPUT_BOX_SIZE[0]) #Work around to long text not wrapping with multiline window
                 except QuotaExceededException:
                     sg.popup_ok("Your DeepL quota for this billing period has been exceeded.", title="Quota Exceeded")
                 except AuthorizationException:
@@ -401,7 +403,7 @@ def run():
                 except ValueError:
                     sg.popup_ok("Please ensure a valid DeepL API key is entered", title="Invalid API Key")
                 window["-TEXT 2-"].update("")
-                window["-TEXT 2-"].update(target)
+                window["-TEXT 2-"].update(wrapped_text)
                 window["-COMPARE-"].update(disabled=False)
                 #except:
                 #    try:
