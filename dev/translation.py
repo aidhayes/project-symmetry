@@ -80,7 +80,7 @@ def translate(code, target, translate_tool, deepl_api_key):
         if translate_tool == "DeepL":
             for language in deeplLangs:
                 if code == language:
-                    result = deepl_trans.translate_text(target, target_lang = language) #turns target into the translated language we want
+                    result = deepl_trans.translate_text(target, target_lang = language).text #turns target into the translated language we want
                     
         elif translate_tool == "Google translate":
             result = GoogleTranslator(source='auto', target=code).translate(target)
