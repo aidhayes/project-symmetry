@@ -39,11 +39,6 @@ Jin Long Shi, Alden Strafford, Henry Qiu, Yuhao Wang, Ambrose Ngayinoko - Spring
 if not nltk.data.find("tokenizers/punkt"):
     nltk.download('punkt')
 
-#For exe- uncomment below line
-#bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
-#For exe- replace line 46 (open moreLang csv) with below line and uncomment line 390 and comment out line 391 (userguide open)
-#with open(os.path.abspath(os.path.join(bundle_dir, "moreLanguagesFinal.csv")), 'r', encoding = "utf-8") as file:
-
 display_trans = {}
 lang_eng = []
 with open("./supplements/moreLanguagesFinal.csv", 'r', encoding = "utf-8") as file:
@@ -77,8 +72,6 @@ else:
     heightMultiplier = 0.015          
 
 INPUT_BOX_SIZE = (round(widthMultiplier * w), round(heightMultiplier * h)) #round(0.6 * w), round(0.3 * h)) # width, height
-# 1 character = 10 pixels wide, 1 row = 20 pixels high
-# if ratio of length to width is c1 < x < c2, make input box size y * w z * h, etc.
 
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
@@ -86,31 +79,43 @@ colors = gen_colors() # Generate random colors for highlighting
 pairs_source = {}
 pairs_target = {}
 
+
 # Section to select which language a user wants the display in the app screen
 lang_selection = [
-    [
-        sg.Text("")
-    ],
-
-    [
-        sg.Push(),
-        sg.Text("App Language:", key="-SELECT LANG-"), 
-        sg.Combo(lang_eng, key="-LANG-", default_value="English", size = (10, 1)), 
-        sg.Button("Select", key = "-SELECT-")
-    ]
+    # [sg.Text("")],
+    # [
+    #     sg.Push(),
+    #     sg.Text("App Language:", key="-SELECT LANG-"), 
+    #     sg.Combo(lang_eng, key="-LANG-", default_value="English", size = (10, 1)), 
+    #     sg.Button("Select", key = "-SELECT-")
+    # ]
     
+]#end lang_selction
+
+menu_def = [        #['Select comparison tool', 'Select similarity percentage']
+    ['Help', 'User Guide'],
+    ['Options', ['Select comparison tool', 'Select similarity percentage']],
+
+ 
+    # Add ['\u2261'],'&App Language' this line to above line to have three lines for "hamburger menu"
+] 
+
+lang_selection = [
+    [sg.Text("")],
+
+    [sg.Menu(menu_def, tearoff=False, key = "-MENU")], # Add the Hamburger menu
+     sg.Push(), sg.Text("App Language:", key="-SELECT LANG-"), sg.Combo(lang_eng, key="-LANG-", default_value="English", size=(10, 1)), 
+     sg.Button("Select", key="-SELECT-")
 ]
 
-# Title of application
-#welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
 
-#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) 
+
 
 text_entry = [
      [
        # sg.Push(),
        # sg.Push(),
-        sg.Button("User Guide", key="-USER GUIDE-"),
+      #  sg.Button("User Guide", key="-USER GUIDE-"),
         sg.Push(),
         sg.Push(),
     ],
@@ -155,34 +160,15 @@ text_entry = [
         sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
         sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
-
-        sg.Push(),
-
-       # Buttons to downloads: Choice-1 
- #       sg.Button('', image_data=dlImg, border_width = 25,button_color=(sg.theme_background_color(),sg.theme_background_color()), key="-SELECT DOWNLOAD CHOICE-"),
-    
-    #    sg.Push(),
-     #   sg.Push(),
-      #  sg.Push(),
         sg.Push(),
         sg.Push(),
-        # Buttons to downloads: Choice-2
- #       sg.Button('', image_data=dlImg, border_width=25,button_color=(sg.theme_background_color(),sg.theme_background_color()),key="-SELECT DOWNLOAD CHOICE 2-"),
-
         sg.Push(),
-
+        sg.Push(),
         sg.Text("Word Count: ", key="-WORD COUNT 2-"),
         sg.Text(" ", key="-TEXT 2 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 2-"),
         sg.Text(" ", key="-TEXT 2 SIM PERCENT-")
     ],
-
-    #Button for message after clicking downlo
-    [
-       # [sg.Button('Download Wikipedia Page')]
-    ],
-
-
 
     # Buttons for clear, compare, and translate
     [ 
@@ -195,17 +181,11 @@ text_entry = [
         #sg.Button("Translate", key="-TRANSLATE-"),
         sg.Button("Compare", key="-COMPARE-"),
     ],
-
-      # Moved to up to the font od the screen for a better visibility
-    # [
-    #     sg.Push(),
-    #     sg.Button("User Guide", key="-USER GUIDE-")
-    # ]
 ]
 
 # Setting the layout of the window
 # THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING 
-layout = [lang_selection, text_entry] #welcome, text_entry]
+layout = [lang_selection, text_entry] 
 
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", resizable = True, font=("Arial", 18)).Finalize()
 window.Maximize()
@@ -213,9 +193,6 @@ window.Maximize()
 # Initializing variables for the link entered and the desired translation language link 
 link = ""
 linkTwoFragment = ""
-
-# If buttons are showing up on gui uncomment the code below and comment out the code above  
-#window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
 
 # Get word count of article
 def count_words(article):
@@ -237,15 +214,6 @@ def percent_similar(article, sim_dict):
     print(sim)
     return round(sim, 2)
 
-
-# Clear the text from both text boxes
-#def clear():
-    #window["-TEXT 1-"].update("")
-    #window["-TEXT 2-"].update("") 
-
-# Highlight the portions of text that are similar between the 2 articles
-# Sentences that are similar will be highlighted with the same color
-# More information on how finding similarities can be found in bleu_score.py and bert.py
 def highlight_sim(element, text, pairs):
     window[element].update("")
     sentences = sent_tokenize(text)
@@ -264,8 +232,13 @@ def highlight_diff(element, text, pairs):
              ...
     '''
 
-    
+def select_language():
+    lang_selection_window = sg.Window("Select Language", [[sg.Text("Select your preferred language:")],
+                        [sg.Combo(lang_eng, key="-LANG-", default_value="English", size=(20, 1))],
+                                                         [sg.Button("OK")]])
 
+   
+  
 '''
 Event loop
 Reads for on screen events performed by the user
@@ -288,7 +261,7 @@ def run():
         Update on screen display language to the selected language by a user.
         Language and matching translations are stored in a dictionary in languages.py
         '''
-        if event == "-SELECT-":
+        if event == "-SELECT-" or event == 'Select comparison tool':
             lang = values["-LANG-"]
             print(lang)
             window["-SELECT LANG-"].update(display_trans[lang][0])
@@ -306,7 +279,7 @@ def run():
             window["-WORD COUNT 2-"].update(display_trans[lang][8])
             window["-TEXT SIM PERCENT 1-"].update(display_trans[lang][9])
             window["-TEXT SIM PERCENT 2-"].update(display_trans[lang][9]) 
-            window["-USER GUIDE-"].update(display_trans[lang][16])
+         #   window["-USER GUIDE-"].update(display_trans[lang][16])
 
         '''
         Selecting comparison %
@@ -319,11 +292,6 @@ def run():
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
 
-        #========================
-
-        #Specify an absolute path for the file to ensure that it is saved in a 
-        # location where the program has write permissions. Make sure to 
-        # replace "/path/to/your/directory/" with the actual path where you want to save the file.
         file_path_text_1 = r"C:\Users\xiggy\OneDrive\Desktop\project-symmetry\project-symmetry\text1_download.txt"
 
         if event == "-SELECT DOWNLOAD CHOICE-":
@@ -335,12 +303,7 @@ def run():
             except Exception as e:
                 print(f"Error during download: {e}")
 
-        #sg.Push(),
-        #sg.Text(""),
-
-        #Specify an absolute path for the file to ensure that it is saved in a 
-        # location where the program has write permissions. Make sure to 
-        # replace "/path/to/your/directory/" with the actual path where you want to save the file.         
+                
         file_path_text_2 = r"C:\Users\xiggy\OneDrive\Desktop\project-symmetry\project-symmetry\text2_download.txt"
 
         if event == "-SELECT DOWNLOAD CHOICE 2-":
@@ -353,9 +316,7 @@ def run():
               #      else
                 sg.popup('You downloaded your Target Article: Download complete!')
             except Exception as e:
-                print(f"Error during download: {e}")
-        
-        #========================    
+                print(f"Error during download: {e}")  
 
         # Comparing user inputted text
         if event == "-COMPARE-":
@@ -363,13 +324,10 @@ def run():
             source = values["-TEXT 1-"]
             target = values["-TEXT 2-"]
             
-
-
             # Display word count for each article
             window["-TEXT 1 WORD COUNT-"].update(str(count_words(source)))
             window["-TEXT 2 WORD COUNT-"].update(str(count_words(target)))
             
-
             # Determining which comparison type is being used
             try:
                 if compare_type == "BLEU Score":
@@ -403,31 +361,17 @@ def run():
                 except:
                     sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
-                #if len(target) < 4500: can change this if to try and except to the popups below
-                #if(len(target) > 4500):
-                if len(target) > 4500 or len(target) == 4500:  # Change this condition to extend the capacity of the article
+                
+                if len(target) > 4500 or len(target) == 4500:  
                     sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- Please click OK to continue.", title="Warning: Long Translation Request")
-                #try:
+            
                 code = link.replace("https://", "")
                 code = code.split('.')
                 code = code[0]
                 target = translate(code, target)
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(target)
-                #except:
-                #    try:
-                #        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
-                #    except:
-                #       sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
-
-
-        # NOT IMPLEMENTED
-        #if event == "-TRANSLATE BACK-":
-         #   text2 = values["-TEXT 2-"]
-          #  text2 = translate_back(text2, text2)
-           # window["-TEXT 2-"].update("")
-            #window["-TEXT 2-"].update(text2)
-        
+              
         # Clear button
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
@@ -437,14 +381,13 @@ def run():
             window["-TEXT 2 WORD COUNT-"].update("")
             window["-TEXT 2 SIM PERCENT-"].update("")
             window["-EXPAND SIM-"].update(visible=False)
+        
         #User Guide button
-        if event == "-USER GUIDE-":
-            #file = open(os.path.abspath(os.path.join(bundle_dir, "userguide.txt"))) For exe- uncomment this line and comment out below line 
+        if event == 'User Guide':
             file = open("userguide.txt")
             user_guide = file.read()
             sg.popup_scrolled(user_guide, title="User Guide", font=("Arial", 18), size=(63, 18))
 
-        #expand view- shows matching sentences in popup- renaming it was discussed, so dont hesitate to change the name to something you think is more fitting
         if event == "-EXPAND SIM-":
             expand_list = []
             source_vals = list(pairs_source.values())
@@ -452,8 +395,7 @@ def run():
             for i in range(0, len(source_vals)):
                 expand_list.append(str(i+1) + ": SOURCE TEXT- " + target_vals[i][0] + "\nTARGET TEXT- " + source_vals[i][0] + "\n\n") #\n creates space for each line after, unsure how to fix, since cant use sep arg
             sg.popup_scrolled(' '.join(expand_list), title="Expanded View", font=("Arial", 18), size=(63, 18))
-            #for i in range(0, len(source_vals)):
-            #, text_color_for_value="white", background_color_for_value=source_vals[i][1], append=True        	
+                	
 
         # Searching link events 
         if event == 'Enter':
@@ -468,12 +410,8 @@ def run():
         if event == "-CONFIRM SAC-": 
             linkTwoFragment = (values['-SAC CHOSEN-'])
             print("The secondary language chosen is: " + linkTwoFragment)
-            # Only if the link was entered will this work, exception handling a crash 
-
+            
             try:
-                #link = link.replace("https://", "")
-                #linkList = link.split(".", 1)
-                #linkTwo = "https://" + languagesSACDict[linkTwoFragment] + "." + linkList[1]
                 linkTwo = languagesSACDict[linkTwoFragment]
                 print(linkTwo)
                 response = requests.get(linkTwo)
@@ -489,7 +427,16 @@ def run():
 
             except:
                 print("No link entered or no language chosen")
-                
+
+        #if event in ('Select comparison tool', 'Select similarity percentage'):
+        if event ==  'Select comparison tool':   #"-SELECT COMPARE TEXT-":
+        # Add your logic here for handling these options
+        # You may show a popup, prompt the user, or take other actions
+            sg.popup(f'You selected: {event}')   
+            select_language()
+
+        if event == "Select similarity percentage":
+            sg.popup(f'You selected: {event}')         
     window.close()
 
 #end run

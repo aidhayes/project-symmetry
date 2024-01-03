@@ -3,7 +3,8 @@ import PySimpleGUI as sg
 lst = sorted([
     'Global', 'USA', 'India', 'Brazil', 'Russian', 'France', 'UK', 'Italy',
     'Spain', 'Germany', 'Colombia', 'Argentina', 'Mexico', 'Turkey', 'Poland',
-    'Iran', 'Ukraine', 'South Africa', 'Peru', 'Netherlands', 'Alaska'])
+    'Iran', 'Ukraine', 'South Africa', 'Peru', 'Netherlands', 'Alaska'
+    ])
 width = max(map(len, lst)) + 2
 
 font = ("Courier New", 16)

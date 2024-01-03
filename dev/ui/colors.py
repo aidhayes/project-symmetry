@@ -15,7 +15,7 @@ def gen_colors():
     for i in range(100000):
         # Generate random hex value
         highlight = "%06x" % random.randint(0, 0xFFFFFF)
-        # Add # in front so that it is read as hex value by GUI
+        # Add # symbol in front so that it is read as hex value by GUI
         highlight = "#" + highlight
         colors.append(highlight)
     return colors

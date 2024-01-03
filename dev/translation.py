@@ -72,7 +72,7 @@ def translate(code, target):
         code = "pt-br" 
     code = code.upper()
 
-    if len(target) < 4500:
+    if len(target) < 4500:     # <== 4500
         for language in deeplLangs:
             if code == language:
                 result = deepl_trans.translate_text(target, target_lang = language) #turns target into the translated language we want
