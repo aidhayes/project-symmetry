@@ -5,12 +5,7 @@ import math
 import deepl
 from nltk.tokenize import sent_tokenize
 from textwrap import wrap
-from .deeplconfig import deepl_api_key
-
-#here is the auth_key which connects to deepl allowing us to be able to translate
-#google_trans helps with the language codes
-auth_key = deepl_api_key 
-deepl_trans = deepl.Translator(auth_key)
+from deep_translator import GoogleTranslator
 
 # allows deepl to translate the target article
 # Contributor: Joe LaBianca, Raj JaGroup
@@ -18,6 +13,8 @@ deepl_trans = deepl.Translator(auth_key)
 deeplLangs = [
     "BG", "CS", "DA", "DE", "EL", "EN", "EN-GB", "EN-US", "ES", "ET", "FI", "FR", "HU", "ID", "IT", "JA", "KO", "LT", "LV", "NB", "NL", "PL", "PT", "PT-BR", "PT-PT", "RO", "RU", "SK", "SL", "SV", "TR", "UK", "ZH"
 ]
+
+
 """
 "BG" : 'bg',
 "CS" : 'cs',
@@ -55,7 +52,7 @@ PT-"PT" : Portuguese (all Portuguese varieties excluding Brazilian Portuguese),
 }
 """
 
-def translate(code, target):
+def translate(code, target, translate_tool, deepl_api_key):
     """
     text1_sent = sent_tokenize(text1)[0]
 
@@ -66,30 +63,52 @@ def translate(code, target):
         goog = goog + '-BR'
     # goog is the name of the language that we are changing right box into
     goog = 'EN-US'
-    """   
-    if (code == "en"):
-        code = "en-us"
-    if (code == "pt"):
-        code = "pt-br" 
-    code = code.upper()
+    """
+
+    #here is the auth_key which connects to deepl allowing us to be able to translate
+    if translate_tool == "DeepL":
+        auth_key = deepl_api_key 
+        deepl_trans = deepl.Translator(auth_key) 
+
+        if (code == "en"):
+            code = "en-us"
+        if (code == "pt"):
+            code = "pt-br" 
+        code = code.upper() 
 
     if len(target) < 4500:
-        for language in deeplLangs:
-            if code == language:
-                result = deepl_trans.translate_text(target, target_lang = language) #turns target into the translated language we want
-                return result
+        if translate_tool == "DeepL":
+            for language in deeplLangs:
+                if code == language:
+                    result = deepl_trans.translate_text(target, target_lang = language).text #turns target into the translated language we want
+                    
+        elif translate_tool == "Google translate":
+            result = GoogleTranslator(source='auto', target=code).translate(target)
+        
+        return result            
 
     else:
         result = ""
         iterations = math.ceil(len(target)/4450)
         i = 0
-        for language in deeplLangs:
-            if code == language:
-                textFragments = wrap(target, 4450, break_long_words=False) #first 4450 to translate without breaking words
-                while i < iterations:
-                    resultFragment = ""
-                    resultFragment = deepl_trans.translate_text(textFragments[i], target_lang = language) 
-                    result = result + str(resultFragment)
-                    i += 1
+        textFragments = wrap(target, 4450, break_long_words=False)
+
+        if translate_tool == "DeepL":
+            for language in deeplLangs:
+                if code == language:
+                    while i < iterations:
+                        resultFragment = ""
+                        resultFragment = deepl_trans.translate_text(textFragments[i], target_lang = language) 
+                        result += str(resultFragment)
+                        i += 1
+
+        elif translate_tool == "Google translate":            
+            while i < iterations:
+                resultFragment = ""
+                resultFragment = GoogleTranslator(source='auto', target=code).translate(textFragments[i])
+                result += str(resultFragment)
+                i += 1
+        
         return result
+
     #if this line is hit, return the popup that user will have to manually translate
