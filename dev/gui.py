@@ -16,6 +16,11 @@ from deepl.exceptions import QuotaExceededException
 from deepl.exceptions import AuthorizationException
 import textwrap
 
+# Check if the current working directory is writable and accessible,
+# mostly for downloading purpose. If we later decide to implement it. 
+# But for now, this just prints the current working directory using os.getcwd().
+print("Current Working Directory:", os.getcwd())
+
 '''
 GUI file that designs the GUI of the application using PySimpleGUI
 
@@ -60,20 +65,20 @@ ratio = round(w/h, 2)
 widthMultiplier = .01
 heightMultiplier = .01 
 if (0.00 < ratio < 1.59):
-    widthMultiplier = 0.028 #0.038
-    heightMultiplier = 0.015 #0.025
+    widthMultiplier = 0.038 #0.028
+    heightMultiplier = 0.017 #0.015, 0.025
 
 elif (1.60 < ratio < 1.69):
-    widthMultiplier = 0.024 #0.034
-    heightMultiplier = 0.011 #0.021
+    widthMultiplier = 0.034 #0.024
+    heightMultiplier = 0.017 #0.011, 0.021
 
 elif (1.7 < ratio < 1.79):
     widthMultiplier = 0.02 #0.03
-    heightMultiplier = 0.007 #0.017
+    heightMultiplier = 0.017 #0.007
 
 else:
     widthMultiplier = 0.025
-    heightMultiplier = 0.015          
+    heightMultiplier = 0.017 #0.015          
 
 INPUT_BOX_SIZE = (round(widthMultiplier * w), round(heightMultiplier * h)) #round(0.6 * w), round(0.3 * h)) # width, height
 # 1 character = 10 pixels wide, 1 row = 20 pixels high
@@ -85,54 +90,51 @@ colors = gen_colors() # Generate random colors for highlighting
 pairs_source = {}
 pairs_target = {}
 
-# Section to choose the translation tool
-translation_tool_selection = [
-
-    [
+# Section User Guide button and translation tolls (Google Translation or DeepL).
+userGuide_translation_tools = [
+    #User Guide button
+    [  
+        sg.Button("User Guide", key="-USER GUIDE-"),
         sg.Push(),
+
         sg.Text("Translation tool:", key="-SELECT TOOL-"), 
         sg.Combo(["Google translate", "DeepL"], key="-TRANSLATION SELECT-", default_value="Google translate"), 
         sg.Button("Select", key = "-SELECT TRANSLATION TOOL-"),
-    ],
-    [
-        sg.Push(),
-        sg.InputText("DeepL API key", key="-DEEPL API KEY-"),
-        sg.Button("Enter", key = "-ENTER DEEPL KEY-")
-    ]
-    
-]
-# Section to select which language a user wants the display in
-
-lang_selection = [
-    [
-        sg.Text("")
-    ],
+    ],#end User Guide
 
     [
-        sg.Push(),
         sg.Text("App Language:", key="-SELECT LANG-"), 
         sg.Combo(lang_eng, key="-LANG-", default_value="English", size = (10, 1)), 
-        sg.Button("Select", key = "-SELECT-")
-    ]
-    
-]
-
-# Title of application
-#welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
-
-#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) 
-
-text_entry = [
-
-    # Comparison and similarity score selection 
-    [
-        sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
-        sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
-        sg.Text("Select similarity percentage:", key="-COMPARE VAL TEXT-"),
-        sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 
-        sg.Button("Select", key="-SELECT COMPARE VALS-")
+        sg.Button("Select", key = "-SELECT-"),
+        sg.Push(),
+        sg.Push(),
     ],
 
+    [
+         sg.Text("")
+    ],
+
+    # User select Comparison tool (BLEU Score" or "Sentence Bert) and the rate of similarity %  
+    [
+            sg.Text("Select comparison tool:", key="-SELECT COMPARE TEXT-"),
+            sg.Combo(["BLEU Score", "Sentence Bert"], key="-COMPARE SELECT-", default_value="BLEU Score"),
+            sg.Push(),
+            sg.Text("Select similarity %:", key="-COMPARE VAL TEXT-"),
+            sg.Slider(range=(1, 100), default_value=10, resolution=.5, orientation="horizontal", key="-COMPARE VAL-"), # Default 1 -> 10 
+            sg.Button("Select", key="-SELECT COMPARE VALS-")
+    ],#end Comparison tool and similarity %
+
+    # User can select DeepL as the translation tool
+    [
+        sg.InputText("DeepL API key", key="-DEEPL API KEY-"),
+        sg.Button("Enter", key = "-ENTER DEEPL KEY-"),
+    
+    ],
+
+]#end userGuide_translation_tools
+
+text_entry = [
+    
     # Link input box 
     [
         sg.Push(),
@@ -141,73 +143,59 @@ text_entry = [
         sg.Text('Target Article:'), sg.Combo('', key = '-SAC CHOSEN-', default_value="Enter a link first!", size = (22, 1)), sg.Button("Select", key = "-CONFIRM SAC-"),
         sg.Push()
     ],
-
-    # Text you want to compare
+    
+    # Text user wants to compare
     [ 
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 1-"),
         sg.Multiline(size=INPUT_BOX_SIZE, enable_events=True, key = "-TEXT 2-")
     ],
-    
-    [ 
-        sg.Text('')
-    ],
 
-# Statistics display
+    # Statistics display
     [
-        sg.Text("Word Count: ", key="-WORD COUNT 1-"),
-        sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
-        sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
+        #Note: This space centers the text right below the Source Article box.
+        #(there may be a better way to implement it, but leave it like tis for now).
+        sg.Push(),
+        sg.Text("Word Count: ", key="-WORD COUNT 1-"),# sg.Text("                   Word Count: ", key="-WORD COUNT 1-"),
+        sg.Text(" ", key="-TEXT 1 WORD COUNT-"), sg.Text('  '),
+        sg.Text("Similarity %: ", key="-TEXT SIM PERCENT 1-"), #Similarity Percentage:
         sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
 
         sg.Push(),
 
-        sg.Button('', image_data=dlImg, border_width = 25,
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE-"),
-        sg.Push(),
-        sg.Push(),
-        sg.Push(),
-        sg.Push(),
-        sg.Push(),
-        sg.Button('', image_data=dlImg, border_width=25, 
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE 2-"),
-
-        sg.Push(),
-
         sg.Text("Word Count: ", key="-WORD COUNT 2-"),
-        sg.Text(" ", key="-TEXT 2 WORD COUNT-"),
-        sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 2-"),
+        sg.Text(" ", key="-TEXT 2 WORD COUNT-"), sg.Text('  '),
+        #Note: This space centers the text right below the Target Article box.
+        sg.Text("Similarity %:", key="-TEXT SIM PERCENT 2-"), 
+        sg.Push(),
         sg.Text(" ", key="-TEXT 2 SIM PERCENT-")
+    ],
+
+    [ 
+         sg.Text('  ')
     ],
 
     # Buttons for clear, compare, and translate
     [ 
         # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
         sg.Button("Clear", key="-CLEAR-"),
+        sg.Push(),
+        sg.Push(),
         sg.Button("Compare", key="-COMPARE-"),
+        sg.Push(),
+        sg.Push(),
         sg.Button("Translate", key="-TRANSLATE-")
     ],
 
-    [
-        sg.Push(),
-        sg.Button("User Guide", key="-USER GUIDE-")
-    ]
-]
+]#end text_entry
 
-# Setting the layout of the window
-# THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING 
-layout = [translation_tool_selection, lang_selection, text_entry] #welcome, text_entry]
-
+# Setting up the layout for the App's screen (UI)
+layout = [userGuide_translation_tools, text_entry] #lang_selection
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", resizable = True, font=("Arial", 18)).Finalize()
 window.Maximize()
 
 # Initializing variables for the link entered and the desired translation language link 
 link = ""
 linkTwoFragment = ""
-
-# If buttons are showing up on gui uncomment the code below and comment out the code above  
-#window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
 
 # Get word count of article
 def count_words(article):
@@ -228,12 +216,6 @@ def percent_similar(article, sim_dict):
     sim = (sims_len / article_len) * 100
     print(sim)
     return round(sim, 2)
-
-
-# Clear the text from both text boxes
-#def clear():
-    #window["-TEXT 1-"].update("")
-    #window["-TEXT 2-"].update("") 
 
 # Highlight the portions of text that are similar between the 2 articles
 # Sentences that are similar will be highlighted with the same color
@@ -345,7 +327,6 @@ def run():
             target = values["-TEXT 2-"]
             
 
-
             # Display word count for each article
             window["-TEXT 1 WORD COUNT-"].update(str(count_words(source)))
             window["-TEXT 2 WORD COUNT-"].update(str(count_words(target)))
@@ -387,7 +368,7 @@ def run():
                 #if len(target) < 4500: can change this if to try and except to the popups below
                 #if(len(target) > 4500):
                 if len(target) > 4500 or len(target) == 4500:  # Change this condition
-                    sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- please wait.", title="Warning: Long Translate Request")
+                    sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- Please click OK to continue.", title="Warning: Long Translate Request")
                 #try:
                 code = link.replace("https://", "")
                 code = code.split('.')
@@ -405,20 +386,7 @@ def run():
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(wrapped_text)
                 window["-COMPARE-"].update(disabled=False)
-                #except:
-                #    try:
-                #        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
-                #    except:
-                #       sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
-
-
-        # NOT IMPLEMENTED
-        #if event == "-TRANSLATE BACK-":
-         #   text2 = values["-TEXT 2-"]
-          #  text2 = translate_back(text2, text2)
-           # window["-TEXT 2-"].update("")
-            #window["-TEXT 2-"].update(text2)
-        
+            
         # Clear button
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
