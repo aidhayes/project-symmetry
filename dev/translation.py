@@ -1,6 +1,6 @@
 #This is the translation method which uses deepl and google_trans
 #to translate the target article (right) to whatever language the 
-#source article (left) is in
+#source article (left) is in.
 import math
 import deepl
 from nltk.tokenize import sent_tokenize
