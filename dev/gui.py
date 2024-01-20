@@ -463,7 +463,7 @@ def run():
                 elif (response.status_code == 404): 
                     print(f"Sorry, this article does not exist in {linkTwoFragment}\nThe response from the server is {response.status_code}, meaning the webpage does not exist!")
                 window["-TEXT 2-"].update(scraper.textGetter(linkTwo))
-                window["-TRANSLATE-"].update(disabled=False) # Enable translate button
+                window["-TRANSLATE-"].update(disabled=False) # Enable translate button #disabled
                 window["-COMPARE-"].update(disabled=True) # Disable compare button
 
             except:
