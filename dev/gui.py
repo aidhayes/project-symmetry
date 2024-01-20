@@ -54,30 +54,25 @@ dlOptions = ['Source', 'Target']
 
 dlImg = b'iVBORw0KGgoAAAANSUhEUgAAADMAAAA7CAYAAADW8rJHAAAAAXNSR0IArs4c6QAAAoBJREFUaEPtmW3OwUAQx6dEKhLEyw1wBgfwwdsBnNEFvB3BFfQKmiARkbBPWk+l2LYzuzt4nqyvpjPz+8/s2A4HeD9C4t7hCsnmGACEEK8sjhOGZInL4jQJJKoIF5CFQfS8tMVsZRDK3UUi2FJMbWUoasls7QBAKGjbDCFSqoltM4SCts0QItk20xXJtpmugnaaIRS0bYYQyU4zXZFsm+kqaKcZQsE/02bxZVhSZXVgMP6lelLb7CHJlP2XKgzWvzYMZUOpAkPxrwVDTY7bng8mXB4/7pApMKm2Et+J8wd7ZjIDPgXFwlD9GrnOoILGgIK/AJIVvFUx1Sb+MHbRjq3Mb+zkBBG/PUomWJBQSGIEdIWIfqXm4/EYZrMZOke0YSzaW4CoICqViZhYgVRAdGDYztBoNIL5fK7SMQ9n5vl0YxwarRABRJprlPBLUoQpYgSIAvI89qNcA5jEZN4FNBwOYbFYaHVCkKvTarWE53nS0djpdMDzPEwQ5TNEAIF2uy02m438XhbAuK4rTqeT1KDRaIDv+1gYMhAFJHBer9fFdruV5losFsEpFArifD6bgkED9ft9WK1WFKFSYVzXZYHJBFIByaoMJ0wi0GAwgOVySapI1DZpbcYN8wJEmI7Stv80TAgUy0ypIt9SGROX57uPb6iMMSALE0lZrVZhv99r9bmxsgBApVIRu91O6jJzmuVyOSiVSpDP503mpOTrcrnA8XiE6/WqBqMU9UMPZVbmQ3kphf1/MLVaTfi+r6TGNz0U3PBTX86+KdmsXCaTyX0HYOTVNysg1/fdbhfW6/XvnvQWRTSbTTgcDtESnCu2Eb/BHqBcLkOv14PpdBr+Fv4A8cnJcCg/vWQAAAAOZVhJZk1NACoAAAAIAAAAAAAAANJTkwAAAABJRU5ErkJggg=='
 
-#resizing window functionality- should work, not tested very heavily though
+"""
+The implementation I provide here takes into account different screen ratios and adjusts 
+the widthMultiplier and heightMultiplier accordingly. It should work on various computer 
+screens by dynamically calculating the INPUT_BOX_SIZE based on the screen size and ratio.
+
+"""
 w, h = sg.Window.get_screen_size()
-ratio = round(w/h, 2)
-widthMultiplier = .01
-heightMultiplier = .01 
-if (0.00 < ratio < 1.59):
-    widthMultiplier = 0.028 #0.038
-    heightMultiplier = 0.015 #0.025
+ratio = round(w / h, 2)
 
-elif (1.60 < ratio < 1.69):
-    widthMultiplier = 0.024 #0.034
-    heightMultiplier = 0.011 #0.021
+multiplier_options = {
+    (0.00, 1.59): (0.028, 0.015),
+    (1.60, 1.69): (0.024, 0.011),
+    (1.70, 1.79): (0.02, 0.007),
+    (float('-inf'), float('inf')): (0.025, 0.015),
+}
 
-elif (1.7 < ratio < 1.79):
-    widthMultiplier = 0.02 #0.03
-    heightMultiplier = 0.007 #0.017
+widthMultiplier, heightMultiplier = next((w_m, h_m) for (low, high), (w_m, h_m) in multiplier_options.items() if low < ratio < high)
 
-else:
-    widthMultiplier = 0.025
-    heightMultiplier = 0.015          
-
-INPUT_BOX_SIZE = (round(widthMultiplier * w), round(heightMultiplier * h)) #round(0.6 * w), round(0.3 * h)) # width, height
-# 1 character = 10 pixels wide, 1 row = 20 pixels high
-# if ratio of length to width is c1 < x < c2, make input box size y * w z * h, etc.
+INPUT_BOX_SIZE = (round(widthMultiplier * w), round(heightMultiplier * h))
 
 lang = "English" # Default language 
 display = "Wikipedia Article Comparison Tool" # Default title
@@ -87,22 +82,25 @@ pairs_target = {}
 
 # Section to choose the translation tool
 translation_tool_selection = [
-
     [
+        sg.Button("User Guide", key="-USER GUIDE-"),
+        sg.Push(),
+        sg.Push(),
         sg.Push(),
         sg.Text("Translation tool:", key="-SELECT TOOL-"), 
         sg.Combo(["Google translate", "DeepL"], key="-TRANSLATION SELECT-", default_value="Google translate"), 
         sg.Button("Select", key = "-SELECT TRANSLATION TOOL-"),
     ],
+
     [
         sg.Push(),
         sg.InputText("DeepL API key", key="-DEEPL API KEY-"),
-        sg.Button("Enter", key = "-ENTER DEEPL KEY-")
-    ]
+        sg.Button("Enter", key = "-ENTER DEEPL KEY-"),
+    ],
     
-]
-# Section to select which language a user wants the display in
+]#end translation_tool_selectio
 
+# Section to select which language a user wants the display in
 lang_selection = [
     [
         sg.Text("")
@@ -113,16 +111,13 @@ lang_selection = [
         sg.Text("App Language:", key="-SELECT LANG-"), 
         sg.Combo(lang_eng, key="-LANG-", default_value="English", size = (10, 1)), 
         sg.Button("Select", key = "-SELECT-")
-    ]
-    
+    ],  
 ]
 
-# Title of application
-#welcome = [sg.Text(display, justification="c", key="-WELCOME-")]
-
-#sg.theme('DarkAmber') #color of text, eventually we will have the color be f(userSelectedColor) 
-
 text_entry = [
+    [
+    sg.Text("")
+    ],
 
     # Comparison and similarity score selection 
     [
@@ -152,52 +147,43 @@ text_entry = [
         sg.Text('')
     ],
 
-# Statistics display
     [
+        # Statistics display
+    
         sg.Text("Word Count: ", key="-WORD COUNT 1-"),
         sg.Text(" ", key="-TEXT 1 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 1-"),
         sg.Text(" ", key="-TEXT 1 SIM PERCENT-"),
 
         sg.Push(),
-
-        sg.Button('', image_data=dlImg, border_width = 25,
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE-"),
+        
+        # sg.Button('', image_data=dlImg, border_width = 25, button_color=(sg.theme_background_color(),sg.theme_background_color()),key="-SELECT DOWNLOAD CHOICE-"),
         sg.Push(),
         sg.Push(),
         sg.Push(),
         sg.Push(),
         sg.Push(),
-        sg.Button('', image_data=dlImg, border_width=25, 
-            button_color=(sg.theme_background_color(),sg.theme_background_color()),
-            key="-SELECT DOWNLOAD CHOICE 2-"),
+        # sg.Button('', image_data=dlImg, border_width=25, button_color=(sg.theme_background_color(),sg.theme_background_color()),key="-SELECT DOWNLOAD CHOICE 2-"),
 
         sg.Push(),
 
         sg.Text("Word Count: ", key="-WORD COUNT 2-"),
         sg.Text(" ", key="-TEXT 2 WORD COUNT-"),
         sg.Text("Similarity Percentage: ", key="-TEXT SIM PERCENT 2-"),
-        sg.Text(" ", key="-TEXT 2 SIM PERCENT-")
+        sg.Text(" ", key="-TEXT 2 SIM PERCENT-"),
     ],
 
     # Buttons for clear, compare, and translate
-    [ 
-        # sg.Button("Translate Back", key="-TRANSLATE BACK-"),
+    [
         sg.Button("Clear", key="-CLEAR-"),
         sg.Button("Compare", key="-COMPARE-"),
         sg.Button("Translate", key="-TRANSLATE-")
     ],
 
-    [
-        sg.Push(),
-        sg.Button("User Guide", key="-USER GUIDE-")
-    ]
-]
+]#end text_entry   
 
 # Setting the layout of the window
-# THIS IS WHERE I WOULD ADD ADDITIONAL PARTS TO THE WINDOW AND ADD STYLING 
-layout = [translation_tool_selection, lang_selection, text_entry] #welcome, text_entry]
+layout = [translation_tool_selection, lang_selection, text_entry]
 
 window = sg.Window(title="Grey-Box Wikipedia Comparison",layout=layout, element_justification="c", resizable = True, font=("Arial", 18)).Finalize()
 window.Maximize()
@@ -205,9 +191,6 @@ window.Maximize()
 # Initializing variables for the link entered and the desired translation language link 
 link = ""
 linkTwoFragment = ""
-
-# If buttons are showing up on gui uncomment the code below and comment out the code above  
-#window = sg.Window(title="Grey-Box Wikipedia Comparison", layout=layout, no_titlebar=False, location=(0,0), size=(800,600), keep_on_top=True, resizable=True, element_justification="c")
 
 # Get word count of article
 def count_words(article):
@@ -229,11 +212,6 @@ def percent_similar(article, sim_dict):
     print(sim)
     return round(sim, 2)
 
-
-# Clear the text from both text boxes
-#def clear():
-    #window["-TEXT 1-"].update("")
-    #window["-TEXT 2-"].update("") 
 
 # Highlight the portions of text that are similar between the 2 articles
 # Sentences that are similar will be highlighted with the same color
@@ -306,7 +284,8 @@ def run():
 
         '''
         Selecting comparison %
-        The compare methods will search for sentences in Source and Target that have a similarity score GREATER THAN OR EQUAL TO this number
+        The compare methods will search for sentences in Source and Target that have a similarity score 
+        GREATER THAN OR EQUAL TO this number.
         '''
         if event == "-SELECT TRANSLATION TOOL-":
             if(values["-TRANSLATION SELECT-"] == "DeepL"):
@@ -325,18 +304,21 @@ def run():
             compare_type = values["-COMPARE SELECT-"]
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
-        
-        if event == "-SELECT DOWNLOAD CHOICE-":
-            f = open("myfile.txt", "w", encoding="utf-8")
-            print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
-            f.write(values["-TEXT 1-"])
-            f.close()
 
-        if event == "-SELECT DOWNLOAD CHOICE 2-":
-            f = open("myfile.txt", "w", encoding = "utf-8")
-            print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
-            f.write(values["-TEXT 2-"])
-            f.close()
+        """
+        I just comment this part (Refer to  ). 
+        """
+        # if event == "-SELECT DOWNLOAD CHOICE-":
+        #     f = open("myfile.txt", "w", encoding="utf-8")
+        #     print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
+        #     f.write(values["-TEXT 1-"])
+        #     f.close()
+
+        # if event == "-SELECT DOWNLOAD CHOICE 2-":
+        #     f = open("myfile.txt", "w", encoding = "utf-8")
+        #     print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
+        #     f.write(values["-TEXT 2-"])
+        #     f.close()
 
         # Comparing user inputted text
         if event == "-COMPARE-":
@@ -368,7 +350,7 @@ def run():
                 highlight_sim("-TEXT 1-", source, pairs_source)
                 highlight_sim("-TEXT 2-", target, pairs_target)
             except ZeroDivisionError:
-                sg.popup_ok("Must have text in both source and target to perform compare operation.", title="ERROR: MISSING TEXT!")
+                sg.popup_ok("You must have text in both source and target to perform compare operation.", title="ERROR: MISSING TEXT!")
             
 
         # Translate user inputed text
@@ -387,7 +369,7 @@ def run():
                 #if len(target) < 4500: can change this if to try and except to the popups below
                 #if(len(target) > 4500):
                 if len(target) > 4500 or len(target) == 4500:  # Change this condition
-                    sg.popup_ok("Translation of article over 4500 WORDS may take long to translate- please wait.", title="Warning: Long Translate Request")
+                    sg.popup_ok("Translation of an article exceeding 4500 WORDS may take a long time - Please click OK to continue.", title="Warning: Long Translate Request")
                 #try:
                 code = link.replace("https://", "")
                 code = code.split('.')
