@@ -9,7 +9,7 @@ The intended use of this software is for comparing Wikipedia articles, however i
 For more information, visit: https://www.grey-box.ca
 
 ## Requirements
-Python 3+:  
+Python version >=3.7 < 3.11  
 https://www.python.org/downloads/  
 Git:  
 https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
@@ -17,15 +17,25 @@ https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 ## Installation
 
 ```
-# go to your operating system's command line interface
-# clone repo 
-git clone https://github.com/aidhayes/project-symmetry
-# change directory to project-symmetry
-cd project-symmetry
-# install required libraries
-python3 -m pip install -r requirements.txt
-# run program
-python3 main.py
+# Go to your operating system's command line interface
+# Go to the folder where you want to clone the project to 
+# Clone repo 
+  git clone https://github.com/grey-box/Project-Symmetry-Semantic-comparison-Alpha.git
+# change directory to Project-Symmetry-Semantic-comparison-Alpha
+  cd Project-Symmetry-Semantic-comparison-Alpha
+# Install required libraries
+  python -m pip install -r requirements.txt
+# Install Punkt
+  1- python
+  2- import nltk
+  3- nltk.download('punkt')
+# Create a deepl config file
+  1- Inside *dev* folder, create a file called *deeplconfig.py*
+  2- In the file, add the following line of code: deepl_api_key = "your_api_key"
+  3- Replace "your_api_key" by your personal deepl api key
+  4- Save the file
+# Run program
+  python main.py
 ```
 
 ## Getting Started
