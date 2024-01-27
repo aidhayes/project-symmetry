@@ -1,5 +1,28 @@
 User Guide
+How to use the app:
+-- Instructions -- 
+1. Input Source Article Link
+  - Paste the link to the source article in the designated text box.
+2. Select Target Language
+  - Choose the target language from the available options.
+3. Translate
+  - Click the "Translate" button to initiate the translation process back to the source language. The tool will automatically translate the source article into the selected target language and back to the source language.
+4. Compare
+  - After translation, the app activates the "Compare" button to visualize the comparison between the original and translated articles. Different sections will be highlighted with various colors for easy identification.
+5. Button Disablement
+  - Buttons (Translate, Compare) are disabled each time a new article link is entered. This ensures a clean and accurate comparison for each input.
+6. Clear Functionality
+  - The "Clear" button resets the tool by cleaning both the source and target articles. It also disables the buttons, providing a quick restart to the application.
+7. Choose Translation Service
+  - Users can opt for translation services from either DeepL or Google Translate.
+8. DeepL API Key (if applicable)
+  - If DeepL is chosen, users need to add their API key in the provided field. Google Translate users don’t need to specify a key.
+9. Error Handling
+  - The app will throw an error message if the DeepL API key limit is exceeded, an invalid key is added, or an empty key is entered.
 
+## Notes
+- The tool offers flexibility by supporting both DeepL and Google Translate API keys.
+- Users can seamlessly compare translations and identify differences in content structure using the color-coded comparison feature.
 Description of each element from Top Left to Right
 
 Select Language: Shows a list of languages in their native name (ie Dutch 
