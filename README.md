@@ -97,7 +97,38 @@ Testing for comparison speed will be done as follows:
 
 If you wish to not wait roughly 1-2 minute to compare entire articles, then it is recommended you only compare single sections at a time. Doing so will provide much faster results, though more testing will be needed if doing this section by section will save much time.
 
- 
+The instructions for the executable file:
+# Project Symmetry Alpha Setup
+Follow these steps to set up Project Symmetry Alpha on your system.
+## Prerequisites
+1. **Install PyInstaller 6.3.0**
+   - Ensure PyInstaller version 6.3.0 is installed on your system.
+## Configuration Steps
+2. **Copy More Languages File**
+   - Copy the file path of "morelanguagesFinal.csv" located under the "supplements" directory.
+3. **Update Project Specification**
+   - Navigate to the file named "Project-Symmetry-Alpha.specs" containing project specifications.
+   - Replace the existing file path in the "datas" section with the copied path for "morelanguagesFinal.csv."
+   - Also, copy the file path for the user guide and replace it in the "datas" section.
+4. **File Path Adjustment**
+   - Add an 'r' before the replaced file paths to ensure correct interpretation.
+5. **Save Configuration**
+   - Save the changes made to "morelanguagesFinal.csv."
+6. **Modify gui.py**
+   - Open "gui.py" and locate line 48.
+   - Replace the 'open' function with the commented line above it.
+7. **Update User Guide Path**
+   - In the "userguide" section of "gui.py" (line 434), uncomment the 'open' file code line and comment the existing line. This provides a specific path to the files.
+8. **Run PyInstaller**
+   - Open the command window and run the command:
+     ```bash
+     pyinstaller Project-Symmetry-Alpha.specs
+     ```
+9. **Execution**
+   - The process will run for a while and generate a folder called "dist" in your directory.
+   - Inside "dist," you will find an "exe" file along with a folder named "dict."
+Now, you can run the executable file to use Project Symmetry Alpha. If you encounter any issues or have feedback, feel free to report them in the project repository. Happy using!
+
 ## Disclaimer
 
 This project utilizes several NLP libraries to compare text. It is important to note that the results may not always be accurate. Most of these libraries do not take into consideration sentence structure and grammar, so it is advised that the user double checks to make sure highlighted sections are *close enough* to each other. The best translations and comparisons will always be made by a real person, however having someone manually do this would be extremely time consuming, which is one of the problems this project aims to solve.
