@@ -113,7 +113,7 @@ Follow these steps to set up Project Symmetry Alpha on your system.
 4. **File Path Adjustment**
    - Add an 'r' before the replaced file paths to ensure correct interpretation.
 5. **Save Configuration**
-   - Save the changes made to "morelanguagesFinal.csv."
+   - Save the changes made to ".specs" file.
 6. **Modify gui.py**
    - Open "gui.py" and locate line 48.
    - Replace the 'open' function with the commented line above it.
