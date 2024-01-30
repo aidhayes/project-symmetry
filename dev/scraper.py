@@ -19,6 +19,7 @@ def languageGetter (wikiLink):
         link = str(link[2])
         link = link.replace('"', '')
         link = link.replace('hreflang', '')
+        
         """
         link = str(link)
         link = link.split('.') # Splits the string up into a list by the "."

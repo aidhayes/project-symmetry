@@ -358,7 +358,7 @@ display_trans = {
         "Sélectionnez l'outil de comparaison:",
         "Sélectionnez le pourcentage de similitude:",
         "Traduire",
-        "Dégager",
+        "Effacer",
         "Nombre de mots:",
         "Pourcentage de similitude:",
         "Erreur: pas de texte dans la boîte source!",

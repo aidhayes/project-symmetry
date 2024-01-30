@@ -76,7 +76,7 @@ def translate(code, target, translate_tool, deepl_api_key):
             code = "pt-br" 
         code = code.upper() 
 
-    if len(target) < 4500:
+    if len(target) < 4500:    #from < to ==
         if translate_tool == "DeepL":
             for language in deeplLangs:
                 if code == language:
@@ -86,7 +86,6 @@ def translate(code, target, translate_tool, deepl_api_key):
             result = GoogleTranslator(source='auto', target=code).translate(target)
         
         return result            
-
     else:
         result = ""
         iterations = math.ceil(len(target)/4450)
