@@ -1,10 +1,7 @@
 
-#===================== %%%%%%%%%%%%%%%%%%%%%%%%%%% ================================
-
-from .translation import translate
+from translation import translate
 import PySimpleGUI as sg
-#from .ui.languages import lang_eng, display_trans
-from .comparison.bleu_score import compare as bleu
+from .comparison.bleu_score import compare as bleu   
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
 from .ui.colors import gen_colors
@@ -18,6 +15,27 @@ import os
 from deepl.exceptions import QuotaExceededException
 from deepl.exceptions import AuthorizationException
 import textwrap
+
+#=================
+
+# from dev.translation import translate
+# import PySimpleGUI as sg
+# #from dev.ui.languages import lang_eng, display_trans
+# from dev.comparison.bleu_score import compare as bleu
+# from dev.comparison.bert import compare as bert
+# from nltk.tokenize import sent_tokenize
+# from dev.ui.colors import gen_colors
+# from nltk.tokenize import sent_tokenize
+# import nltk
+# import requests
+# import dev.scraper as scraper
+# import csv
+# import sys
+# import os
+# from deepl.exceptions import QuotaExceededException
+# from deepl.exceptions import AuthorizationException
+# import textwrap
+
 
 # Check if the current working directory is writable and accessible,
 # mostly for downloading purpose. If we later decide to implement it. 
@@ -208,13 +226,11 @@ text_entry = [
 
     # Buttons for clear, compare, and translate
     [
-        sg.Button("Clear", key="-CLEAR-"),
+        sg.Button("Clear Boxes", key="-CLEAR-"),
         sg.Push(),
+        sg.Button("Compare Articles", key="-COMPARE-"),
         sg.Push(),
-        sg.Button("Compare", key="-COMPARE-"),
-        sg.Push(),
-        sg.Push(),
-        sg.Button("Translate", key="-TRANSLATE-")
+        sg.Button("Translate Article", key="-TRANSLATE-")
     ],
 
 ]#end text_entry   

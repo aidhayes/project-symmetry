@@ -1,0 +1,33 @@
+
+                                General Guide for TDD-Project-Symmetry
+
+
+   This is a basic outline for implementing test-driven development (TDD) for the functions in project-symmetry. 
+Please keep in mind that for a complete test suite, we would need to cover a variety of test cases including 
+edge cases. 
+   When developing a test suite, it’s important to consider different scenarios and inputs that your 
+functions might encounter. This includes not only typical or expected inputs but also “special cases, boundary 
+conditions, and invalid inputs.” 
+    These scenarios are often referred to as test cases, and they help ensure that our functions behave correctly 
+    and robustly under a variety of conditions. Let's break down the statement “variety of test cases, including 
+    edge cases as well special cases:”
+
+1.	Variety of Test Cases
+    o	Positive Cases: Test the functions with typical or expected inputs to ensure they produce the correct output.
+    o	Negative Cases: Test the functions with invalid or unexpected inputs to ensure they handle errors gracefully, 
+    for example, by raising appropriate exceptions or returning meaningful error messages.
+
+2.	Edge Cases
+    o	Boundary Conditions: Test the functions with inputs at the boundaries of valid ranges or limits. For example, 
+    if your function processes lists, test it with an empty list or a list with one element.
+    o	Extreme Values: Test the functions with extreme values or inputs that might cause performance issues or unexpected 
+    behavior. This is crucial for functions dealing with numeric calculations or large datasets.
+
+3.	Special Cases
+    o	Corner Cases: Test the functions with inputs that might be considered unusual or on the edge of typical usage.
+    o	Specific Conditions: If your functions have specific conditions or constraints, create test cases to ensure those 
+    conditions are handled correctly.
+
+To conclude, by covering a variety of test cases, including these different scenarios, we increase the likelihood of catching 
+bugs or issues that might not be apparent with only typical inputs. This comprehensive testing approach helps ensure that your 
+functions are reliable, robust, and can handle a wide range of situations they might encounter in real-world usage.

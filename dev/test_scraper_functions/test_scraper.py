@@ -1,6 +1,7 @@
 import unittest
 
 # Import the functions to be tested
+#from dev.gui import languageGetter, textGetter
 from dev.gui import languageGetter, textGetter
 
 class TestWikipediaFunctions(unittest.TestCase):
