@@ -1,3 +1,4 @@
+
 import unittest
 
 """
@@ -17,8 +18,9 @@ class TestSentenceComparison(unittest.TestCase):
     #Defines a test method named test_compare within the TestSentenceComparison class.
     def test_compare(self):
         # Define sample input data (links articles:source and target)
-        source = "This is a sample source sentence." 
-        target = "This is a sample target sentences."
+        source = "https://en.wikipedia.org/wiki/History_of_New_York_(state)" #"This is a sample source sentences."
+        
+        target = "https://fr.wikipedia.org/wiki/Histoire_de_l%27%C3%89tat_de_New_York"           #"This is a sample target sentences."
         #Defines a list of colors corresponding to the sentences.
         colors = ["#FF0000", "#00FF00"]
 
