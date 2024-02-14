@@ -4,6 +4,11 @@ import unittest
 #from your_module import gen_colors
 from colors import gen_colors
 
+"""
+This line defines a test case class named TestColorGeneration, 
+which inherits from unittest.TestCase. This class will contain 
+individual test methods.
+"""
 class TestColorGeneration(unittest.TestCase):
 
     def test_gen_colors(self):

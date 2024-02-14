@@ -3,9 +3,11 @@ import unittest
 # Import the function to be tested
 from bleu_score import compare
 
-#This line defines a test case class named TestSentenceComparison, 
-#which inherits from unittest.TestCase. This class will contain 
-#individual test methods.
+"""
+This line defines a test case class named TestSentenceComparison, 
+which inherits from unittest.TestCase. This class will contain 
+individual test methods.
+"""
 class TestCompareFunction(unittest.TestCase):
 
     #Defines a test method named test_compare within the TestCompareFunction class.
@@ -22,5 +24,6 @@ class TestCompareFunction(unittest.TestCase):
         self.assertEqual(len(target_pairs), 1)
         # Add more assertions as needed based on your understanding of the expected behavior.
 
+#Runs the unit tests in the module if the script is executed directly.
 if __name__ == '__main__':
     unittest.main()

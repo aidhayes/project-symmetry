@@ -29,10 +29,9 @@ class TestSentenceComparison(unittest.TestCase):
         self.assertIsNotNone(result_source)
         self.assertIsNotNone(result_target)
 
-#This line runs the unit tests in the module if the script is executed directly.
+#Runs the unit tests in the module if the script is executed directly.
 if __name__ == '__main__':
     unittest.main()
-
 
 """
 In summary, this test method sets up sample input data, calls the compare 
