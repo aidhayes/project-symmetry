@@ -1,5 +1,5 @@
 
-from translation import translate
+from dev.translation import translate
 import PySimpleGUI as sg
 from .comparison.bleu_score import compare as bleu   
 from .comparison.bert import compare as bert
