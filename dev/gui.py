@@ -84,7 +84,6 @@ dlImg = b'iVBORw0KGgoAAAANSUhEUgAAADMAAAA7CAYAAADW8rJHAAAAAXNSR0IArs4c6QAAAoBJRE
 The implementation I provide here takes into account different screen ratios and adjusts 
 the widthMultiplier and heightMultiplier accordingly. It should work on various computer 
 screens by dynamically calculating the INPUT_BOX_SIZE based on the screen size and ratio.
-
 """
 w, h = sg.Window.get_screen_size()
 ratio = round(w / h, 2)
@@ -349,7 +348,6 @@ def run():
                 window["-ENTER DEEPL KEY-"].update(visible=False) 
             translate_tool = values["-TRANSLATION SELECT-"]
 
-
         if event == "-ENTER DEEPL KEY-":
             deepl_api_key = values["-DEEPL API KEY-"]
 
@@ -358,34 +356,16 @@ def run():
             # Divide by 100 because comparison tools returns a value in [0, 1]
             sim_percent = int(values["-COMPARE VAL-"]) / 100
 
-        """
-        I just comment this part (Refer to  ). 
-        """
-        # if event == "-SELECT DOWNLOAD CHOICE-":
-        #     f = open("myfile.txt", "w", encoding="utf-8")
-        #     print(f"Downloading {dlOptions[0].lower()} text to default directory since nothing was chosen")
-        #     f.write(values["-TEXT 1-"])
-        #     f.close()
-
-        # if event == "-SELECT DOWNLOAD CHOICE 2-":
-        #     f = open("myfile.txt", "w", encoding = "utf-8")
-        #     print(f"Downloading {dlOptions[1].lower()} text to default directory since nothing was chosen")
-        #     f.write(values["-TEXT 2-"])
-        #     f.close()
-
         # Comparing user inputted text
         if event == "-COMPARE-":
             # Retrieve text from text boxes
             source = values["-TEXT 1-"]
             target = values["-TEXT 2-"]
             
-
-
             # Display word count for each article
             window["-TEXT 1 WORD COUNT-"].update(str(count_words(source)))
             window["-TEXT 2 WORD COUNT-"].update(str(count_words(target)))
             
-
             # Determining which comparison type is being used
             try:
                 if compare_type == "BLEU Score":
@@ -419,8 +399,7 @@ def run():
                 except:
                     sg.Popup(display_trans["English"][11], keep_on_top=True, title= display_trans["English"][10])
             else:
-                #if len(target) < 4500: can change this if to try and except to the popups below
-                #if(len(target) > 4500):
+                
                 if len(target) > 4500 or len(target) == 4500:  # Change this condition
                     sg.popup_ok("Translation of an article exceeding 4500 WORDS may take a long time - Please click OK to continue.", title="Warning: Long Translate Request")
                 #try:
@@ -440,20 +419,7 @@ def run():
                 window["-TEXT 2-"].update("")
                 window["-TEXT 2-"].update(wrapped_text)
                 window["-COMPARE-"].update(disabled=False)
-                #except:
-                #    try:
-                #        sg.Popup(display_trans[lang][13], keep_on_top=True, title= display_trans[lang][12])
-                #    except:
-                #       sg.Popup(display_trans["English"][13], keep_on_top=True, title= display_trans["English"][12])
 
-
-        # NOT IMPLEMENTED
-        #if event == "-TRANSLATE BACK-":
-         #   text2 = values["-TEXT 2-"]
-          #  text2 = translate_back(text2, text2)
-           # window["-TEXT 2-"].update("")
-            #window["-TEXT 2-"].update(text2)
-        
         # Clear button
         if event == "-CLEAR-":
             window["-TEXT 1-"].update("")
@@ -516,7 +482,7 @@ def run():
                 elif (response.status_code == 404): 
                     print(f"Sorry, this article does not exist in {linkTwoFragment}\nThe response from the server is {response.status_code}, meaning the webpage does not exist!")
                 window["-TEXT 2-"].update(scraper.textGetter(linkTwo))
-                window["-TRANSLATE-"].update(disabled=False) # Enable translate button
+                window["-TRANSLATE-"].update(disabled=False) # Enable translate button #disabled
                 window["-COMPARE-"].update(disabled=True) # Disable compare button
 
             except:

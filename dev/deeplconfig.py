@@ -1,2 +1,2 @@
 
-deepl_api_key = "Replace your own DeepL API key here"
+deepl_api_key = "Replace this line with your own API key"
