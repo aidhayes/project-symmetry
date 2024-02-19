@@ -1,7 +1,9 @@
 
 import unittest
 from translation import translate
-#import PySimpleGUI as sg
+from dev.gui import percent_similar, highlight_sim, count_words
+#from dev.test_gui_functions import percent_similar, highlight_sim, count_words
+#from gui import percent_similar, highlight_sim, count_words
 from .comparison.bleu_score import compare as bleu   
 from .comparison.bert import compare as bert
 from nltk.tokenize import sent_tokenize
@@ -17,7 +19,6 @@ from deepl.exceptions import QuotaExceededException
 from deepl.exceptions import AuthorizationException
 import textwrap
 
-from gui import percent_similar, highlight_sim, count_words
 
 class TestPercentSimilar(unittest.TestCase):
 
