@@ -82,6 +82,7 @@ display_trans = {
         "يتجاوز طول النص الذي تحاول ترجمته حد الأحرف 4500.",
         "مصدر",
         "استهداف",
+        "دليل المستخدم"
     ],
     "বাংলা": [
         "ভাষা নির্বাচন কর:",
@@ -100,6 +101,7 @@ display_trans = {
         "আপনি যে পাঠ্যটির দৈর্ঘ্য অনুবাদ করার চেষ্টা করছেন তা 4500 এর চরিত্রের সীমা ছাড়িয়ে গেছে।",
         "সূত্র",
         "লক্ষ্য",
+        "ব্যবহারকারীর নির্দেশিকা"
     ],
     "Euskara": [
         "Hautatu Hizkuntza:",
@@ -118,6 +120,7 @@ display_trans = {
         "Itzuli nahi duzun testuaren iraupena 4500 karaktere muga gainditzen du.",
         "Iturri",
         "Jomuga",
+        "Erabiltzailearen Gidaliburua"
     ],
     "Bosanski": [
         "Odaberite Jezik:",
@@ -136,6 +139,7 @@ display_trans = {
         "Dužina teksta na koju pokušavate prevesti prelazi granicu znakova od 4500.",
         "Izvor",
         "Ciljati",
+        "Korisnički vodič"
     ],
     "Български": [
         "Избери език:",
@@ -154,6 +158,7 @@ display_trans = {
         "Дължината на текста, която се опитвате да преведете, надвишава границата на символите от 4500.",
         "Източник",
         "Цел",
+        "Упътване за употреба"
     ],
     "Català": [
         "Escolliu l'idioma:",
@@ -172,6 +177,7 @@ display_trans = {
         "La longitud del text que intenteu traduir supera el límit de caràcters de 4500.",
         "Font",
         "Objectiu",
+        "Guia de l'usuari"
     ],
     "中文": [
         "选择语言：",
@@ -190,6 +196,7 @@ display_trans = {
         "您试图翻译的文本长度超过了4500的字符限制。",
         "资源",
         "目标",
+        "用户指南"
     ],
     "Hrvatski": [
         "Izaberi jezik:",
@@ -208,6 +215,7 @@ display_trans = {
         "Duljina teksta koji pokušavate prevesti premašuje granicu karaktera od 4500.",
         "Izvor",
         "Cilj",
+        "Korisnički vodič"
     ],
     "Čeština": [
         "Zvolte jazyk:",
@@ -226,6 +234,7 @@ display_trans = {
         "Délka textu, který se snažíte přeložit, překračuje limit znaku 4500.",
         "Zdroj",
         "cílová",
+        "Uživatelská příručka"
     ],
     "Dansk": [
         "Vælg sprog:",
@@ -244,6 +253,7 @@ display_trans = {
         "Længden af tekst, du prøver at oversætte, overstiger karaktergrænsen på 4500.",
         "Kilde",
         "Mål",
+        "Brugervejledning"
     ],
     "Nederlands": [
         "Selecteer taal:",
@@ -262,6 +272,7 @@ display_trans = {
         "De lengte van de tekst die u probeert te vertalen overschrijdt de tekenlimiet van 4500.",
         "Bron",
         "Doelwit",
+        "Gebruikershandleiding"
     ],
     "English": [
         "Select Language:",
@@ -280,6 +291,7 @@ display_trans = {
         "The length of text you are trying to translate exceeds the character limit of 4500.",
         "Source",
         "Target",
+        "User Guide"
     ],
     "Esperanto": [
         "Elektu Lingvon:",
@@ -298,6 +310,7 @@ display_trans = {
         "La longeco de teksto, kiun vi provas traduki, superas la karakteron limo de 4500.",
         "Fonto",
         "Celo",
+        "Uzantgvidilo"
     ],
     "Eesti": [
         "Vali keel:",
@@ -316,6 +329,7 @@ display_trans = {
         "Teksti pikkus, mida proovite tõlkida, ületab tähemärgi piiri 4500.",
         "Allikas",
         "Siht",
+        "Kasutusjuhend"
     ],
     "Suomi": [
         "Valitse kieli:",
@@ -334,6 +348,7 @@ display_trans = {
         "Tekstin pituus, jonka yrität kääntää, ylittää merkkirajan 4500.",
         "Lähde",
         "Kohde",
+        "Käyttöohjeet"
     ],
     "Français": [
         "Choisir la langue:",
@@ -343,7 +358,7 @@ display_trans = {
         "Sélectionnez l'outil de comparaison:",
         "Sélectionnez le pourcentage de similitude:",
         "Traduire",
-        "Dégager",
+        "Effacer",
         "Nombre de mots:",
         "Pourcentage de similitude:",
         "Erreur: pas de texte dans la boîte source!",
@@ -352,6 +367,7 @@ display_trans = {
         "La longueur du texte que vous essayez de traduire dépasse la limite de caractères de 4500.",
         "La source",
         "Cible",
+        "Mode d'emploi"
     ],
     "Galego": [
         "Selecciona Idioma:",
@@ -370,6 +386,7 @@ display_trans = {
         "A lonxitude do texto que está intentando traducir supera o límite de caracteres de 4500.",
         "Fonte",
         "Obxectivo",
+        "Guía do usuario"
     ],
     "ქართული": [
         "Აირჩიეთ ენა:",
@@ -388,6 +405,7 @@ display_trans = {
         "ტექსტის სიგრძე, რომლის თარგმნასაც ცდილობთ, აღემატება პერსონაჟის ზღვარს 4500.",
         "წყარო",
         "სამიზნე",
+        "მომხმარებლის სახელმძღვანელო"
     ],
     "Deutsch": [
         "Sprache auswählen:",
@@ -406,6 +424,7 @@ display_trans = {
         "Die Länge des Textes, die Sie übersetzen möchten, überschreitet die Zeichengrenze von 4500.",
         "Quelle",
         "Ziel",
+        "Benutzerhandbuch"
     ],
     "Ελληνικά": [
         "Επιλέξτε γλώσσα:",
@@ -424,6 +443,7 @@ display_trans = {
         "Το μήκος του κειμένου που προσπαθείτε να μεταφράσετε υπερβαίνει το όριο χαρακτήρων 4500.",
         "Πηγή",
         "Στόχος",
+        "ΟΔΗΓΟΣ ΧΡΗΣΤΗ"
     ],
     "עברית": [
         "בחר שפה:",
@@ -442,6 +462,7 @@ display_trans = {
         "אורך הטקסט שאתה מנסה לתרגם עולה על גבול הדמות של 4500.",
         "מָקוֹר",
         "יַעַד",
+        "מדריך למשתמש"
     ],
     "Magyar": [
         "Válasszon nyelvet:",
@@ -460,6 +481,7 @@ display_trans = {
         "A lefordítani kívánt szöveg hossza meghaladja a 4500 karakterhatárot.",
         "Forrás",
         "Cél",
+        "Használati útmutató"
     ],
     "Bahasa Indonesia": [
         "Pilih bahasa:",
@@ -478,6 +500,7 @@ display_trans = {
         "Panjang teks yang Anda coba terjemahkan melebihi batas karakter 4500.",
         "Sumber",
         "Target",
+        "Panduan pengguna"
     ],
     "Italiano": [
         "Seleziona la lingua:",
@@ -496,6 +519,7 @@ display_trans = {
         "La lunghezza del testo che stai cercando di tradurre supera il limite di carattere di 4500.",
         "Fonte",
         "Obbiettivo",
+        "Guida utente"
     ],
     "日本語": [
         "言語を選択する：",
@@ -514,6 +538,7 @@ display_trans = {
         "翻訳しようとしているテキストの長さは、4500の文字制限を超えています。",
         "ソース",
         "目標",
+        "ユーザーガイド"
     ],
     "한국어": [
         "언어 선택 :",
@@ -532,6 +557,7 @@ display_trans = {
         "번역하려는 텍스트 길이는 4500의 문자 한계를 초과합니다.",
         "원천",
         "표적",
+        "사용자 설명서"
     ],
     "Latviešu": [
         "Izvēlēties valodu:",
@@ -550,6 +576,7 @@ display_trans = {
         "Jūsu mēģinātā teksta garums pārsniedz rakstzīmju ierobežojumu 4500.",
         "Avots",
         "Tēlot",
+        "Lietotāja rokasgrāmata"
     ],
     "Lietuvių": [
         "Pasirinkite kalbą:",
@@ -568,6 +595,7 @@ display_trans = {
         "Teksto ilgis, kurį bandote išversti, viršija 4500 simbolių limitą.",
         "Šaltinis",
         "Taikinys",
+        "Naudotojo gidas"
     ],
     "Македонски": [
         "Одбери јазик:",
@@ -586,6 +614,7 @@ display_trans = {
         "Должината на текстот што се обидувате да го преведете го надминува границата на знакот од 4500.",
         "Извор",
         "Цел",
+        "Упатство за корисникот"
     ],
     "Bahasa Melayu": [
         "Pilih Bahasa:",
@@ -604,6 +633,7 @@ display_trans = {
         "Panjang teks yang anda cuba diterjemahkan melebihi had aksara 4500.",
         "Sumber",
         "Sasaran",
+        "Panduan pengguna"
     ],
     "Norsk": [
         "Velg språk:",
@@ -622,6 +652,7 @@ display_trans = {
         "Tekstens lengde du prøver å oversette overstiger karaktergrensen på 4500.",
         "Kilde",
         "Mål",
+        "Brukerhåndboken"
     ],
     "فارسی": [
         "زبان را انتخاب کنید:",
@@ -640,6 +671,7 @@ display_trans = {
         "طول متنی که می خواهید ترجمه کنید بیش از حد شخصیت 4500 است.",
         "منبع",
         "هدف",
+        "راهنمای کاربر"
     ],
     "Polski": [
         "Wybierz język:",
@@ -658,6 +690,7 @@ display_trans = {
         "Długość tekstu, którą próbujesz przetłumaczyć, przekracza limit znaków 4500.",
         "Źródło",
         "Cel",
+        "Podręcznik użytkownika"
     ],
     "Português": [
         "Selecione o idioma:",
@@ -676,6 +709,7 @@ display_trans = {
         "O comprimento do texto que você está tentando traduzir excede o limite do caractere de 4500.",
         "Fonte",
         "Alvo",
+        "Podręcznik użytkownika"
     ],
     "Română": [
         "Selecteaza limba:",
@@ -694,6 +728,7 @@ display_trans = {
         "Lungimea textului pe care încercați să o traduceți depășește limita de caracter de 4500.",
         "Sursă",
         "Ţintă",
+        "Manualul utilizatorului"
     ],
     "Русский": [
         "Выберите язык:",
@@ -712,6 +747,7 @@ display_trans = {
         "Длина текста, который вы пытаетесь перевести, превышает предел символа 4500.",
         "Источник",
         "Цель",
+        "Гид пользователя"
     ],
     "Српски": [
         "Изаберите језик:",
@@ -730,6 +766,7 @@ display_trans = {
         "Дужина текста који покушавате да преведете прелази ограничење знака од 4500.",
         "Извор",
         "Мета",
+        "Упутство за употребу"
     ],
     "Slovenčina": [
         "Zvoľ jazyk:",
@@ -748,6 +785,7 @@ display_trans = {
         "Dĺžka textu, ktorý sa snažíte preložiť, presahuje limit znakov 4500.",
         "Zdroj",
         "Cieľ",
+        "Užívateľská príručka"
     ],
     "Slovenščina": [
         "Izberi jezik:",
@@ -766,6 +804,7 @@ display_trans = {
         "Dolžina besedila, ki ga poskušate prevesti, presega mejo znakov 4500.",
         "Vir",
         "Cilj",
+        "Navodila"
     ],
     "Español": [
         "Seleccione el idioma:",
@@ -784,6 +823,7 @@ display_trans = {
         "La longitud del texto que está tratando de traducir excede el límite de caracteres de 4500.",
         "Fuente",
         "Objetivo",
+        "Guía del usuario"
     ],
     "Svenska": [
         "Välj språk:",
@@ -802,6 +842,7 @@ display_trans = {
         "Längden på text du försöker översätta överskrider teckengränsen på 4500.",
         "Källa",
         "Mål",
+        "Användarguide"
     ],
     "ไทย": [
         "เลือกภาษา:",
@@ -820,6 +861,7 @@ display_trans = {
         "ความยาวของข้อความที่คุณพยายามแปลเกินขีด จำกัด อักขระ 4,500",
         "แหล่งที่มา",
         "เป้า",
+        "คู่มือผู้ใช้"
     ],
     "Türkçe": [
         "Dil Seçin:",
@@ -838,6 +880,7 @@ display_trans = {
         "Çevirmeye çalıştığınız metnin uzunluğu 4500 karakter sınırını aşar.",
         "Kaynak",
         "Hedef",
+        "Kullanici rehberi"
     ],
     "Українська": [
         "Оберіть мову:",
@@ -856,6 +899,7 @@ display_trans = {
         "Довжина тексту, який ви намагаєтесь перекласти, перевищує межу символу 4500.",
         "Джерело",
         "Цільовий",
+        "Керівництво користувача"
     ],
     "Tiếng Việt": [
         "Chọn ngôn ngữ:",
@@ -874,5 +918,6 @@ display_trans = {
         "Độ dài của văn bản bạn đang cố gắng dịch vượt quá giới hạn ký tự là 4500.",
         "Nguồn",
         "Mục tiêu",
+        "Hướng dẫn sử dụng"
     ],
 }

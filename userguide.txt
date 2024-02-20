@@ -1,0 +1,64 @@
+User Guide
+How to use the app:
+-- Instructions -- 
+1. Input Source Article Link
+  - Paste the link to the source article in the designated text box.
+2. Select Target Language
+  - Choose the target language from the available options.
+3. Translate
+  - Click the "Translate" button to initiate the translation process back to the source language. The tool will automatically translate the source article into the selected target language and back to the source language.
+4. Compare
+  - After translation, the app activates the "Compare" button to visualize the comparison between the original and translated articles. Different sections will be highlighted with various colors for easy identification.
+5. Button Disablement
+  - Buttons (Translate, Compare) are disabled each time a new article link is entered. This ensures a clean and accurate comparison for each input.
+6. Clear Functionality
+  - The "Clear" button resets the tool by cleaning both the source and target articles. It also disables the buttons, providing a quick restart to the application.
+7. Choose Translation Service
+  - Users can opt for translation services from either DeepL or Google Translate.
+8. DeepL API Key (if applicable)
+  - If DeepL is chosen, users need to add their API key in the provided field. Google Translate users don’t need to specify a key.
+9. Error Handling
+  - The app will throw an error message if the DeepL API key limit is exceeded, an invalid key is added, or an empty key is entered.
+
+## Notes
+- The tool offers flexibility by supporting both DeepL and Google Translate API keys.
+- Users can seamlessly compare translations and identify differences in content structure using the color-coded comparison feature.
+Description of each element from Top Left to Right
+
+Select Language: Shows a list of languages in their native name (ie Dutch 
+shown as Deutsch); will change language of all tool text to selected 
+language on pressing "Select"
+
+Select Comparison Tool: Selects which model to base similarity percentage 
+off of
+
+Select Similarity Percentage: Sets percentage needed for two sentences to
+be marked as similar. If using BLEU score, 10% is recommended; for 
+Sentence Bert, 30% is recommended.
+
+Enter Article Link: Retrieves article specified by link and pastes
+inside source text box
+
+Second Article Language: Retrieves article specified by first article 
+link and second language selection, pastes inside target text box
+
+Text Boxes: Here you can enter the two texts to be compared: the source 
+(left side) and the target (right side)
+
+Word Count: Post compare, will be equal to the total amount of words in
+their respective text (left side source text, right side target text)
+
+Similarity Percentage: Post compare, will be equal to the similarity 
+percentage of the respective text to their opposite text (left side 
+source text to target text, right side target text to source text)
+
+Clear: Will clear text and associated values (word count, similarity
+percentage)
+
+Compare: Will compare the two texts inputted, highlight sentences with a 
+similarity percentage of greater than or equal to user similarity 
+percentage input, and set/update word count and similarity 
+percentage values for both source and target texts
+
+Translate: Will translate target text to same language as source text if
+source text length is 4500 words or less

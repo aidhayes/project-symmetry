@@ -6,3 +6,6 @@ gui.spec
 ~$Compare_Tests.xlsx
 tmp_env/
 query.py
+.idea/
+symmetry_env/
+```
